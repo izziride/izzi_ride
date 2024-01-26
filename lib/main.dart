@@ -21,7 +21,7 @@ void main() async {
       Locale locale= LocalizationManager.getCurrentLocale();
   int isWelcome =await FirstWelcome().getWelocme();
   runApp( MaterialApp(
-          
+          title: "iZZi Ride",
           navigatorKey: navigatorKey,
           initialRoute: "/loader",
           routes: {

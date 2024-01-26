@@ -41,7 +41,7 @@ class AuthInterceptor extends Interceptor {
     if (err.response?.statusCode == 400) {
 
 
-      handler.next(err);
+      
     }
     if (err.response?.statusCode == 409) {
         print(err.response?.data);
@@ -53,11 +53,11 @@ class AuthInterceptor extends Interceptor {
         print(err.requestOptions.path);
         print(err.response?.data);
 
-      handler.next(err);
+      
     }
     
     handler.next(err);
-    return err;
+    
     
   }
 

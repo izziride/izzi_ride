@@ -99,10 +99,13 @@ class _PriceState extends State<Price> {
           locations: locations
         );
         HttpUserOrder().createUserOrder(userOrder)
-        .then((_){
+        .then((code){
+          if(code==0){
             Navigator.of(context)
                   .popUntil((route) => route.settings.name == '/menu'); 
-            widget.side();
+                  widget.side();
+          }
+            
                     });
       }
       

@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:temp/constants/colors/colors.dart';
+import 'package:temp/models/preferences/preferences.dart';
 import 'package:temp/pages/main/tabs/create/auto/auto.dart';
 import 'package:temp/pages/main/tabs/create/card_car/card_car.dart';
+import 'package:temp/pages/main/tabs/create/dop_options/dop_options.dart';
 import 'package:temp/pages/main/tabs/create/enumMap/enum_map.dart';
 import 'package:temp/pages/main/tabs/search/result_search/bar_navigation.dart';
 import 'package:temp/repository/create_repo/create_repo.dart';
@@ -45,7 +47,10 @@ class _AutoTitleState extends State<AutoTitle> {
   }
 
   updateName(String newName,int mnameId){
-    createRepo.updateCarModel(newName,mnameId);
+    createRepo.updateCarNamet(newName,mnameId);
+    setState(() {
+      
+    });
   }
 
   updateCarNumber(String newNumber){
@@ -60,6 +65,36 @@ class _AutoTitleState extends State<AutoTitle> {
   bool validModel=true; 
   bool validNumber=true;
   bool validYear=true;
+
+
+void checkValid(){
+  
+  if(createRepo.carName.isEmpty){
+    validManufacturer=false;
+  }
+  if(createRepo.carModel.isEmpty){
+    validModel=false;
+  }
+  if(_numberController.text.isEmpty){
+    validNumber=false;
+  }
+  if(_yearController.text.isEmpty){
+    validYear=false;
+  }
+  setState(() {
+    
+  });
+  if(validManufacturer&&validModel&&validNumber&&validYear){
+    createRepo.updateCarNumber(_numberController.text);
+    createRepo.updateCarYear(_yearController.text);
+    Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DopOptions(side: widget.side, count: defaultcountPass,preferences: Preferences(smoking: false, luggage: false, childCarSeat: false, animals: false),carId: -1,createAuto:true)),
+                                );
+  }
+}
+
   @override
   Widget build(BuildContext context) {
 
@@ -124,11 +159,11 @@ class _AutoTitleState extends State<AutoTitle> {
                     Observer(
                       builder: (context) {
                         String carName=createRepo.carName;
-                        String carModel=createRepo.carName;
+                        String carModel=createRepo.carModel;
                         int carNameId=createRepo.carNameId;
                         return Column(
                           children: [
-                              CardCar(update: updateName, types: MyEnum.name,title:carName,other: "",valid:validManufacturer,id: -1,),
+                              CardCar(update: updateName, types: MyEnum.name,title:carName,other: "all",valid:validManufacturer,id: -1,),
                               CardCar(update: updateModel, types: MyEnum.model,title:carModel,other: carName,valid:validModel,id: carNameId,),
                                         Padding(
                                           padding: const EdgeInsets.only(bottom: 12),
@@ -146,6 +181,11 @@ class _AutoTitleState extends State<AutoTitle> {
                                           ),
                                           child: TextField(
                         controller: _numberController,
+                        onChanged: (value) {
+                          setState(() {
+                            validNumber=true;
+                          });
+                        },
                         style: TextStyle(
                           fontFamily: "SF",
                           fontSize: 14,
@@ -177,6 +217,11 @@ class _AutoTitleState extends State<AutoTitle> {
                           )
                                         ),
                                         child: TextField(
+                                          onChanged: (value) {
+                                            setState(() {
+                                              validYear=true;
+                                            });
+                                          },
                                           controller: _yearController,
                                            style: TextStyle(
                           fontFamily: "SF",
@@ -206,7 +251,7 @@ class _AutoTitleState extends State<AutoTitle> {
                             right: 0,
                             child: InkWell(
                                               onTap: (){
-                                               //checkValid();
+                                               checkValid();
                                                
                                               },
                                               child: Container(

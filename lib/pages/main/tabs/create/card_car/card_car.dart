@@ -32,6 +32,7 @@ class _CardCarState extends State<CardCar> {
       padding: const EdgeInsets.only(bottom: 12),
       child: InkWell(
         onTap:(){
+          print("tap");
           if(widget.other.isNotEmpty){
             showBottomSheet(
           context: context,

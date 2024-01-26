@@ -1,6 +1,12 @@
 {
   "images" : [
     {
+      "size" : "180x180",
+      "idiom" : "iphone",
+      "filename" : "app_icon.svg",
+      "scale" : "3x"
+    },
+    {
       "size" : "20x20",
       "idiom" : "iphone",
       "filename" : "Icon-App-20x20@2x.png",
