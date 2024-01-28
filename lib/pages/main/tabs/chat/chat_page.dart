@@ -59,6 +59,8 @@ class _MessagePageState extends State<MessagePage> {
   }
 
 
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -138,7 +140,7 @@ class _MessagePageState extends State<MessagePage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                chatInfo.chatMembers[0].clientName+userRepository.userInfo.clienId.toString(),
+                                chatInfo.chatMembers[0].clientName,
                                 style: TextStyle(
                                   fontFamily: "SF",
                                   fontWeight: FontWeight.w500,
@@ -182,7 +184,7 @@ class _MessagePageState extends State<MessagePage> {
                     if(chatInfo==null){
                       return SizedBox.shrink();
                     }
-                      return InkWell(
+                      return GestureDetector(
                         onTap: () {
                           Navigator.push(context,
                            MaterialPageRoute(builder: (context) => CardFullOrder(
@@ -194,6 +196,7 @@ class _MessagePageState extends State<MessagePage> {
                             )
                             );
                         },
+                        
                         child: Row(
                           children: [
                             Column(

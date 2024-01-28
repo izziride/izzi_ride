@@ -345,7 +345,7 @@ child: SvgPicture.asset("assets/svg/passanger_empty.svg"),
                                     decoration: BoxDecoration(
 
 
-borderRadius: BorderRadius.circular(12),
+                                      borderRadius: BorderRadius.circular(12),
                                       color: Colors.white
                                     ),
                                     child: Column(
@@ -408,7 +408,7 @@ borderRadius: BorderRadius.circular(12),
                                                         child: Stack(
 
 
-children: [
+                                                    children: [
                                                             Container(
                                                               margin: EdgeInsets.all(3),
                                                                                                           width: 40,

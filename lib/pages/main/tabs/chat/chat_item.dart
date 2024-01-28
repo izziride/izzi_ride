@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:temp/constants/colors/colors.dart';
 import 'package:temp/helpers/string_to_color.dart';
 import 'package:temp/models/chat/chat_info.dart';
 import 'package:temp/repository/user_repo/user_repo.dart';
 
 class ChatItem extends StatefulWidget {
   final ChatInfo chatState;
+  final List<int> variableChatId;
+  final bool contextMenu;
   const ChatItem({
     required this.chatState,
+    required this.contextMenu,
+    required this.variableChatId,
     super.key
     });
 
@@ -135,7 +140,26 @@ class _ChatItemState extends State<ChatItem> {
                 Builder(
                   builder: (context) {
                     
-                   
+                   if(widget.contextMenu){
+
+                      bool isItem=false;
+                      for(int chatId in widget.variableChatId){
+                        if(widget.chatState.chatId==chatId){
+                          isItem=true;
+                          break;
+                        }
+                      }
+                      return isItem?Container(
+                        width: 20,
+                        height: 20,
+                        margin: EdgeInsets.only(right: 20),
+                        decoration: BoxDecoration(
+                          color: brandBlue,
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                        child: Icon(Icons.done_outlined,color: Colors.white,size: 10,),
+                      ):SizedBox.shrink();
+                    }
                     String formattedTime="";
                     if(widget.chatState.messages.isNotEmpty){
                          String current_time=widget.chatState.messages[0].time;
@@ -155,7 +179,10 @@ class _ChatItemState extends State<ChatItem> {
                     Builder(
                       
                         builder: (context) {
-                          print(widget.chatState.messages[0].status);
+                          if(widget.contextMenu){
+                            return SizedBox.shrink();
+                          }
+                          //print(widget.chatState.messages[0].status);
                           if(widget.chatState.messages.isNotEmpty && widget.chatState.messages[0].senderClientId==userRepository.userInfo.clienId){
                             int status= widget.chatState.messages[0].status;
                             if(status==-1){

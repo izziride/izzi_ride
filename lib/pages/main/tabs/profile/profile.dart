@@ -127,7 +127,8 @@ List list=[];
             },
             ),
          ),
-          
+          Container(padding: EdgeInsets.all(0), color: Colors.red, child: CheckboxListTile(value: false, onChanged: (_){},contentPadding: EdgeInsets.all(0),title: Text("dsds",style: TextStyle(height: 0.1,fontSize: 1),),dense: true,controlAffinity: ListTileControlAffinity.platform,)),
+          CheckboxListTile(value: true, onChanged: (_){},contentPadding: EdgeInsets.all(0),title: Text("dsds"),dense: true,visualDensity: VisualDensity.compact),
         
         ],
       );

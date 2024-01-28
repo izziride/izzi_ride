@@ -21,7 +21,7 @@ class AppPopup extends StatelessWidget {
       borderRadius: BorderRadius.circular(14),
       color: Color.fromRGBO(242, 242, 242, 0.8)
     ),
-    height: 138,
+    height: 146,
     width: 270,
       child: Column(
         children: [

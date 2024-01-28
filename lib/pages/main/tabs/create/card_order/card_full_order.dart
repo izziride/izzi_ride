@@ -69,7 +69,7 @@ class _CardFullOrderState extends State<CardFullOrder> {
                     ),
                     child: AppPopup(warning: false, title: "Delete User?", description: "Do you really want to\ndelete"+name+"?", pressYes: ()async{
                       int result=await HttpUserOrder().deleteUserInOrder(widget.orderId, clientId);
-                      print("result: "+result.toString());
+                      
                       setState(() {
                         widget.side();
                       });
@@ -123,7 +123,7 @@ class _CardFullOrderState extends State<CardFullOrder> {
                 String day = dateComponents[0].padLeft(2, '0');
                 String month = dateComponents[1];
                 formattedDate = '$day $month';
-          
+                
                 String formattedTime = DateFormat('HH:mm').format(dateTime);
                 formattedTime = formattedTime.split(':').map((segment) => segment.padLeft(2, '0')).join(':');
                 print(fullUserOrder.isBooked);
@@ -391,56 +391,75 @@ class _CardFullOrderState extends State<CardFullOrder> {
                                             ],
                                           ),
                                         )
-                                        : Row(
+                                        : Column(
                                           children: [
-                                              for (int i = 0; i < fullUserOrder.travelers.length; i++) 
+                                              
+                                              for (int i=0,a = -(fullUserOrder.travelers.length-1); a < fullUserOrder.travelers.length; a++,i++ ) 
+                                              i%2==1?Container(height: 2,color: const Color.fromARGB(255, 214, 214, 214),margin: EdgeInsets.symmetric(horizontal: 5,vertical: 15),) :
                                               Padding(
                                                 padding: const EdgeInsets.only(right: 10),
-                                                child:  Column( children: [
-                                                      InkWell(
-                                                        onTap: () {
-                                                          openModalDeleteUser(fullUserOrder.travelers[i].nickname,fullUserOrder.travelers[i].userId);
-                                                        },
-                                                        child: Stack(
-                                                          children: [
-                                                            Container(
+                                                child:  Row( 
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Container(
                                                               margin: EdgeInsets.all(3),
-                                                                                                          width: 40,
-                                                                                                          height: 40,
-                                                                                                          alignment: Alignment.center,
-                                                                                                          decoration: BoxDecoration(
-                                                            borderRadius: BorderRadius.circular(20),
-                                                            color: ColorUtils.stringToColor(fullUserOrder.travelers[i].nickname)
-                                                                                                          ),
-                                                                                                          child: Text(
-                                                            fullUserOrder.travelers[i].nickname[0],
-                                                            style: TextStyle(
-                                                              fontFamily: "SF",
-                                                              fontSize: 25,
-                                                              
+                                                              width: 40,
+                                                              height: 40,
+                                                              alignment: Alignment.center,
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(20),
+                                                                color: ColorUtils.stringToColor(fullUserOrder.travelers[((i+1)/2).toInt()].nickname)
+                                                              ),
+                                                              child:Text(
+                                                                      fullUserOrder.travelers[((i+1)/2).toInt()].nickname[0],
+                                                                      style: TextStyle(
+                                                                        fontFamily: "SF",
+                                                                        fontSize: 25,
+                                                                      ),
+                                                                    ),
                                                             ),
-                                                                                                          ),
-                                                                                                           ),
-                                                         Positioned(
-                                                        top: 0,
-                                                        right: 0,
-                                                        child: Icon(
-                                                          Icons.cancel,
-                                                          size: 15,
-                                                          color: Colors.red,
-                                                          ),
-                                                                                                          )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                                                              Column(
-                                                    children: [
+                                                
+                                                         
+                                                      
+                                                      SizedBox(width: 10,),
                                                       Text(
-                                                        fullUserOrder.travelers[i].nickname,
+                                                        fullUserOrder.travelers[((i+1)/2).toInt()].nickname,
                                                         textAlign: TextAlign.center,
-                                                      )
-                                                    ],
-                                                                                              )
+                                                      ),
+                                                      ],
+                                                    ),
+                                                      
+                                                      Row(
+                                                        children: [
+                                                          Column(
+                                                            children: [
+                                                              GestureDetector(
+                                                                onTap: () async{
+                                                                  int chatId=await HttpChats().getChatId(fullUserOrder.orderId,fullUserOrder.travelers[((i+1)/2).toInt()].userId);
+                                                                    
+                                                                    Navigator.push(
+                                                                      context, 
+                                                                      MaterialPageRoute(builder: (context) => MessagePage(chatId: chatId),)
+                                                                      );
+                                                                },
+                                                                child: Icon(Icons.message,color: brandBlue,size: 20)),
+                                                            ],
+                                                          ),
+                                                          SizedBox(width: 10,),
+                                                          Column(
+                                                            children: [
+                                                              GestureDetector(
+                                                                onTap: () {
+                                                                    openModalDeleteUser(fullUserOrder.travelers[((i+1)/2).toInt()].nickname,fullUserOrder.travelers[((i+1)/2).toInt()].userId);
+                                                                  },
+                                                                child: Icon(Icons.dangerous,color: Colors.red,size: 20,)),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
+
                                                     ],),
                                                
                                               )

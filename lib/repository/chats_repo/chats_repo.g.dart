@@ -114,6 +114,17 @@ mixin _$ChatsRepo on _ChatsRepo, Store {
   }
 
   @override
+  dynamic deleteChat(int chatId) {
+    final _$actionInfo =
+        _$_ChatsRepoActionController.startAction(name: '_ChatsRepo.deleteChat');
+    try {
+      return super.deleteChat(chatId);
+    } finally {
+      _$_ChatsRepoActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 chats: ${chats},

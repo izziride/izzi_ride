@@ -11,7 +11,7 @@ part 'chats_repo.g.dart';
 
 class ChatsRepo = _ChatsRepo with _$ChatsRepo;
 
-abstract class _ChatsRepo with Store {
+abstract class _ChatsRepo with Store  {
  
   @observable
   ObservableMap<String,ChatInfo> chats=ObservableMap();
@@ -143,7 +143,13 @@ abstract class _ChatsRepo with Store {
       chats=ObservableMap.of(chats);
     }
   }
-
+   @action
+  deleteChat(int chatId){
+    if(chats[chatId.toString()]!=null){
+      chats.removeWhere((key, value) => value.chatId==chatId);
+      chats=ObservableMap.of(chats);
+    }
+  }
 } 
 
 

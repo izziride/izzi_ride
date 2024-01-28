@@ -35,6 +35,26 @@ class HttpChats{
       dio.interceptors.add(authInterceptor);
     }
 
+    Future<int> deleteChat(int chatId)async{
+
+        String access= tokenStorage.accessToken;
+        
+        try {
+          Response response= await dio.delete(
+          chatUrl+"/${chatId}",
+          options: Options(
+          headers: {
+            "Authorization":"Bearer $access"
+          }
+        )
+          );  
+          return 0;
+        } catch (e) {
+          print(e);
+          return -1;
+
+        }
+    }
 
     Future<ChatInfo?> getUserChat(int chatId)async{
       String access= tokenStorage.accessToken;
