@@ -268,7 +268,7 @@ class HttpChats{
                 status: 1,
                 frontContentId: Uuid().v4(), 
                 chatId: response.data["data"]["chat_id"], 
-                time: "",
+                time: el["created_at"],
                 type: "text"
                 )).toList();
                 return listMessage;

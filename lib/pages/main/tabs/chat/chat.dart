@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:temp/constants/colors/colors.dart';
 import 'package:temp/http/chats/http_chats.dart';
 import 'package:temp/models/chat/chat_info.dart';
+import 'package:temp/pages/main/tabs/chat/chat_empty_widget.dart';
 import 'package:temp/pages/main/tabs/chat/chat_item.dart';
 import 'package:temp/pages/main/tabs/chat/chat_page.dart';
 import 'package:temp/pages/main/tabs/emptyState/empty_state.dart';
@@ -179,6 +180,9 @@ class _ChatState extends State<Chat> with TickerProviderStateMixin  {
                 chatsRepository.chats.forEach((key, value) { 
                   listChats.add(value);
                 });
+                if(listChats.isEmpty){
+                  return MessagesEmptyState();
+                }
                  return ListView.builder(
                   itemCount: listChats.length,
                   itemBuilder: (context,index){
@@ -198,6 +202,7 @@ class _ChatState extends State<Chat> with TickerProviderStateMixin  {
                             }else{
                               variableChatId.add(listChats[index].chatId);
                             }
+                           
                           });
                         }else{
                           appSocket.fullReadMessage(listChats[index].chatId);

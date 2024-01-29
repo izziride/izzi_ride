@@ -194,7 +194,7 @@ void checkValid(){
                         ),
                         decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: "State number of the car",
+                          hintText: "Plate number of the car",
                           counterText: ""
                         ),
                         inputFormatters: [

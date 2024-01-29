@@ -139,7 +139,7 @@ class _ChatItemState extends State<ChatItem> {
               children: [
                 Builder(
                   builder: (context) {
-                    
+                   
                    if(widget.contextMenu){
 
                       bool isItem=false;
@@ -160,7 +160,9 @@ class _ChatItemState extends State<ChatItem> {
                         child: Icon(Icons.done_outlined,color: Colors.white,size: 10,),
                       ):SizedBox.shrink();
                     }
-                    String formattedTime="";
+                    String formattedTime="6";
+                     print(widget.chatState.messages.length);
+                     print(widget.chatState.messages[0].time);
                     if(widget.chatState.messages.isNotEmpty){
                          String current_time=widget.chatState.messages[0].time;
                           if(current_time!=""){
