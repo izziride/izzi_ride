@@ -1,25 +1,19 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:temp/constants/colors/colors.dart';
 import 'package:temp/http/orders/orders.dart';
-import 'package:temp/pages/main/tabs/create/card_order/card_full_order.dart';
+import 'package:temp/pages/UI/dotted_filling.dart';
 
-class CardOrder extends StatefulWidget{
-DriverOrder driverOrder;
-Function side;
-CardOrder({required this.side, required this.driverOrder, super.key});
+class OrderInforamationHeader extends StatelessWidget {
+  final DriverOrder driverOrder;
+  final Function side;
+  const OrderInforamationHeader({super.key,required this.driverOrder,required this.side});
 
-  @override
-  State<CardOrder> createState() => _CardOrderState();
-}
-
-class _CardOrderState extends State<CardOrder> {
   @override
   Widget build(BuildContext context) {
 
-    DateTime dateTime = DateTime.parse(widget.driverOrder.departureTime);
+     DateTime dateTime = DateTime.parse(driverOrder.departureTime);
     dateTime=dateTime.add(Duration(hours: DateTime.now().timeZoneOffset.inHours));
     String formattedDate = DateFormat('d MMMM').format(dateTime);
     List<String> dateComponents = formattedDate.split(' ');
@@ -34,9 +28,10 @@ class _CardOrderState extends State<CardOrder> {
     formatter.minimumFractionDigits = 2;
     formatter.maximumFractionDigits = 2;
     
-    String formattedNumber = formatter.format(widget.driverOrder.price);
+    String formattedNumber = formatter.format(driverOrder.price);
 
-    return  Padding(
+
+    return   Padding(
         padding: const EdgeInsets.only(left: 15,right: 15,top: 10),
         child: Container(
           decoration: BoxDecoration(
@@ -105,7 +100,7 @@ class _CardOrderState extends State<CardOrder> {
                        Padding(
                         padding: EdgeInsets.only(top: 4),
                         child: Text(
-                          widget.driverOrder.startCountryName,
+                          driverOrder.startCountryName,
                           style: TextStyle(
                                 fontFamily: "SF",
                                 fontSize: 16,
@@ -125,7 +120,7 @@ class _CardOrderState extends State<CardOrder> {
                           width: double.infinity,
                         child: CustomPaint(
                           
-                          painter: DottedLinePainter(
+                          painter: DottedFeeling(
                             color: const Color.fromRGBO(217,217,217,1),
                             dotSize: 2,
                             spacing: 2
@@ -145,7 +140,7 @@ class _CardOrderState extends State<CardOrder> {
                       Padding(
                         padding: EdgeInsets.only(top:4),
                         child: Text(
-                          widget.driverOrder.endCountryName,
+                          driverOrder.endCountryName,
                           style: TextStyle(
                                 fontFamily: "SF",
                                 fontSize: 16,
@@ -182,7 +177,7 @@ class _CardOrderState extends State<CardOrder> {
                                 borderRadius: BorderRadius.circular(20)
                               ),
                               child: Text(
-                                widget.driverOrder.nickname.isNotEmpty == true ? widget.driverOrder.nickname[0] : "!",
+                                driverOrder.nickname.isNotEmpty == true ? driverOrder.nickname[0] : "!",
                                 style: const TextStyle(
                                       fontFamily: "SF",
                                       fontSize: 20,
@@ -193,7 +188,7 @@ class _CardOrderState extends State<CardOrder> {
                           ),
                         ),
                         Text(
-                          widget.driverOrder.nickname,
+                          driverOrder.nickname,
                           style: const TextStyle(
                                       fontFamily: "SF",
                                       fontSize: 16,
@@ -237,11 +232,11 @@ class _CardOrderState extends State<CardOrder> {
                       children: [
                         Row(
                           children: [
-                            for (int i = 0; i < widget.driverOrder.seatsInfo.reserved; i++) Padding(
+                            for (int i = 0; i < driverOrder.seatsInfo.reserved; i++) Padding(
                               padding: const EdgeInsets.only(right: 5.7),
                               child: SvgPicture.asset("assets/svg/passenger.svg"),
                             ),
-                            for (int i = 0; i < widget.driverOrder.seatsInfo.free; i++) Padding(
+                            for (int i = 0; i < driverOrder.seatsInfo.free; i++) Padding(
                               padding: const EdgeInsets.only(right: 5.7),
                               child: SvgPicture.asset("assets/svg/passanger_empty.svg"),
                             ),
@@ -254,8 +249,8 @@ class _CardOrderState extends State<CardOrder> {
                               child: Stack(
                                 alignment: Alignment.center,
                                 children: [
-                                  SvgPicture.asset("assets/svg/childSeats.svg",color:widget.driverOrder.preferences.childCarSeat?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
-                                  widget.driverOrder.preferences.childCarSeat?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 1,color: Color.fromARGB(255, 169, 108, 104) ,)
+                                  SvgPicture.asset("assets/svg/childSeats.svg",color:driverOrder.preferences.childCarSeat?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
+                                  driverOrder.preferences.childCarSeat?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 1,color: Color.fromARGB(255, 169, 108, 104) ,)
                                 ],
                               ),
                             ),
@@ -264,8 +259,8 @@ class _CardOrderState extends State<CardOrder> {
                               child: Stack(
                                 alignment: Alignment.center,
                                 children: [
-                                  SvgPicture.asset("assets/svg/animals.svg",color:widget.driverOrder.preferences.animals?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
-                                  widget.driverOrder.preferences.animals?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 2,color: Color.fromARGB(255, 169, 108, 104)  ,)
+                                  SvgPicture.asset("assets/svg/animals.svg",color:driverOrder.preferences.animals?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
+                                  driverOrder.preferences.animals?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 2,color: Color.fromARGB(255, 169, 108, 104)  ,)
                                 ],
                               ),
                             ),
@@ -274,8 +269,8 @@ class _CardOrderState extends State<CardOrder> {
                               child: Stack(
                                 alignment: Alignment.center,
                                 children: [
-                                  SvgPicture.asset("assets/svg/luggage.svg",color:widget.driverOrder.preferences.luggage?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
-                                  widget.driverOrder.preferences.luggage?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 2,color: Color.fromARGB(255, 169, 108, 104)  ,)
+                                  SvgPicture.asset("assets/svg/luggage.svg",color:driverOrder.preferences.luggage?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
+                                  driverOrder.preferences.luggage?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 2,color: Color.fromARGB(255, 169, 108, 104)  ,)
                                 ],
                               ),
                             ),
@@ -284,8 +279,8 @@ class _CardOrderState extends State<CardOrder> {
                               child: Stack(
                                 alignment: Alignment.center,
                                 children: [
-                                  SvgPicture.asset("assets/svg/smoking.svg",color:widget.driverOrder.preferences.smoking?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
-                                  widget.driverOrder.preferences.smoking?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 2,color: Color.fromARGB(255, 169, 108, 104)  ,)
+                                  SvgPicture.asset("assets/svg/smoking.svg",color:driverOrder.preferences.smoking?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
+                                  driverOrder.preferences.smoking?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 2,color: Color.fromARGB(255, 169, 108, 104)  ,)
                                 ],
                               ),
                             ),
@@ -299,17 +294,17 @@ class _CardOrderState extends State<CardOrder> {
                 ),
               ),
               InkWell(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => CardFullOrder(
-                    side: (){
-                      widget.side();
-                    },
-                    fullOrderType: FullOrderType.driver,
-                    startLocation: widget.driverOrder.startCountryName,
-                    endLocation: widget.driverOrder.endCountryName,
-                    orderId:widget.driverOrder.orderId
-                  ),));
-                },
+                // onTap: () {
+                //   Navigator.push(context, MaterialPageRoute(builder: (context) => CardFullOrder(
+                //     side: (){
+                //       side();
+                //     },
+                //     fullOrderType: FullOrderType.driver,
+                //     startLocation: driverOrder.startCountryName,
+                //     endLocation: driverOrder.endCountryName,
+                //     orderId:driverOrder.orderId
+                //   ),));
+                // },
                 child: Container(
                   margin: EdgeInsets.only(top:13),
                         height: 48,
@@ -335,37 +330,5 @@ class _CardOrderState extends State<CardOrder> {
         ),
       
     );
-  }
-}
-
-
-
-class DottedLinePainter extends CustomPainter {
-  final Color color;
-  final double dotSize;
-  final double spacing;
-
-  DottedLinePainter({required this.color, required this.dotSize, required this.spacing});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = color;
-    final dotRadius = dotSize / 2;
-    final dotSpacing = dotSize + spacing;
-    final dotsCount = (size.width / dotSpacing).ceil();
-    final lineWidth = dotSpacing * (dotsCount - 1) + dotSize;
-
-    final startX = (size.width - lineWidth) / 2;
-    final startY = size.height / 2;
-
-    for (var i = 0; i < dotsCount; i++) {
-      final dotCenter = Offset(startX + dotSpacing * i + dotRadius, startY);
-      canvas.drawCircle(dotCenter, dotRadius, paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
   }
 }

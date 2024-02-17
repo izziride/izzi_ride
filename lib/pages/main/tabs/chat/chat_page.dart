@@ -10,7 +10,7 @@ import 'package:temp/constants/colors/colors.dart';
 import 'package:temp/helpers/string_to_color.dart';
 import 'package:temp/models/chat/chat_info.dart';
 import 'package:temp/models/chat/message.dart';
-import 'package:temp/pages/UI/full_information_order.dart';
+import 'package:temp/pages/UI/full_information_order/full_information_order.dart';
 import 'package:temp/repository/chats_repo/chats_repo.dart';
 import 'package:temp/repository/user_repo/user_repo.dart';
 import 'package:temp/socket/socket.dart';
@@ -86,6 +86,7 @@ class _MessagePageState extends State<MessagePage> {
                     
                     ChatInfo? chatInfo=chatsRepository.chats[widget.chatId.toString()];
                     if(chatInfo==null){
+                      chatsRepository.getChat(widget.chatId);
                       return SizedBox.shrink();
                     }
                      
@@ -140,7 +141,7 @@ class _MessagePageState extends State<MessagePage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                chatInfo.chatMembers[0].clientName,
+                                chatInfo.chatMembers[0].clientName+widget.chatId.toString(),
                                 style: TextStyle(
                                   fontFamily: "SF",
                                   fontWeight: FontWeight.w500,
@@ -360,131 +361,183 @@ class _MessagePageState extends State<MessagePage> {
                            
                           },
 
-                  child: Observer(
-                    builder: (context) {
-                        ChatInfo? chatInfo=chatsRepository.chats[widget.chatId.toString()];
-                      if(chatInfo==null){
-                        return SizedBox.shrink();
-                      }
-                      List<Message> messages=chatInfo.messages;
-                      if(messages.length==1){
-                       // chatsRepository.getMessageInchats(widget.chatId);
-                      }
-                      return ListView.builder(
-                                reverse: true,
-                                
-                                controller: _controller,
-                                        itemCount: messages.length,
-                                        itemBuilder: (context, index) {
-                                          return  Padding(
-                                              padding: EdgeInsets.only(top: 10,left: 15,right: 15,bottom: 10),
-                                              child: Container(
-                                                
-                                                alignment:messages[index].senderClientId!=userRepository.userInfo.clienId?Alignment.centerLeft:Alignment.centerRight,
-                                                child: Stack(
-                                                  alignment:messages[index].senderClientId==userRepository.userInfo.clienId? Alignment.bottomRight:Alignment.bottomLeft,
-                                                  children: [
-                                                    Container(
-                                                      
-                                                      margin:messages[index].senderClientId==userRepository.userInfo.clienId? EdgeInsets.only(right: 5):EdgeInsets.only(left: 5),
-                                                      decoration: BoxDecoration(
-                                                          color: messages[index].senderClientId==userRepository.userInfo.clienId?Color.fromRGBO(0, 122, 255, 1):Color.fromRGBO(229, 229, 234, 1),
-                                                          borderRadius: BorderRadius.circular(15)
-                                                      ),
-                                                      constraints: BoxConstraints(
-                                                        minWidth: 100,
-                                                        maxWidth: 234
-                                                      ),
-                                                      padding: EdgeInsets.only(left: 14,right: 30,top: 7, bottom: 7),
-                                                        
-                                                      child: Text(
-                                                        messages[index].content,
-                                                        style: TextStyle(
-                                                          color: messages[index].senderClientId==userRepository.userInfo.clienId?Colors.white:Colors.black,
-                                                          fontFamily: "SF",
-                                                          fontWeight: FontWeight.w400,
-                                                          fontSize: 17,
-                                                          letterSpacing: -0.41
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    messages[index].senderClientId==userRepository.userInfo.clienId?Image.asset("assets/image/tailBlue.png"):Image.asset("assets/image/tailGray.png"),
-                                                    messages[index].senderClientId==userRepository.userInfo.clienId? Positioned(
-                                                      bottom: 5,
-                                                      right: 15,
-                                                      child: Icon(messages[index].status==1?Icons.done_all: messages[index].status==-1?Icons.query_builder: Icons.done,size: 15,color: Colors.white,)//SvgPicture.asset("assets/svg/status_0.svg",color: Colors.white,width: 10,height: 10),
-                                                    ):SizedBox.shrink(),
+                  child: Stack(
+                    children: [
+                      SizedBox(
+                          width: double.infinity,
+                          height: double.infinity,
+                          child: Image.asset("assets/image/bg2.png",width: 20,height: 20, repeat: ImageRepeat.repeat,)
+                          ),
+                      Observer(
+                        builder: (context) {
+                            ChatInfo? chatInfo=chatsRepository.chats[widget.chatId.toString()];
+                          if(chatInfo==null){
+                            return SizedBox.shrink();
+                          }
+                          List<Message> messages=chatInfo.messages;
+                          if(messages.length==1){
+                           // chatsRepository.getMessageInchats(widget.chatId);
+                          }
+                          String reg="Driver removed you from order";
+                          return ListView.builder(
+                                    reverse: true,
+                                    
+                                    controller: _controller,
+                                            itemCount: messages.length,
+                                            itemBuilder: (context, index) {
+                                              if(messages[index].type=="10"){
+                                                return SizedBox.fromSize();
+                                              }
+                                              if(messages[index].type=="1"){
+                                                return Container(
+                                                  alignment: Alignment.center,
+                                                  margin: EdgeInsets.symmetric(horizontal: 30,vertical:10 ),
+                                                  padding: EdgeInsets.only(left: 10,top: 5,bottom: 5),
+                                                  decoration: BoxDecoration(
+                                                    color: Color.fromARGB(66, 0, 0, 0),
+                                                    borderRadius: BorderRadius.circular(20)
+                                                  ),
+                                                  child: Text(
+                                                            messages[index].content,
+                                                            style: TextStyle(
+                                                              color: Color.fromARGB(255, 255, 255, 255),
+                                                              fontFamily: "SF",
+                                                              fontWeight: FontWeight.w600,
+                                                              fontSize: 15,
+                                                            ),
+                                                          ),
+                                                );
+                                              }
+                                              return  Padding(
+                                                  padding: EdgeInsets.only(top: 10,left: 15,right: 15,bottom: 10),
+                                                  child:  Container(
                                                     
-                                                  ],
-                      
+                                                    alignment:messages[index].senderClientId!=userRepository.userInfo.clienId?Alignment.centerLeft:Alignment.centerRight,
+                                                    child: Stack(
+                                                      alignment:messages[index].senderClientId==userRepository.userInfo.clienId? Alignment.bottomRight:Alignment.bottomLeft,
+                                                      children: [
+                                                        Container(
+                                                          
+                                                          margin:messages[index].senderClientId==userRepository.userInfo.clienId? EdgeInsets.only(right: 5):EdgeInsets.only(left: 5),
+                                                          decoration: BoxDecoration(
+                                                              color: messages[index].senderClientId==userRepository.userInfo.clienId?Color.fromRGBO(0, 122, 255, 1):Color.fromRGBO(229, 229, 234, 1),
+                                                              borderRadius: BorderRadius.circular(15)
+                                                          ),
+                                                          constraints: BoxConstraints(
+                                                            minWidth: 100,
+                                                            maxWidth: 234
+                                                          ),
+                                                          padding: EdgeInsets.only(left: 14,right: 30,top: 7, bottom: 7),
+                                                            
+                                                          child: Text(
+                                                            messages[index].content,
+                                                            style: TextStyle(
+                                                              color: messages[index].senderClientId==userRepository.userInfo.clienId?Colors.white:Colors.black,
+                                                              fontFamily: "SF",
+                                                              fontWeight: FontWeight.w400,
+                                                              fontSize: 17,
+                                                              letterSpacing: -0.41
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        messages[index].senderClientId==userRepository.userInfo.clienId?Image.asset("assets/image/tailBlue.png"):Image.asset("assets/image/tailGray.png"),
+                                                        messages[index].senderClientId==userRepository.userInfo.clienId? Positioned(
+                                                          bottom: 5,
+                                                          right: 15,
+                                                          child: Icon(messages[index].status==1?Icons.done_all: messages[index].status==-1?Icons.query_builder: Icons.done,size: 15,color: Colors.white,)//SvgPicture.asset("assets/svg/status_0.svg",color: Colors.white,width: 10,height: 10),
+                                                        ):SizedBox.shrink(),
+                                                        
+                                                      ],
+                          
+                          ),
+                                                  ),
+                                                );
+                                              
+                                            },
+                        );
+                        }
                       ),
-                                              ),
-                                            );
-                                          
-                                        },
-                                      );
-                    }
+                       
+                        
+                    ],
                   ),
                         )
                        ),
-                      Container(
-                        height: 67.25,
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.only(left: 27.67,right: 15, bottom: 20),
-                        decoration: BoxDecoration(
-                          color: Color.fromRGBO(248, 248, 248, 1),
-                          border: Border(
-                            top: BorderSide(
-                              color: Color.fromRGBO(179, 179, 179, 1),
-                              width: 1,
-                              style: BorderStyle.solid
-                            )
-                          )
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: TextField(
-                                focusNode: _focusNode,
-                                controller: _msgController,
-                                textInputAction:TextInputAction.send,
-                                onEditingComplete:(){
-                                    sendMessage();
-                                },
-                               
-                                style: TextStyle( 
-                                  color: brandBlack,
-                                  fontSize: 17
-                                ),
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Type your message here..",
-                                  hintStyle: TextStyle(
-                                    color: brandGrey
-                                  )
-                                ),
-                              ),
+                      Observer(
+                        builder: (context) {
+                          bool deactivate = chatsRepository.chats[widget.chatId.toString()]?.deactivate??false;
+                          print("STATUS CHAT "+deactivate.toString());
+                          return Container(
+                            height: 67.25,
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.only(left: 27.67,right: 15, bottom: 20),
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(248, 248, 248, 1),
+                              border: Border(
+                                top: BorderSide(
+                                  color: Color.fromRGBO(179, 179, 179, 1),
+                                  width: 1,
+                                  style: BorderStyle.solid
+                                )
+                              )
                             ),
-                            InkWell(
-                              onTap: () {
-                               sendMessage();
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 15),
-                                child: Text(
-                                  "Send",
-                                  style: TextStyle(
-                                    color: brandBlue,
-                                    fontFamily: "SF",
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14
+                            child: !deactivate
+                            ?Text(
+                                      "Chat is deactivate",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontFamily: "SF",
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14
+                                      ),
+                                    )
+
+                            :Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: TextField(
+                                    focusNode: _focusNode,
+                                    controller: _msgController,
+                                    textInputAction:TextInputAction.send,
+                                    onEditingComplete:(){
+                                        sendMessage();
+                                    },
+                                   
+                                    style: TextStyle( 
+                                      color: brandBlack,
+                                      fontSize: 17
+                                    ),
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: "Type your message here..",
+                                      hintStyle: TextStyle(
+                                        color: brandGrey
+                                      )
+                                    ),
                                   ),
                                 ),
-                              ),
-                            )
-                          ],
-                        ),
+                                InkWell(
+                                  onTap: () {
+                                   sendMessage();
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                                    child: Text(
+                                      "Send",
+                                      style: TextStyle(
+                                        color: brandBlue,
+                                        fontFamily: "SF",
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        }
                       )
                     ],
                   ),

@@ -80,15 +80,16 @@ class HttpChats{
       ).toList();
       Message mess=Message(
               chatId: mocked["chat_id"], 
-              content: mocked["message"]["content"], 
-              frontContentId: mocked["message"]["front_content_id"], 
-              id: mocked["message"]["id"], 
-              senderClientId: mocked["message"]["client_id"], 
-              time: mocked["message"]["message_time"], 
-              type: "text", 
-              status: mocked["message"]["status"]
+              content: mocked["message"]["content"]??"", 
+              frontContentId: mocked["message"]["front_content_id"]??"", 
+              id: mocked["message"]["id"]??-1, 
+              senderClientId: mocked["message"]["client_id"]??-1, 
+              time: mocked["message"]["message_time"]??"", 
+              type: mocked["message"]["type"]??"10", 
+              status: mocked["message"]["status"]??-1
               );
       userChats= ChatInfo(
+          deactivate: mocked["deactivate"]??false,
           orderId: mocked["order_id"], 
           chatId: mocked["chat_id"], 
           unreadMsgs: mocked["unread_messages"],
@@ -138,10 +139,11 @@ class HttpChats{
               id: el["message"]["id"]??-1, 
               senderClientId: el["message"]["client_id"]??-1, 
               time: el["message"]["message_time"]??"", 
-              type: "text", 
+              type: el["message"]["type"]??"1", 
               status: el["message"]["status"]??-2
               );
          return ChatInfo(
+          deactivate: el["chat_status"]??true,
           orderId: el["order_id"], 
           chatId: el["chat_id"], 
           unreadMsgs: el["unread_messages"],
@@ -258,7 +260,7 @@ class HttpChats{
         )
         );
         print(response.data);
-        List<dynamic> listDinamic = response.data["data"]["messages"];
+        List<dynamic> listDinamic = response.data["data"]["messages"]??[];
         ;
        List<Message>listMessage= listDinamic.map((el)=>
               Message(
@@ -269,7 +271,7 @@ class HttpChats{
                 frontContentId: Uuid().v4(), 
                 chatId: response.data["data"]["chat_id"], 
                 time: el["created_at"],
-                type: "text"
+                type: el["type"]??"1"
                 )).toList();
                 return listMessage;
       } catch (e) {
@@ -304,6 +306,7 @@ class HttpChats{
           ).toList();
        
           ChatInfo chatInfo=ChatInfo(
+            deactivate: t_chatInfo["deactivate"]??false,
             chatId: t_chatInfo["chat_id"], 
             chatMembers: chatMembers, 
             createdAt: t_chatInfo["created_at"], 

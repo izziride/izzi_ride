@@ -67,6 +67,19 @@ class SocketProvider {
             
               
         }
+        if(message.type=="cancel-client"){
+          Map<String,dynamic> booking=json.decode(event);
+          int orderId=booking["order_id"]??-1;
+          
+          print("DELETEEE");
+        }
+        if(message.type=="booking"){
+          Map<String,dynamic> booking=json.decode(event);
+          int orderId=booking["orderId"];
+          // int newStatus
+          // userRepository.editStatusOrder(orderId, newStatus)
+          print("DELETEEE");
+        }
         if(message.type=="message-itself"){
           Map<String,dynamic> statusMsg=json.decode(event);
           int status=statusMsg["status"];
@@ -152,7 +165,7 @@ class SocketProvider {
       "chat_id":chatId
     };
     print(message);
-    Message newMsg= Message(content: text, status: -1, frontContentId: currUuid, chatId: chatId, time: "",id:-1,senderClientId: userRepository.userInfo.clienId,type: "text");
+    Message newMsg= Message(content: text, status: -1, frontContentId: currUuid, chatId: chatId, time: "",id:-1,senderClientId: userRepository.userInfo.clienId,type: "1");
 
     //editMessage(newMsg,false);
     chatsRepository.addMessage(newMsg);

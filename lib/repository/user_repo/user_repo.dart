@@ -1,5 +1,6 @@
 
 import 'package:mobx/mobx.dart';
+import 'package:temp/http/orders/orders.dart';
 import 'package:temp/http/user/http_user.dart';
 import 'package:temp/http/user/http_user_car.dart';
 import 'package:temp/models/car/car.dart';
@@ -39,6 +40,106 @@ abstract class _UserRepo with Store {
   Future<void> getUserCar()async{
    List<UserCar> listCar= await HttpUserCar().getUserCar();
    userCar=ObservableList.of(listCar);
+  }
+
+  
+
+  @observable
+  ObservableList<DriverOrder> userOrders = ObservableList();
+
+
+  //check user orders
+  @observable
+  bool isFirstLoaded=false;
+
+  @action
+  Future<void> getUserOrders()async{
+   List<DriverOrder> listOrders= await HttpUserOrder().getUserOrders();
+   if(listOrders.isNotEmpty){
+      userOrders=ObservableList.of(listOrders);
+   }
+   isFirstLoaded=true;
+  }
+
+  @action
+  void addUserOrders(DriverOrder order){
+      userOrders.add(order);
+      userOrders=ObservableList.of(userOrders);
+  }
+  
+
+   //check user booked orders
+  @observable
+  bool isFirstLoadedBooked=false;
+
+  @observable
+  ObservableList<DriverOrder> userBookedOrders = ObservableList();
+
+  @action
+  Future<void> getUserBookedOrders()async{
+   List<DriverOrder> listOrders= await HttpUserOrder().myTrips();
+   if(listOrders.isNotEmpty){
+      userBookedOrders=ObservableList.of(listOrders);
+   }
+   isFirstLoadedBooked=true;
+  }
+
+
+  @observable
+  UserOrderFullInformation? userOrderFullInformation;
+  @observable
+  bool userOrderFullInformationError=false;
+  @action
+  Future<void> getUserFullInformationOrder(int orderId)async{
+   UserOrderFullInformation? order= await HttpUserOrder().getOrderInfo(orderId);
+   if(order!=null){
+      userOrderFullInformation=order;
+   }else{
+    userOrderFullInformationError=true;
+   }
+  }
+
+  @action
+  Future<void> deleteUserByOrder(int orderId,int clientId)async{
+   int result= await HttpUserOrder().deleteUserInOrder(orderId, clientId);
+   if(result==0 && userOrderFullInformation!=null){
+     userOrderFullInformation!.travelers=userOrderFullInformation!.travelers.where((element) => element.userId!=clientId).toList();
+     userOrderFullInformation=userOrderFullInformation;
+   }
+  }
+
+  @action
+  Future<void> editStatusOrder(int orderId,String newStatus)async{
+    final orders = userBookedOrders;
+    for(int i=0;i<orders.length;i++){
+      if(orders[i].orderId==orderId){
+        orders[i].orderStatus=newStatus;
+        userBookedOrders=ObservableList.of(orders);
+        break;
+      }
+    }
+  }
+  @action
+  Future<int> cancelOrder(int orderId,String comment)async{
+   int status= await HttpUserOrder().orderDriverCancel(orderId, "");
+   if(status==0){
+    final newOrders=userOrders.where((element) => element.orderId!=orderId).toList();
+    userOrders=ObservableList.of(newOrders);
+    return 0;
+   }else{
+    return -1;
+   }
+  }
+  @action
+  Future<int> deleteUserBy(int orderId,String comment)async{
+   int status= await HttpUserOrder().orderDriverCancel(orderId, "");
+   if(status==0){
+    final newOrders=userOrders.where((element) => element.orderId!=orderId).toList();
+    userOrders=ObservableList.of(newOrders);
+    return 0;
+   }else{
+    return -1;
+   }
   }
 } 
 

@@ -70,7 +70,7 @@ class _PriceState extends State<Price> {
           preferences: preferences
         );
         
-
+         
         List<Location> locations=[
           Location(
             city: createRepo.fromCity,
@@ -80,7 +80,7 @@ class _PriceState extends State<Price> {
             location: "", 
             longitude: createRepo.fromLng, 
             latitude: createRepo.fromLat, 
-            departureTime: createRepo.date.toIso8601String()
+            departureTime: createRepo.generateCurrentDateTimeString()
             ),
             Location(
             city: createRepo.toCity, 

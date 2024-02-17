@@ -43,6 +43,11 @@ abstract class _CreateRepo with Store {
   @observable
   DateTime time=DateTime.now();
 
+  String generateCurrentDateTimeString(){
+    DateTime gen = date.copyWith(hour:time.hour,minute: time.minute );
+    return gen.toIso8601String();
+  }
+
   @observable
   int personCount=1;
 

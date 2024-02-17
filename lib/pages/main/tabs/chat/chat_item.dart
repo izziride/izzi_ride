@@ -160,9 +160,8 @@ class _ChatItemState extends State<ChatItem> {
                         child: Icon(Icons.done_outlined,color: Colors.white,size: 10,),
                       ):SizedBox.shrink();
                     }
-                    String formattedTime="6";
-                     print(widget.chatState.messages.length);
-                     print(widget.chatState.messages[0].time);
+                    String formattedTime="";
+                
                     if(widget.chatState.messages.isNotEmpty){
                          String current_time=widget.chatState.messages[0].time;
                           if(current_time!=""){

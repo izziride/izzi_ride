@@ -48,6 +48,14 @@ mixin _$ChatsRepo on _ChatsRepo, Store {
     return _$getChatsAsyncAction.run(() => super.getChats());
   }
 
+  late final _$getChatAsyncAction =
+      AsyncAction('_ChatsRepo.getChat', context: context);
+
+  @override
+  Future<void> getChat(int chatId) {
+    return _$getChatAsyncAction.run(() => super.getChat(chatId));
+  }
+
   late final _$addMessageAsyncAction =
       AsyncAction('_ChatsRepo.addMessage', context: context);
 

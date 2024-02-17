@@ -40,6 +40,104 @@ mixin _$UserRepo on _UserRepo, Store {
     });
   }
 
+  late final _$userOrdersAtom =
+      Atom(name: '_UserRepo.userOrders', context: context);
+
+  @override
+  ObservableList<DriverOrder> get userOrders {
+    _$userOrdersAtom.reportRead();
+    return super.userOrders;
+  }
+
+  @override
+  set userOrders(ObservableList<DriverOrder> value) {
+    _$userOrdersAtom.reportWrite(value, super.userOrders, () {
+      super.userOrders = value;
+    });
+  }
+
+  late final _$isFirstLoadedAtom =
+      Atom(name: '_UserRepo.isFirstLoaded', context: context);
+
+  @override
+  bool get isFirstLoaded {
+    _$isFirstLoadedAtom.reportRead();
+    return super.isFirstLoaded;
+  }
+
+  @override
+  set isFirstLoaded(bool value) {
+    _$isFirstLoadedAtom.reportWrite(value, super.isFirstLoaded, () {
+      super.isFirstLoaded = value;
+    });
+  }
+
+  late final _$isFirstLoadedBookedAtom =
+      Atom(name: '_UserRepo.isFirstLoadedBooked', context: context);
+
+  @override
+  bool get isFirstLoadedBooked {
+    _$isFirstLoadedBookedAtom.reportRead();
+    return super.isFirstLoadedBooked;
+  }
+
+  @override
+  set isFirstLoadedBooked(bool value) {
+    _$isFirstLoadedBookedAtom.reportWrite(value, super.isFirstLoadedBooked, () {
+      super.isFirstLoadedBooked = value;
+    });
+  }
+
+  late final _$userBookedOrdersAtom =
+      Atom(name: '_UserRepo.userBookedOrders', context: context);
+
+  @override
+  ObservableList<DriverOrder> get userBookedOrders {
+    _$userBookedOrdersAtom.reportRead();
+    return super.userBookedOrders;
+  }
+
+  @override
+  set userBookedOrders(ObservableList<DriverOrder> value) {
+    _$userBookedOrdersAtom.reportWrite(value, super.userBookedOrders, () {
+      super.userBookedOrders = value;
+    });
+  }
+
+  late final _$userOrderFullInformationAtom =
+      Atom(name: '_UserRepo.userOrderFullInformation', context: context);
+
+  @override
+  UserOrderFullInformation? get userOrderFullInformation {
+    _$userOrderFullInformationAtom.reportRead();
+    return super.userOrderFullInformation;
+  }
+
+  @override
+  set userOrderFullInformation(UserOrderFullInformation? value) {
+    _$userOrderFullInformationAtom
+        .reportWrite(value, super.userOrderFullInformation, () {
+      super.userOrderFullInformation = value;
+    });
+  }
+
+  late final _$userOrderFullInformationErrorAtom =
+      Atom(name: '_UserRepo.userOrderFullInformationError', context: context);
+
+  @override
+  bool get userOrderFullInformationError {
+    _$userOrderFullInformationErrorAtom.reportRead();
+    return super.userOrderFullInformationError;
+  }
+
+  @override
+  set userOrderFullInformationError(bool value) {
+    _$userOrderFullInformationErrorAtom
+        .reportWrite(value, super.userOrderFullInformationError, () {
+      super.userOrderFullInformationError = value;
+    });
+  }
+
   late final _$getUserInfoAsyncAction =
       AsyncAction('_UserRepo.getUserInfo', context: context);
 
@@ -56,11 +154,93 @@ mixin _$UserRepo on _UserRepo, Store {
     return _$getUserCarAsyncAction.run(() => super.getUserCar());
   }
 
+  late final _$getUserOrdersAsyncAction =
+      AsyncAction('_UserRepo.getUserOrders', context: context);
+
+  @override
+  Future<void> getUserOrders() {
+    return _$getUserOrdersAsyncAction.run(() => super.getUserOrders());
+  }
+
+  late final _$getUserBookedOrdersAsyncAction =
+      AsyncAction('_UserRepo.getUserBookedOrders', context: context);
+
+  @override
+  Future<void> getUserBookedOrders() {
+    return _$getUserBookedOrdersAsyncAction
+        .run(() => super.getUserBookedOrders());
+  }
+
+  late final _$getUserFullInformationOrderAsyncAction =
+      AsyncAction('_UserRepo.getUserFullInformationOrder', context: context);
+
+  @override
+  Future<void> getUserFullInformationOrder(int orderId) {
+    return _$getUserFullInformationOrderAsyncAction
+        .run(() => super.getUserFullInformationOrder(orderId));
+  }
+
+  late final _$deleteUserByOrderAsyncAction =
+      AsyncAction('_UserRepo.deleteUserByOrder', context: context);
+
+  @override
+  Future<void> deleteUserByOrder(int orderId, int clientId) {
+    return _$deleteUserByOrderAsyncAction
+        .run(() => super.deleteUserByOrder(orderId, clientId));
+  }
+
+  late final _$editStatusOrderAsyncAction =
+      AsyncAction('_UserRepo.editStatusOrder', context: context);
+
+  @override
+  Future<void> editStatusOrder(int orderId, String newStatus) {
+    return _$editStatusOrderAsyncAction
+        .run(() => super.editStatusOrder(orderId, newStatus));
+  }
+
+  late final _$cancelOrderAsyncAction =
+      AsyncAction('_UserRepo.cancelOrder', context: context);
+
+  @override
+  Future<int> cancelOrder(int orderId, String comment) {
+    return _$cancelOrderAsyncAction
+        .run(() => super.cancelOrder(orderId, comment));
+  }
+
+  late final _$deleteUserByAsyncAction =
+      AsyncAction('_UserRepo.deleteUserBy', context: context);
+
+  @override
+  Future<int> deleteUserBy(int orderId, String comment) {
+    return _$deleteUserByAsyncAction
+        .run(() => super.deleteUserBy(orderId, comment));
+  }
+
+  late final _$_UserRepoActionController =
+      ActionController(name: '_UserRepo', context: context);
+
+  @override
+  void addUserOrders(DriverOrder order) {
+    final _$actionInfo = _$_UserRepoActionController.startAction(
+        name: '_UserRepo.addUserOrders');
+    try {
+      return super.addUserOrders(order);
+    } finally {
+      _$_UserRepoActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 userInfo: ${userInfo},
-userCar: ${userCar}
+userCar: ${userCar},
+userOrders: ${userOrders},
+isFirstLoaded: ${isFirstLoaded},
+isFirstLoadedBooked: ${isFirstLoadedBooked},
+userBookedOrders: ${userBookedOrders},
+userOrderFullInformation: ${userOrderFullInformation},
+userOrderFullInformationError: ${userOrderFullInformationError}
     ''';
   }
 }

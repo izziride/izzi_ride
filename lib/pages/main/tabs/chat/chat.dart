@@ -206,7 +206,10 @@ class _ChatState extends State<Chat> with TickerProviderStateMixin  {
                           });
                         }else{
                           appSocket.fullReadMessage(listChats[index].chatId);
-                        chatsRepository.getMessageInchats(listChats[index].chatId, listChats[index].messages[0].id);
+                          if(listChats[index].messages.isNotEmpty){
+                            chatsRepository.getMessageInchats(listChats[index].chatId, listChats[index].messages[0].id);
+                          }
+                        
                         chatsRepository.updateCurrentChatId(listChats[index].chatId);
                         chatsRepository.updateUnreadInCHat(listChats[index].chatId);
                          Navigator.push(

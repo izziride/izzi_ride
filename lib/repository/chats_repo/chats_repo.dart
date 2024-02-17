@@ -40,6 +40,16 @@ abstract class _ChatsRepo with Store  {
         chats=ObservableMap.of(chats);
   }
 
+  @action
+  Future<void> getChat(int chatId)async{
+    final result =await HttpChats().getUserChat(chatId);
+    if(result!=null){
+      chats[chatId.toString()]=result;
+    }
+    chats=ObservableMap.of(chats);
+        
+  }
+
   Future<int> checkChatIsNotEmpty(int chatId)async{
     try {
       if(chats[chatId.toString()]==null){

@@ -11,7 +11,9 @@ class ChatInfo{
   int chatId;
   int orderId;
   Message message;
+  bool deactivate;
   ChatInfo({
+    required this.deactivate,
     required this.end,
     required this.start,
     required this.messages,

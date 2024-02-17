@@ -1,9 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:temp/http/orders/orders.dart';
 import 'package:temp/pages/main/tabs/create/auto/auto.dart';
-import 'package:temp/pages/main/tabs/create/card_order/card_order.dart';
+import 'package:temp/pages/main/tabs/widgets/card_order.dart';
 import 'package:temp/pages/main/tabs/create/create_title.dart';
 import 'package:temp/pages/main/tabs/emptyState/empty_state.dart';
 import 'package:temp/repository/create_repo/create_repo.dart';
@@ -71,42 +72,43 @@ void _showDialogPage(BuildContext context){
   @override
   Widget build(BuildContext context) {
 
-      
-   bool auth = userRepository.isAuth;
+    bool auth = userRepository.isAuth;
+    if(!auth){
+      return const EmptyStateAllPAge();
+    }
 
-    return auth?  FutureBuilder<List<DriverOrder>>(
-      future: HttpUserOrder().getUserOrders(),
-      builder: (context, snapshot){
-        if(snapshot.connectionState==ConnectionState.waiting){
+    return Observer(
+      builder: (context) {
+        print(userRepository.isFirstLoaded);
+        if(!userRepository.isFirstLoaded && userRepository.userOrders.isEmpty){
+          userRepository.getUserOrders();
+        }
+        if(!userRepository.isFirstLoaded){
           return const Center(
-            child: CircularProgressIndicator()
-            );
+            child:  CircularProgressIndicator(),
+          );
         }
-        if(snapshot.hasError){
-            return CreateTitle(side: updateData, back: false,);
+        if(userRepository.userOrders.isEmpty){
+          return CreateTitle(side: updateData, back: false);
         }
-        
-        if(snapshot.hasData){
-          List<DriverOrder>? driverOrder=  snapshot.data;
-        print(driverOrder);
-          if(driverOrder!.isEmpty){
-            return  CreateTitle(side: updateData, back: false,);
-          }
-          return Column(
+        List<DriverOrder> orders = userRepository.userOrders;
+        print("object");
+        return Column(
             children: [
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: ()async {
                     setState(() {
-                      
+                      userRepository.isFirstLoaded=false;
+                      userRepository.getUserOrders();
                     });
                   },
                   child: ListView.builder(
-                    itemCount: driverOrder.length,
+                    itemCount: orders.length,
                     itemBuilder: (context, index) {
-                      return CardOrder(driverOrder: driverOrder[index],side: (){setState(() {
+                      return CardOrder(driverOrder: orders[index],side: (){setState(() {
                         
-                      });},);
+                      });},full: false,);
                     },
                     ),
                 ),
@@ -159,12 +161,8 @@ void _showDialogPage(BuildContext context){
                 ),
             ],
           );
-        }
-        return SizedBox.shrink();
-        
       },
-      )
-      :EmptyStateAllPAge()
-      ;
+      ); 
+    
   }
 }

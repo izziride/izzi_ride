@@ -6,28 +6,22 @@ import 'package:temp/constants/colors/colors.dart';
 import 'package:temp/http/orders/orders.dart';
 import 'package:temp/pages/UI/full_information_order/full_information_order.dart';
 
-class CardsearchOrderSearch extends StatefulWidget{
-final DriverOrderFind driverOrder;
-final int seats;
+class CardOrder extends StatelessWidget{
+final DriverOrder driverOrder;
+final Function side;
+final bool full;
+const CardOrder({required this.side, required this.driverOrder,required this.full,super.key});
 
-const CardsearchOrderSearch({ required this.seats, required this.driverOrder, super.key});
-
-  @override
-  State<CardsearchOrderSearch> createState() => _CardsearchOrderSearch();
-}
-
-class _CardsearchOrderSearch extends State<CardsearchOrderSearch> {
   @override
   Widget build(BuildContext context) {
-
-    DateTime dateTime = DateTime.parse(widget.driverOrder.departureTime);
-   dateTime= dateTime.add(Duration(hours: DateTime.now().timeZoneOffset.inHours));
+    print("ored");
+    DateTime dateTime = DateTime.parse(driverOrder.departureTime);
+    dateTime=dateTime.add(Duration(hours: DateTime.now().timeZoneOffset.inHours));
     String formattedDate = DateFormat('d MMMM').format(dateTime);
     List<String> dateComponents = formattedDate.split(' ');
     String day = dateComponents[0].padLeft(2, '0');
     String month = dateComponents[1];
     formattedDate = '$day $month';
-
     String formattedTime = DateFormat('HH:mm').format(dateTime);
     formattedTime = formattedTime.split(':').map((segment) => segment.padLeft(2, '0')).join(':');
 
@@ -35,13 +29,13 @@ class _CardsearchOrderSearch extends State<CardsearchOrderSearch> {
     formatter.minimumFractionDigits = 2;
     formatter.maximumFractionDigits = 2;
     
-    String formattedNumber = formatter.format(widget.driverOrder.price);
-    print("order id ${widget.driverOrder.orderId}");
+    String formattedNumber = formatter.format(driverOrder.price);
+    
     return Padding(
       padding: const EdgeInsets.only(left: 15,right: 15,top: 10),
       child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Color.fromARGB(255, 255, 255, 255),
             borderRadius: BorderRadius.circular(13),
             boxShadow: const [
               BoxShadow(
@@ -52,7 +46,7 @@ class _CardsearchOrderSearch extends State<CardsearchOrderSearch> {
               ),
         ],
           ),
-          height: 262,
+          height:full? 214:262,
           width: double.infinity,
           padding: const EdgeInsets.all(14),
           child: Column(
@@ -108,7 +102,7 @@ class _CardsearchOrderSearch extends State<CardsearchOrderSearch> {
                              Padding(
                               padding: EdgeInsets.only(top: 4),
                               child: Text(
-                                widget.driverOrder.startPoint.city,
+                                driverOrder.startCountryName,
                                 style: TextStyle(
                                       fontFamily: "SF",
                                       fontSize: 16,
@@ -148,7 +142,7 @@ class _CardsearchOrderSearch extends State<CardsearchOrderSearch> {
                             Padding(
                               padding: EdgeInsets.only(top:4),
                               child: Text(
-                                widget.driverOrder.endPoint.city,
+                                driverOrder.endCountryName,
                                 style: TextStyle(
                                       fontFamily: "SF",
                                       fontSize: 16,
@@ -185,7 +179,7 @@ class _CardsearchOrderSearch extends State<CardsearchOrderSearch> {
                                       borderRadius: BorderRadius.circular(20)
                                     ),
                                     child: Text(
-                                      widget.driverOrder.nickname.isNotEmpty == true ? widget.driverOrder.nickname[0] : "!",
+                                      driverOrder.nickname.isNotEmpty ? driverOrder.nickname[0] : "!",
                                       style: const TextStyle(
                                             fontFamily: "SF",
                                             fontSize: 20,
@@ -196,7 +190,7 @@ class _CardsearchOrderSearch extends State<CardsearchOrderSearch> {
                                 ),
                               ),
                               Text(
-                                widget.driverOrder.nickname,
+                                driverOrder.nickname,
                                 style: const TextStyle(
                                             fontFamily: "SF",
                                             fontSize: 16,
@@ -240,11 +234,11 @@ class _CardsearchOrderSearch extends State<CardsearchOrderSearch> {
                             children: [
                               Row(
                                 children: [
-                                  for (int i = 0; i < widget.driverOrder.seatsInfo.reserved; i++) Padding(
+                                  for (int i = 0; i < driverOrder.seatsInfo.reserved; i++) Padding(
                                     padding: const EdgeInsets.only(right: 5.7),
                                     child: SvgPicture.asset("assets/svg/passenger.svg"),
                                   ),
-                                  for (int i = 0; i < widget.driverOrder.seatsInfo.free; i++) Padding(
+                                  for (int i = 0; i < driverOrder.seatsInfo.free; i++) Padding(
                                     padding: const EdgeInsets.only(right: 5.7),
                                     child: SvgPicture.asset("assets/svg/passanger_empty.svg"),
                                   ),
@@ -257,8 +251,8 @@ class _CardsearchOrderSearch extends State<CardsearchOrderSearch> {
                                     child: Stack(
                                       alignment: Alignment.center,
                                       children: [
-                                        SvgPicture.asset("assets/svg/childSeats.svg",color:widget.driverOrder.preferences.childCarSeat?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
-                                        widget.driverOrder.preferences.childCarSeat?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 1,color: Color.fromARGB(255, 169, 108, 104) ,)
+                                        SvgPicture.asset("assets/svg/childSeats.svg",color:driverOrder.preferences.childCarSeat?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
+                                        driverOrder.preferences.childCarSeat?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 1,color: Color.fromARGB(255, 169, 108, 104) ,)
                                       ],
                                     ),
                                   ),
@@ -267,8 +261,8 @@ class _CardsearchOrderSearch extends State<CardsearchOrderSearch> {
                                     child: Stack(
                                       alignment: Alignment.center,
                                       children: [
-                                        SvgPicture.asset("assets/svg/animals.svg",color:widget.driverOrder.preferences.animals?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
-                                        widget.driverOrder.preferences.animals?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 2,color: Color.fromARGB(255, 169, 108, 104)  ,)
+                                        SvgPicture.asset("assets/svg/animals.svg",color:driverOrder.preferences.animals?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
+                                        driverOrder.preferences.animals?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 2,color: Color.fromARGB(255, 169, 108, 104)  ,)
                                       ],
                                     ),
                                   ),
@@ -277,8 +271,8 @@ class _CardsearchOrderSearch extends State<CardsearchOrderSearch> {
                                     child: Stack(
                                       alignment: Alignment.center,
                                       children: [
-                                        SvgPicture.asset("assets/svg/luggage.svg",color:widget.driverOrder.preferences.luggage?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
-                                        widget.driverOrder.preferences.luggage?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 2,color: Color.fromARGB(255, 169, 108, 104)  ,)
+                                        SvgPicture.asset("assets/svg/luggage.svg",color:driverOrder.preferences.luggage?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
+                                        driverOrder.preferences.luggage?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 2,color: Color.fromARGB(255, 169, 108, 104)  ,)
                                       ],
                                     ),
                                   ),
@@ -287,8 +281,8 @@ class _CardsearchOrderSearch extends State<CardsearchOrderSearch> {
                                     child: Stack(
                                       alignment: Alignment.center,
                                       children: [
-                                        SvgPicture.asset("assets/svg/smoking.svg",color:widget.driverOrder.preferences.smoking?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
-                                        widget.driverOrder.preferences.smoking?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 2,color: Color.fromARGB(255, 169, 108, 104)  ,)
+                                        SvgPicture.asset("assets/svg/smoking.svg",color:driverOrder.preferences.smoking?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
+                                        driverOrder.preferences.smoking?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 2,color: Color.fromARGB(255, 169, 108, 104)  ,)
                                       ],
                                     ),
                                   ),
@@ -303,15 +297,15 @@ class _CardsearchOrderSearch extends State<CardsearchOrderSearch> {
                    ],
               
               ),
-              InkWell(
+              !full? InkWell(
                 onTap: () {
                    Navigator.push(context, MaterialPageRoute(builder: (context) => CardFullOrder(
                     side: (){},
                     fullOrderType: FullOrderType.user,
-                    startLocation: widget.driverOrder.startPoint.city,
-                    endLocation: widget.driverOrder.endPoint.city,
-                    orderId:widget.driverOrder.orderId,
-                    seats: widget.seats,
+                    startLocation: driverOrder.startCountryName,
+                    endLocation: driverOrder.endCountryName,
+                    orderId:driverOrder.orderId,
+                    seats: 4,
                   ),));
                 
                 },
@@ -333,7 +327,7 @@ class _CardsearchOrderSearch extends State<CardsearchOrderSearch> {
                         ),
                       ),
                     ),
-              )
+              ):SizedBox.shrink()
             ],
           ),
         
@@ -341,8 +335,6 @@ class _CardsearchOrderSearch extends State<CardsearchOrderSearch> {
     );
   }
 }
-
-
 
 class DottedLinePainter extends CustomPainter {
   final Color color;

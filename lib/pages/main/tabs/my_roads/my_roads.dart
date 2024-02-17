@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:temp/constants/colors/colors.dart';
 import 'package:temp/http/orders/orders.dart';
 import 'package:temp/pages/main/tabs/emptyState/empty_state.dart';
 import 'package:temp/pages/main/tabs/search/UI/search_card/search_card_search.dart';
+import 'package:temp/pages/main/tabs/widgets/card_order.dart';
 import 'package:temp/repository/user_repo/user_repo.dart';
 
 class MyRoads extends StatefulWidget{
@@ -17,22 +19,22 @@ class _MyRoadsState extends State<MyRoads> {
   @override
   Widget build(BuildContext context) {
     bool auth = userRepository.isAuth;
-    return auth?  FutureBuilder<List<DriverOrderFind>>(
-      future: HttpUserOrder().myTrips(),
-      builder: (context, snapshot) {
-        if(snapshot.hasError){
-          return errorState();
-        }
-        if(snapshot.connectionState==ConnectionState.waiting){
+    return Observer(
+      builder: (context) {
+        if(!userRepository.isAuth){
+          return EmptyStateAllPAge();
+        }    
+        if(!userRepository.isFirstLoadedBooked && userRepository.userBookedOrders.isEmpty){
+          userRepository.getUserBookedOrders();
           return Center(
             child: CircularProgressIndicator(),
           );
         }
-        List<DriverOrderFind> trips=snapshot.data!;
-        print(trips.length);
-        if(trips.length==0){
+        List<DriverOrder> myTrips = userRepository.userBookedOrders;
+        if(myTrips.length==0){
           return emptyState();
         }
+
         return RefreshIndicator(
           
           onRefresh: ()async {
@@ -41,16 +43,15 @@ class _MyRoadsState extends State<MyRoads> {
             });
           },
           child: ListView.builder(
-            itemCount: trips.length,
+            itemCount: myTrips.length,
             itemBuilder: (context, index) {
-              return CardsearchOrderSearch(driverOrder: trips[index],seats: trips[index].clientReservedSeats!,);
+              return CardOrder(side: (){}, driverOrder: myTrips[index],full: false,); //CardsearchOrderSearch(driverOrder: trips[index],seats: trips[index].clientReservedSeats!,);
             },
             ),
-        );
+        ); 
       },
-    )
-    : EmptyStateAllPAge()
-    ;
+    );
+    
   }
 
   Widget errorState(){
