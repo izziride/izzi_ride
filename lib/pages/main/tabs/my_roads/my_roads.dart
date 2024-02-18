@@ -38,9 +38,8 @@ class _MyRoadsState extends State<MyRoads> {
         return RefreshIndicator(
           
           onRefresh: ()async {
-            setState(() {
-              
-            });
+            userRepository.isFirstLoadedBooked=false;
+            userRepository.getUserBookedOrders();
           },
           child: ListView.builder(
             itemCount: myTrips.length,

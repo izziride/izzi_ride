@@ -89,7 +89,7 @@ class HttpChats{
               status: mocked["message"]["status"]??-1
               );
       userChats= ChatInfo(
-          deactivate: mocked["deactivate"]??false,
+          deactivate: mocked["chat_status"]??false,
           orderId: mocked["order_id"], 
           chatId: mocked["chat_id"], 
           unreadMsgs: mocked["unread_messages"],
@@ -271,7 +271,7 @@ class HttpChats{
                 frontContentId: Uuid().v4(), 
                 chatId: response.data["data"]["chat_id"], 
                 time: el["created_at"],
-                type: el["type"]??"1"
+                type: el["message_type"]??"1"
                 )).toList();
                 return listMessage;
       } catch (e) {

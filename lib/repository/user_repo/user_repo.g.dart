@@ -171,6 +171,24 @@ mixin _$UserRepo on _UserRepo, Store {
         .run(() => super.getUserBookedOrders());
   }
 
+  late final _$editStatusOrderAsyncAction =
+      AsyncAction('_UserRepo.editStatusOrder', context: context);
+
+  @override
+  Future<void> editStatusOrder(int orderId, String newStatus) {
+    return _$editStatusOrderAsyncAction
+        .run(() => super.editStatusOrder(orderId, newStatus));
+  }
+
+  late final _$cancelBookedOrderByUserAsyncAction =
+      AsyncAction('_UserRepo.cancelBookedOrderByUser', context: context);
+
+  @override
+  Future<void> cancelBookedOrderByUser(int orderId) {
+    return _$cancelBookedOrderByUserAsyncAction
+        .run(() => super.cancelBookedOrderByUser(orderId));
+  }
+
   late final _$getUserFullInformationOrderAsyncAction =
       AsyncAction('_UserRepo.getUserFullInformationOrder', context: context);
 
@@ -187,15 +205,6 @@ mixin _$UserRepo on _UserRepo, Store {
   Future<void> deleteUserByOrder(int orderId, int clientId) {
     return _$deleteUserByOrderAsyncAction
         .run(() => super.deleteUserByOrder(orderId, clientId));
-  }
-
-  late final _$editStatusOrderAsyncAction =
-      AsyncAction('_UserRepo.editStatusOrder', context: context);
-
-  @override
-  Future<void> editStatusOrder(int orderId, String newStatus) {
-    return _$editStatusOrderAsyncAction
-        .run(() => super.editStatusOrder(orderId, newStatus));
   }
 
   late final _$cancelOrderAsyncAction =
@@ -225,6 +234,17 @@ mixin _$UserRepo on _UserRepo, Store {
         name: '_UserRepo.addUserOrders');
     try {
       return super.addUserOrders(order);
+    } finally {
+      _$_UserRepoActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void editUserOrdersSeatsInOrder(int orderId, String type) {
+    final _$actionInfo = _$_UserRepoActionController.startAction(
+        name: '_UserRepo.editUserOrdersSeatsInOrder');
+    try {
+      return super.editUserOrdersSeatsInOrder(orderId, type);
     } finally {
       _$_UserRepoActionController.endAction(_$actionInfo);
     }

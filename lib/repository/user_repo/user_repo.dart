@@ -66,6 +66,20 @@ abstract class _UserRepo with Store {
       userOrders.add(order);
       userOrders=ObservableList.of(userOrders);
   }
+
+   @action
+  void editUserOrdersSeatsInOrder(int orderId,String type){
+      final currUserOrders=userOrders.firstWhere((element) => element.orderId==orderId);
+      print(currUserOrders);
+      if(type=="accepted"){
+        currUserOrders.seatsInfo.free=currUserOrders.seatsInfo.free-1;
+        currUserOrders.seatsInfo.reserved=currUserOrders.seatsInfo.reserved+1;
+      }else{
+        currUserOrders.seatsInfo.free=currUserOrders.seatsInfo.free+1;
+        currUserOrders.seatsInfo.reserved=currUserOrders.seatsInfo.reserved-1;
+      } 
+      userOrders=ObservableList.of(userOrders);
+  }
   
 
    //check user booked orders
@@ -83,7 +97,30 @@ abstract class _UserRepo with Store {
    }
    isFirstLoadedBooked=true;
   }
+  @action
+  Future<void> editStatusOrder(int orderId,String newStatus)async{
+    final orders = userBookedOrders;
+    for(int i=0;i<orders.length;i++){
+      if(orders[i].orderId==orderId){
+        orders[i].orderStatus=newStatus;
+        userBookedOrders=ObservableList.of(orders);
+        break;
+      }
+    }
+  }
 
+  @action
+  Future<void> cancelBookedOrderByUser(int orderId)async{
+    final orders = userBookedOrders;
+    for(int i=0;i<orders.length;i++){
+      if(orders[i].orderId==orderId){
+        orders[i].seatsInfo.free=orders[i].seatsInfo.free+1;
+        orders[i].seatsInfo.reserved=orders[i].seatsInfo.reserved-1;
+        userBookedOrders=ObservableList.of(orders);
+        break;
+      }
+    }
+  }
 
   @observable
   UserOrderFullInformation? userOrderFullInformation;
@@ -103,22 +140,12 @@ abstract class _UserRepo with Store {
   Future<void> deleteUserByOrder(int orderId,int clientId)async{
    int result= await HttpUserOrder().deleteUserInOrder(orderId, clientId);
    if(result==0 && userOrderFullInformation!=null){
-     userOrderFullInformation!.travelers=userOrderFullInformation!.travelers.where((element) => element.userId!=clientId).toList();
-     userOrderFullInformation=userOrderFullInformation;
+    
    }
+    getUserFullInformationOrder(orderId);
   }
 
-  @action
-  Future<void> editStatusOrder(int orderId,String newStatus)async{
-    final orders = userBookedOrders;
-    for(int i=0;i<orders.length;i++){
-      if(orders[i].orderId==orderId){
-        orders[i].orderStatus=newStatus;
-        userBookedOrders=ObservableList.of(orders);
-        break;
-      }
-    }
-  }
+
   @action
   Future<int> cancelOrder(int orderId,String comment)async{
    int status= await HttpUserOrder().orderDriverCancel(orderId, "");

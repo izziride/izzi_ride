@@ -133,6 +133,17 @@ mixin _$ChatsRepo on _ChatsRepo, Store {
   }
 
   @override
+  dynamic updateStatusChat(int chatId) {
+    final _$actionInfo = _$_ChatsRepoActionController.startAction(
+        name: '_ChatsRepo.updateStatusChat');
+    try {
+      return super.updateStatusChat(chatId);
+    } finally {
+      _$_ChatsRepoActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 chats: ${chats},

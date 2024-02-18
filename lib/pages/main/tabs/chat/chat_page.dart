@@ -189,10 +189,12 @@ class _MessagePageState extends State<MessagePage> {
                         onTap: () {
                           Navigator.push(context,
                            MaterialPageRoute(builder: (context) => CardFullOrder(
+                            chatid: widget.chatId,
                             side: (){},
                             startLocation: chatInfo.start, 
                             endLocation: chatInfo.end, 
-                            orderId: chatInfo.orderId
+                            orderId: chatInfo.orderId,
+
                             ),
                             )
                             );
@@ -366,7 +368,7 @@ class _MessagePageState extends State<MessagePage> {
                       SizedBox(
                           width: double.infinity,
                           height: double.infinity,
-                          child: Image.asset("assets/image/bg2.png",width: 20,height: 20, repeat: ImageRepeat.repeat,)
+                          child: Image.asset("assets/image/bg4.jpg",width: 20,height: 20, repeat: ImageRepeat.repeat,)
                           ),
                       Observer(
                         builder: (context) {
@@ -385,6 +387,7 @@ class _MessagePageState extends State<MessagePage> {
                                     controller: _controller,
                                             itemCount: messages.length,
                                             itemBuilder: (context, index) {
+                                              print(messages[index].type);
                                               if(messages[index].type=="10"){
                                                 return SizedBox.fromSize();
                                               }

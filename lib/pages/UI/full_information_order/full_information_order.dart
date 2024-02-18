@@ -28,7 +28,8 @@ class CardFullOrder extends StatefulWidget{
   final int? seats;
   final FullOrderType? fullOrderType;
   final Function side;
-  const CardFullOrder({required this.side, this.seats, this.fullOrderType, required this.startLocation,required this.endLocation,required this.orderId, super.key});
+  int? chatid=null;
+  CardFullOrder({this.chatid, required this.side, this.seats, this.fullOrderType, required this.startLocation,required this.endLocation,required this.orderId, super.key});
 
   final String endLocation;
   final int orderId;
@@ -104,13 +105,13 @@ class _CardFullOrderState extends State<CardFullOrder> {
                             children: [
                               CardOrder(side: (){}, driverOrder: driverOrder,full:true),
                               SizedBox(height: fullOrderType==FullOrderType.driver?24:0 ,),
-                              fullOrderType==FullOrderType.driver?FO_PassangerData(travelers:travelers,orderId: orderId,):const SizedBox.shrink(),
+                              fullOrderType==FullOrderType.driver?FO_PassangerData(travelers:travelers,orderId: orderId,chatid: widget.chatid,):const SizedBox.shrink(),
                               const SizedBox(height: 24,),
                               FO_InfoInTheMap(location:startLocation),
                               const SizedBox(height: 24,),
                               FO_RideDetails(automobile: automobile,comment: comment,countSeats: countSeats,endLocation: endLocation,startLocation: startLocation,),     
                               const SizedBox(height: 24,),
-                              FO_BookedStatusAction(fullOrderType: fullOrderType,fullUserOrder: fullUserOrder,seats: widget.seats??0,)
+                              FO_BookedStatusAction(fullOrderType: fullOrderType,fullUserOrder: fullUserOrder,seats: widget.seats??0,chatid: widget.chatid,)
                             ],
                           ),
                           )

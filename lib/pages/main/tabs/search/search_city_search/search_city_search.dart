@@ -133,12 +133,14 @@ class _SearchCitySearch extends State<SearchCitySearch> {
           
           return;
          }
+         print("place");
          PlacesAutocompleteResponse response = await places.autocomplete(
     text,
     language: "us", 
     types: ["postal_code","sublocality","administrative_area_level_3","locality","street_address"],
     components: [Component(Component.country, "us")], 
   );
+  print(response);
   setState(() {
       _cityList=response.predictions;
     });

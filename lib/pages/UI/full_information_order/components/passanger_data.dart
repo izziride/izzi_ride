@@ -5,14 +5,17 @@ import 'package:string_to_color/string_to_color.dart';
 import 'package:temp/constants/colors/colors.dart';
 import 'package:temp/http/chats/http_chats.dart';
 import 'package:temp/http/orders/orders.dart';
+import 'package:temp/models/chat/message.dart';
 import 'package:temp/pages/UI/app_popup.dart';
 import 'package:temp/pages/main/tabs/chat/chat_page.dart';
+import 'package:temp/repository/chats_repo/chats_repo.dart';
 import 'package:temp/repository/user_repo/user_repo.dart';
 
 class FO_PassangerData extends StatelessWidget {
   final List<Travelers>travelers;
+  int? chatid=null;
   final int orderId;
-  const FO_PassangerData({super.key,required this.travelers,required this.orderId});
+  FO_PassangerData({super.key,required this.travelers,required this.orderId,this.chatid});
 
 
   openModalDeleteUser(String name,int clientId,BuildContext context){
@@ -26,7 +29,12 @@ class FO_PassangerData extends StatelessWidget {
                     child: AppPopup(warning: false, title: "Delete User?", description: "Do you really want to\ndelete"+name+"?", pressYes: ()async{
                       
                       await userRepository.deleteUserByOrder(orderId, clientId);
-                      
+                      if(chatid!=null){
+                        chatsRepository.updateStatusChat(chatid!);
+                         Message newmsg=Message(content: "Driver removed you from order", status: 0, frontContentId: "",chatId: chatid!, time:"",id: -1,senderClientId: -1,type: "1" );
+                        chatsRepository.addMessage(newmsg);
+                        
+                      }
                       Navigator.pop(context);
                     }, pressNo: ()=>Navigator.pop(context)),
                     );

@@ -160,6 +160,13 @@ abstract class _ChatsRepo with Store  {
       chats=ObservableMap.of(chats);
     }
   }
+  @action
+  updateStatusChat(int chatId){
+    if(chats[chatId.toString()]!=null){
+      chats[chatId.toString()]!.deactivate=false;
+    }
+    chats=ObservableMap.of(chats);
+  }
 } 
 
 

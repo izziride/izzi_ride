@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:temp/localStorage/tokenStorage/token_storage.dart';
+import 'package:temp/models/chat/chat_info.dart';
 import 'package:temp/models/chat/message.dart';
 import 'package:temp/repository/chats_repo/chats_repo.dart';
 import 'package:temp/repository/user_repo/user_repo.dart';
@@ -79,6 +80,45 @@ class SocketProvider {
           // int newStatus
           // userRepository.editStatusOrder(orderId, newStatus)
           print("DELETEEE");
+        }
+        if(message.type=="booking_driver"){
+          Map<String,dynamic> bookingDriver=json.decode(event);
+          int orderId=bookingDriver["order_id"];
+          String statusName=bookingDriver["status_name"];
+          userRepository.editUserOrdersSeatsInOrder(orderId,statusName);
+        }
+        if(message.type=="cancel-client"){
+          Map<String,dynamic> cancelClient=json.decode(event);
+          int senderId=cancelClient["sender_id"];
+          String time=cancelClient["sent_time"];
+          int orderId=cancelClient["order_id"];
+          userRepository.cancelBookedOrderByUser(orderId);
+          int chatId=cancelClient["chat_id"]??-1;
+          if(chatId==-1 || chatsRepository.chats[chatId.toString()]==null){
+            return;
+          }
+          Message newmsg=Message(content: "Driver removed you from order", status: 0, frontContentId: "",chatId: chatId, time:time,id: -1,senderClientId: -1,type: "1" );
+          chatsRepository.addMessage(newmsg);
+          chatsRepository.updateStatusChat(chatId);
+          // chatsRepository.chats.forEach((key, value) { 
+          //   if(value.orderId==)
+          // });
+
+         
+        }
+        if(message.type=="cancel-order"){
+          Map<String,dynamic> cancelClient=json.decode(event);
+          int senderId=cancelClient["sender_id"];
+          String time=cancelClient["sent_time"];
+          int orderId=cancelClient["order_id"];
+          userRepository.cancelBookedOrderByUser(orderId);
+          int chatId=cancelClient["chat_id"]??-1;
+          if(chatId==-1 || chatsRepository.chats[chatId.toString()]==null){
+            return;
+          }
+          Message newmsg=Message(content: "Driver cancelled order", status: 0, frontContentId: "",chatId: chatId, time:time,id: -1,senderClientId: -1,type: "1" );
+          chatsRepository.addMessage(newmsg);
+          chatsRepository.updateStatusChat(chatId);
         }
         if(message.type=="message-itself"){
           Map<String,dynamic> statusMsg=json.decode(event);
@@ -165,7 +205,7 @@ class SocketProvider {
       "chat_id":chatId
     };
     print(message);
-    Message newMsg= Message(content: text, status: -1, frontContentId: currUuid, chatId: chatId, time: "",id:-1,senderClientId: userRepository.userInfo.clienId,type: "1");
+    Message newMsg= Message(content: text, status: -1, frontContentId: currUuid, chatId: chatId, time: "",id:-1,senderClientId: userRepository.userInfo.clienId,type: "0");
 
     //editMessage(newMsg,false);
     chatsRepository.addMessage(newMsg);

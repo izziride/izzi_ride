@@ -9,6 +9,7 @@ import 'package:temp/http/user/http_user_car.dart';
 import 'package:temp/models/preferences/preferences.dart';
 import 'package:temp/pages/main/tabs/search/result_search/bar_navigation.dart';
 import 'package:temp/repository/create_repo/create_repo.dart';
+import 'package:temp/repository/user_repo/user_repo.dart';
 
 class Price extends StatefulWidget{
   final Function side;
@@ -103,7 +104,8 @@ class _PriceState extends State<Price> {
           if(code==0){
             Navigator.of(context)
                   .popUntil((route) => route.settings.name == '/menu'); 
-                  widget.side();
+                  
+                  userRepository.getUserOrders();
           }
             
                     });

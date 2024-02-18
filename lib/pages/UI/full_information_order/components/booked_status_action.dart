@@ -3,21 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:temp/constants/colors/colors.dart';
 import 'package:temp/http/chats/http_chats.dart';
 import 'package:temp/http/orders/orders.dart';
+import 'package:temp/models/chat/message.dart';
 import 'package:temp/pages/UI/app_popup.dart';
 import 'package:temp/pages/UI/full_information_order/full_information_order.dart';
 import 'package:temp/pages/main/tabs/chat/chat_page.dart';
 import 'package:temp/pages/main/tabs/create/card_order/card_order_redact/card_order_redact.dart';
+import 'package:temp/repository/chats_repo/chats_repo.dart';
 import 'package:temp/repository/user_repo/user_repo.dart';
 
 class FO_BookedStatusAction extends StatefulWidget {
   final FullOrderType fullOrderType;
   final UserOrderFullInformation fullUserOrder;
   final int seats;
-  const FO_BookedStatusAction({
+  int? chatid=null;
+   FO_BookedStatusAction({
     super.key,
     required this.fullOrderType,
     required this.seats,
-    required this.fullUserOrder
+    required this.fullUserOrder,
+    this.chatid
     });
 
   @override
@@ -71,9 +75,8 @@ class _FO_BookedStatusActionState extends State<FO_BookedStatusAction> {
                                 }else{
                                   int result= await HttpUserOrder().orderBook(widget.fullUserOrder.orderId,widget.seats);
                                   if(result==0){
-                                    setState(() {
-                                      
-                                    });
+                                    userRepository.getUserFullInformationOrder(widget.fullUserOrder.orderId);
+                                    userRepository.getUserBookedOrders();
                                   }
                                 }
                               }
@@ -119,8 +122,15 @@ class _FO_BookedStatusActionState extends State<FO_BookedStatusAction> {
                                         int result;
                                         if(widget.fullOrderType==FullOrderType.user){
                                            result = await HttpUserOrder().orderCancel(widget.fullUserOrder.orderId);
+                                           userRepository.getUserFullInformationOrder(widget.fullUserOrder.orderId);
                                         }else{
                                           result=await userRepository.cancelOrder(widget.fullUserOrder.orderId, "");
+                                          if(widget.chatid!=null){
+                                              chatsRepository.updateStatusChat(widget.chatid!);
+                                              Message newmsg=Message(content: "Driver cancelled order", status: 0, frontContentId: "",chatId: widget.chatid!, time:"",id: -1,senderClientId: -1,type: "1" );
+                                              chatsRepository.addMessage(newmsg);
+                                              
+                                            }
                                         }
                                     if(result==0){
                                       setState(() {
