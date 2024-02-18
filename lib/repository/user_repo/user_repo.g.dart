@@ -198,6 +198,16 @@ mixin _$UserRepo on _UserRepo, Store {
         .run(() => super.getUserFullInformationOrder(orderId));
   }
 
+  late final _$getUserFullInformationOrderWithouOrderIdAsyncAction =
+      AsyncAction('_UserRepo.getUserFullInformationOrderWithouOrderId',
+          context: context);
+
+  @override
+  Future<void> getUserFullInformationOrderWithouOrderId() {
+    return _$getUserFullInformationOrderWithouOrderIdAsyncAction
+        .run(() => super.getUserFullInformationOrderWithouOrderId());
+  }
+
   late final _$deleteUserByOrderAsyncAction =
       AsyncAction('_UserRepo.deleteUserByOrder', context: context);
 

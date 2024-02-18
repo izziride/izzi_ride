@@ -156,6 +156,19 @@ abstract class _UserRepo with Store {
    }
   }
 
+   @action
+  Future<void> getUserFullInformationOrderWithouOrderId()async{
+    if(userOrderFullInformation!=null){
+      UserOrderFullInformation? order= await HttpUserOrder().getOrderInfo(userOrderFullInformation!.orderId);
+      if(order!=null){
+          userOrderFullInformation=order;
+      }else{
+        userOrderFullInformationError=true;
+      }
+    }
+   
+  }
+
   @action
   Future<void> deleteUserByOrder(int orderId,int clientId)async{
    int result= await HttpUserOrder().deleteUserInOrder(orderId, clientId);

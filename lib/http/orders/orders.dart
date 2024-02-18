@@ -540,6 +540,7 @@ class HttpUserOrder{
 
   Future<UserOrderFullInformation?> getOrderInfo(int orderId)async{
     String access= tokenStorage.accessToken;
+    print("get full order");
     try {
       Response response=await dio.get(
         baseUrlFindOrderInId+"/"+orderId.toString(),
@@ -549,7 +550,7 @@ class HttpUserOrder{
       }
     )
       );
-      
+      print("get full order end");
       Map<String,dynamic> _mapResponse=response.data["data"];
       inspect(_mapResponse);
       List<dynamic> _locationsResponse=_mapResponse["locations"];
@@ -560,9 +561,9 @@ class HttpUserOrder{
           state: el["state"], 
           sortId: el["sort_id"], 
           pickUp: el["pick_up"], 
-          location: el["location"], 
-          longitude: el["longitude"], 
-          latitude:el ["latitude"], 
+          location: el["location"]??"", 
+          longitude: el["longitude"]+0.0, 
+          latitude:el ["latitude"]+0.0, 
           departureTime: el["departure_time"]
           );
       }).toList();
