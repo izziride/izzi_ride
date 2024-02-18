@@ -229,6 +229,17 @@ mixin _$UserRepo on _UserRepo, Store {
       ActionController(name: '_UserRepo', context: context);
 
   @override
+  void CLEANUSERREPO() {
+    final _$actionInfo = _$_UserRepoActionController.startAction(
+        name: '_UserRepo.CLEANUSERREPO');
+    try {
+      return super.CLEANUSERREPO();
+    } finally {
+      _$_UserRepoActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void addUserOrders(DriverOrder order) {
     final _$actionInfo = _$_UserRepoActionController.startAction(
         name: '_UserRepo.addUserOrders');
