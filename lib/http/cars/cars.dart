@@ -20,7 +20,7 @@ class CarsHttp{
     dio.interceptors.add(interceptor);
     
     response=await dio.get(
-      "http://31.184.254.86:9099/api/v1/car/manufacturer",
+      "https://ezride.pro/api/v1/car/manufacturer",
       queryParameters: {
         "name":text
       }
@@ -41,7 +41,7 @@ class CarsHttp{
     dio.interceptors.add(interceptor);
     
     response=await dio.get(
-      "http://31.184.254.86:9099/api/v1/car/model",
+      "https://ezride.pro/api/v1/car/model",
       queryParameters: {
         "name":text,
         "manufacturer_id":id

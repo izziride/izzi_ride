@@ -10,10 +10,10 @@ import 'package:temp/models/chat/message.dart';
 import 'package:uuid/uuid.dart';
 
 
-const baseUrl="http://31.184.254.86:9099/api/v1/client/chats";
-const chatUrl="http://31.184.254.86:9099/api/v1/chat";
-const baseAppUrl="http://31.184.254.86:9099/api/v1";
-const fcmTokenUrl="http://31.184.254.86:9099/api/v1/push-token";
+const baseUrl="https://ezride.pro/api/v1/client/chats";
+const chatUrl="https://ezride.pro/api/v1/chat";
+const baseAppUrl="https://ezride.pro/api/v1";
+const fcmTokenUrl="https://ezride.pro/api/v1/push-token";
 
 
 class UserChatInfo{
@@ -60,7 +60,7 @@ class HttpChats{
       String access= tokenStorage.accessToken;
       try {
         Response response=await dio.get(
-        "http://31.184.254.86:9099/api/v1/chat/${chatId}",
+        "https://ezride.pro/api/v1/chat/${chatId}",
         options: Options(
           headers: {
             "Authorization":"Bearer $access"

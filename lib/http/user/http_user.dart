@@ -3,8 +3,8 @@ import 'package:temp/http/instanse.dart';
 import 'package:temp/localStorage/tokenStorage/token_storage.dart';
 import 'package:temp/models/user/user_data.dart';
 
-const baseUrl="http://31.184.254.86:9099/api/v1/client/info";
-const baseAppUrl="http://31.184.254.86:9099/api/v1/";
+const baseUrl="https://ezride.pro/api/v1/client/info";
+const baseAppUrl="https://ezride.pro/api/v1/";
 
 
 
@@ -21,7 +21,7 @@ class HttpUser{
   Response response; 
   try{
     response = await dio.post(
-    "http://31.184.254.86:9099/api/v1/client/info",
+    "https://ezride.pro/api/v1/client/info",
     data: {
       "nickname":nickname
     },
@@ -47,7 +47,7 @@ class HttpUser{
   Response response; 
   try{
     response = await dio.put(
-    "http://31.184.254.86:9099/api/v1/client/info",
+    "https://ezride.pro/api/v1/client/info",
     data: {
       "nickname":nickname
     } 
@@ -122,7 +122,7 @@ class HttpUser{
   Response response; 
   try{
     response = await dio.delete(
-    "http://31.184.254.86:9099/api/v1/client",
+    "https://ezride.pro/api/v1/client",
     );
     print(response.data);
     return 0;

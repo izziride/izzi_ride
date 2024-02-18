@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:temp/http/instanse.dart';
-const baseUrl="http://31.184.254.86:9099/api/v1/sign";
-const baseUrlOtp="http://31.184.254.86:9099/api/v1/otp";
+const baseUrl="https://ezride.pro/api/v1/sign";
+const baseUrlOtp="https://ezride.pro/api/v1/otp";
 class HttpReg{
 
     Dio dio = Dio();

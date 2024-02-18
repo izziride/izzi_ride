@@ -97,7 +97,7 @@ class _SearchCitySearch extends State<SearchCitySearch> {
         final intr=Dio();
         intr.interceptors.add(AuthInterceptor(intr));
       final result= await intr.get(
-        "http://31.184.254.86:9099/api/v1/city",
+        "https://ezride.pro/api/v1/city",
         queryParameters: {
           "state":state,
           "city":city,

@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:temp/http/instanse.dart';
 import 'package:temp/localStorage/tokenStorage/token_storage.dart';
-const baseUrl="http://31.184.254.86:9099/api/v1/refresh-token";
+//const baseUrl="https://ezride.pro/api/v1/refresh-token";
 
-
+const baseUrl="https://ezride.pro/api/v1/refresh-token";
 
 class HttpToken{
   Dio dio=Dio();
