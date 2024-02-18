@@ -88,6 +88,17 @@ mixin _$ChatsRepo on _ChatsRepo, Store {
   }
 
   @override
+  void CLEANCHATS() {
+    final _$actionInfo =
+        _$_ChatsRepoActionController.startAction(name: '_ChatsRepo.CLEANCHATS');
+    try {
+      return super.CLEANCHATS();
+    } finally {
+      _$_ChatsRepoActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic editStatus(
       String chatId, int status, String frontContentId, String time) {
     final _$actionInfo =

@@ -4,7 +4,7 @@ import 'package:temp/localStorage/tokenStorage/token_storage.dart';
 import 'package:temp/models/car/car.dart';
 import 'package:temp/models/preferences/preferences.dart';
 
-const baseUrl="http://31.184.254.86:9099/api/v1/client/auto";
+const baseUrl="https://ezride.pro/api/v1/client/auto";
 
 class ClientCar{
   int modelId;

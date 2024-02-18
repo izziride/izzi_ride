@@ -29,7 +29,7 @@ class SocketProvider {
   void connect()async{
     try {
       
-    WebSocket conn =await WebSocket.connect("ws://31.184.254.86:9099/api/v1/chat/join");
+    WebSocket conn =await WebSocket.connect("wss://ezride.pro/api/v1/chat/join");
     conn.pingInterval=Duration(seconds: 1);
     channel=conn;
     SocketProvider.isConnect=true;

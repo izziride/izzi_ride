@@ -4,6 +4,7 @@ import 'package:temp/http/orders/orders.dart';
 import 'package:temp/models/preferences/preferences.dart';
 import 'package:temp/pages/UI/app_popup.dart';
 import 'package:temp/pages/main/tabs/create/card_order/card_order_redact/card_order_redact.dart';
+import 'package:temp/repository/user_repo/user_repo.dart';
 
 class PreferencesWithSeats extends Preferences{
   int seats;
@@ -102,6 +103,7 @@ class _ReductDopOptionsState extends State<ReductDopOptions> {
                           );
                           if(result==0){
                             widget.update();
+                            userRepository.getUserFullInformationOrderWithouOrderId();
                             Navigator.pop(context);  
                             Navigator.pop(context);  
                           }else{

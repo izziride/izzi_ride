@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -19,7 +21,7 @@ class _MapSearchState extends State<MapSearch> {
   Widget build(BuildContext context) {
 
     MapPage arguments =ModalRoute.of(context)!.settings.arguments as MapPage;
-
+    inspect(arguments);
     return Scaffold(
       appBar: AppBar(
               systemOverlayStyle: SystemUiOverlayStyle.dark,

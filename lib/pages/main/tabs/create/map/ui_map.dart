@@ -41,13 +41,18 @@ class _UIMapState extends State<UIMap> {
           final Completer<GoogleMapController> _completer=
       Completer<GoogleMapController>();
     late GoogleMapController _controller;
+
   double latitudeRide = 0;
   double longitudeRide = 0;
+
   Set<Marker> _markers={
     
   };
 
   getResult(double lat,double lng)async{
+    if(lat==0||lng==0){
+      return;
+    }
     bool? perm=await HttpUser().getPermission("geocoding");
           if(perm!=null&&!perm){
             return;
@@ -55,10 +60,11 @@ class _UIMapState extends State<UIMap> {
          if(perm==null){
           return;
          }
+         print(lat.toString()+"//"+lng.toString());
     final geocode = await Dio().get(
     "https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyDQ2a3xgarJk8qlNGzNCLzrH3H_XmGSUaY"
   );
-  //inspect(geocode);
+  inspect(geocode.data);
   List<dynamic> addressComponents=geocode.data["results"][0]["address_components"];
   print(addressComponents);
   String city="";
@@ -114,6 +120,10 @@ class _UIMapState extends State<UIMap> {
 
   @override
   void initState() {
+    print(widget.latitude.toString()+"lng");
+    print(widget.longitude);
+    latitudeRide=widget.latitude;
+    longitudeRide=widget.longitude;
     _positionInformation=widget.city;
     initial = CameraPosition(
         target: LatLng(widget.latitude, widget.longitude), zoom: 18);

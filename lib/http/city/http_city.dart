@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:temp/http/city/city_model.dart';
 import 'package:temp/http/instanse.dart';
 
-const baseUrl="http://31.184.254.86:9099/api/v1/city";
+const baseUrl="https://ezride.pro/api/v1/city";
 
 
 class HttpCity{

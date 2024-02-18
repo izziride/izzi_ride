@@ -198,6 +198,16 @@ mixin _$UserRepo on _UserRepo, Store {
         .run(() => super.getUserFullInformationOrder(orderId));
   }
 
+  late final _$getUserFullInformationOrderWithouOrderIdAsyncAction =
+      AsyncAction('_UserRepo.getUserFullInformationOrderWithouOrderId',
+          context: context);
+
+  @override
+  Future<void> getUserFullInformationOrderWithouOrderId() {
+    return _$getUserFullInformationOrderWithouOrderIdAsyncAction
+        .run(() => super.getUserFullInformationOrderWithouOrderId());
+  }
+
   late final _$deleteUserByOrderAsyncAction =
       AsyncAction('_UserRepo.deleteUserByOrder', context: context);
 
@@ -227,6 +237,17 @@ mixin _$UserRepo on _UserRepo, Store {
 
   late final _$_UserRepoActionController =
       ActionController(name: '_UserRepo', context: context);
+
+  @override
+  void CLEANUSERREPO() {
+    final _$actionInfo = _$_UserRepoActionController.startAction(
+        name: '_UserRepo.CLEANUSERREPO');
+    try {
+      return super.CLEANUSERREPO();
+    } finally {
+      _$_UserRepoActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void addUserOrders(DriverOrder order) {

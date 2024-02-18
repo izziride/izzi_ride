@@ -54,6 +54,7 @@ class _SearchFromState extends State<SearchFrom> {
       _availableCityIndex=-1;
     });
     }
+    inspect(details);
     MapPage params = MapPage(details.result.geometry!.location.lng.toString(), details.result.geometry!.location.lat.toString(), description,);
     
     Navigator.push(

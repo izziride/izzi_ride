@@ -7,11 +7,11 @@ import 'package:temp/http/user/http_user_car.dart';
 import 'package:temp/localStorage/tokenStorage/token_storage.dart';
 import 'package:temp/models/preferences/preferences.dart';
 
-const baseUrl="http://31.184.254.86:9099/api/v1/order";
-const baseUrlDriver="http://31.184.254.86:9099/api/v1/driver/orders";
-const baseUrlFindOrder="http://31.184.254.86:9099/api/v1/orders/find";
-const baseUrlFindOrderInId="http://31.184.254.86:9099/api/v1/order";
-const baseAppUrl="http://31.184.254.86:9099/api/v1/";
+const baseUrl="https://ezride.pro/api/v1/order";
+const baseUrlDriver="https://ezride.pro/api/v1/driver/orders";
+const baseUrlFindOrder="https://ezride.pro/api/v1/orders/find";
+const baseUrlFindOrderInId="https://ezride.pro/api/v1/order";
+const baseAppUrl="https://ezride.pro/api/v1/";
 class UserOrder{
   int clientAutoId; 
   RideInfo rideInfo;
@@ -540,6 +540,7 @@ class HttpUserOrder{
 
   Future<UserOrderFullInformation?> getOrderInfo(int orderId)async{
     String access= tokenStorage.accessToken;
+    print("get full order");
     try {
       Response response=await dio.get(
         baseUrlFindOrderInId+"/"+orderId.toString(),
@@ -549,7 +550,7 @@ class HttpUserOrder{
       }
     )
       );
-      
+      print("get full order end");
       Map<String,dynamic> _mapResponse=response.data["data"];
       inspect(_mapResponse);
       List<dynamic> _locationsResponse=_mapResponse["locations"];
@@ -560,9 +561,9 @@ class HttpUserOrder{
           state: el["state"], 
           sortId: el["sort_id"], 
           pickUp: el["pick_up"], 
-          location: el["location"], 
-          longitude: el["longitude"], 
-          latitude:el ["latitude"], 
+          location: el["location"]??"", 
+          longitude: el["longitude"]+0.0, 
+          latitude:el ["latitude"]+0.0, 
           departureTime: el["departure_time"]
           );
       }).toList();

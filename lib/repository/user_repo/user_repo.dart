@@ -11,6 +11,26 @@ part 'user_repo.g.dart';
 class UserRepo = _UserRepo with _$UserRepo;
 
 abstract class _UserRepo with Store {
+
+
+  @action
+  void CLEANUSERREPO(){
+    isAuth=false;
+    userInfo=UserData(
+      clienId: -1,
+      dateOfBirth: 0, 
+      gender:"", 
+      name: "", 
+      nickname: "", 
+      photo: "", 
+      surname: ""
+  );
+  userCar=ObservableList.of([]);
+  userOrders=ObservableList.of([]);
+  userBookedOrders=ObservableList.of([]);
+  userOrderFullInformation=null;
+  }
+
   bool isAuth=false;
   @observable
   UserData userInfo=UserData(
@@ -134,6 +154,19 @@ abstract class _UserRepo with Store {
    }else{
     userOrderFullInformationError=true;
    }
+  }
+
+   @action
+  Future<void> getUserFullInformationOrderWithouOrderId()async{
+    if(userOrderFullInformation!=null){
+      UserOrderFullInformation? order= await HttpUserOrder().getOrderInfo(userOrderFullInformation!.orderId);
+      if(order!=null){
+          userOrderFullInformation=order;
+      }else{
+        userOrderFullInformationError=true;
+      }
+    }
+   
   }
 
   @action

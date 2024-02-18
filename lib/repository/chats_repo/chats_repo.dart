@@ -23,6 +23,10 @@ abstract class _ChatsRepo with Store  {
   void updateCurrentChatId(int updateValue){
     currentChatId=updateValue;
   }
+  @action
+  void CLEANCHATS(){
+    chats=ObservableMap.of({});
+  }
 
   @action
   Future<void> getChats()async{

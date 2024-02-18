@@ -13,6 +13,7 @@ import 'package:temp/pages/main/tabs/profile/Paragraf/paragraf.dart';
 import 'package:temp/pages/main/tabs/profile/Punkt/punkt.dart';
 import 'package:temp/pages/main/tabs/profile/editProfile/edit_profile.dart';
 import 'package:temp/pages/main/tabs/profile/user_car/user_car.dart';
+import 'package:temp/repository/chats_repo/chats_repo.dart';
 import 'package:temp/repository/user_repo/user_repo.dart';
 
 
@@ -93,6 +94,8 @@ List list=[];
       list.add(  Paragraf(paragraf: "Exit",onTap: (context){
     userRepository.isAuth=false;
    TokenStorage().clearSharedPreferences().then((_){
+    userRepository.CLEANUSERREPO();
+    chatsRepository.CLEANCHATS();
     Navigator.pushNamedAndRemoveUntil(context,"/reg",(route)=>false);
    });
  },));
