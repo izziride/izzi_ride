@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "320242355547",
+    "project_id": "eazyride-e70a8",
+    "storage_bucket": "eazyride-e70a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320242355547:android:0df82ce61bfbbb80369e7e",
+        "android_client_info": {
+          "package_name": "com.easyride.ezride"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320242355547-o88bld44g08l0brk24huapcl47u1q878.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrlaXJ1TgI5N7YDmFbJdfkaNtSl6qNtWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320242355547-o88bld44g08l0brk24huapcl47u1q878.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "320242355547-0nar8mem3l2m4ec2plj7tfl0mbdilkg8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.eeasyride.ezride"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,6 +7,7 @@ import 'package:temp/constants/colors/colors.dart';
 import 'package:temp/http/orders/orders.dart';
 import 'package:temp/http/user/http_user_car.dart';
 import 'package:temp/models/preferences/preferences.dart';
+import 'package:temp/pages/main/tabs/profile/user_car/components/create_modal.dart';
 import 'package:temp/pages/main/tabs/search/result_search/bar_navigation.dart';
 import 'package:temp/repository/create_repo/create_repo.dart';
 import 'package:temp/repository/user_repo/user_repo.dart';
@@ -29,9 +30,55 @@ class _PriceState extends State<Price> {
   void handleOrder()async{
     if(widget.createAuto){
       int carId=await createCar();
-      createOrder(carId);
+      
+
+      showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10)
+          ),
+          child: CreateModal(
+            completed: (){
+               Navigator.of(context)
+                  .popUntil((route) => route.settings.name == '/menu'); 
+                  
+                  userRepository.getUserOrders();
+            },
+            errorFn: (){},
+            future: createOrder(carId),
+          ),
+        );
+      },
+      );
+
     }else{
-      createOrder(widget.carId);
+
+       showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10)
+          ),
+          child: CreateModal(
+            completed: (){
+               Navigator.of(context)
+                  .popUntil((route) => route.settings.name == '/menu'); 
+                  
+                  userRepository.getUserOrders();
+            },
+            errorFn: (){},
+            future: createOrder(widget.carId),
+          ),
+        );
+      },
+      );
+
+      
     }
   }
 
@@ -52,12 +99,13 @@ class _PriceState extends State<Price> {
         )
     );
    int carId=await HttpUserCar().createUserCar(clientCar);
+  
    return carId;
   }
 
 
 
-  void createOrder(int carId){
+  Future<int> createOrder(int carId)async{
     Preferences preferences=Preferences(
           smoking: createRepo.smoking, 
           luggage: createRepo.luggage, 
@@ -99,16 +147,16 @@ class _PriceState extends State<Price> {
           rideInfo: rideInfo,  
           locations: locations
         );
-        HttpUserOrder().createUserOrder(userOrder)
-        .then((code){
-          if(code==0){
-            Navigator.of(context)
-                  .popUntil((route) => route.settings.name == '/menu'); 
-                  
-                  userRepository.getUserOrders();
-          }
-            
-                    });
+        try {
+          int code = await HttpUserOrder().createUserOrder(userOrder);
+          return code;
+        } catch (e) {
+          print(e.toString()+"EEEEEEEEEERRRRERRR+ER+E");
+          rethrow;
+        }
+        
+        
+        
       }
       
 

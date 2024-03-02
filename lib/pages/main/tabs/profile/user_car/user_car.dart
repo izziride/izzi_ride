@@ -1,10 +1,18 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 import 'package:temp/constants/colors/colors.dart';
 import 'package:temp/http/user/http_user_car.dart';
 import 'package:temp/models/car/car.dart';
+import 'package:temp/pages/main/tabs/create/auto/auto_title.dart';
 import 'package:temp/pages/main/tabs/create/card_order/card_order_redact/UI/variable_car.dart';
+import 'package:temp/pages/main/tabs/profile/user_car/create_car.dart';
+import 'package:temp/pages/main/tabs/profile/user_car/provider/provider.dart';
 import 'package:temp/pages/main/tabs/search/result_search/bar_navigation.dart';
+import 'package:temp/repository/user_repo/user_repo.dart';
 
 class UserAutoUI extends StatefulWidget{
   const UserAutoUI({super.key});
@@ -76,21 +84,21 @@ int currentCar=0;
 
 
 Widget variableAuto(){
-    return FutureBuilder(
-        future: HttpUserCar().getUserCar(),
-        builder: (context, snapshot) {
-          if(snapshot.hasError){
+    return Observer(
+        builder: (context) {
+          if(userRepository.carHasError){
             return Text("error");
           }
-          if(snapshot.connectionState==ConnectionState.waiting){
-            return Column(
+          if(userRepository.userCar==null){
+            userRepository.getUserCar();
+              return Column(
               children: [
                 ShimmerVariableCar(),
                 
               ],
             );
           }
-          List<UserCar> usercars=snapshot.data!;
+          List<UserCar> usercars=userRepository.userCar!;
           if(usercars.isEmpty){
             return  Container(
                 child: Column(
@@ -122,14 +130,32 @@ Widget variableAuto(){
             crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 for(int i=0;i<usercars.length;i++) 
-                  VariableCar( pressed: currentCar==usercars[i].carId,userCar:usercars[i]),
-                Text(
-                  "+ add car",
-                  style: TextStyle(
-                    color: brandBlue,
-                    fontFamily: "SF",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500
+                  VariableCar( pressed: true,userCar:usercars[i]),
+                GestureDetector(
+                  onTap: () {
+                   Navigator.push(
+                    context, MaterialPageRoute(
+                      builder: (context) 
+                      => ChangeNotifierProvider<DataProvider>(
+                        create: (context) => DataProvider(),
+                        
+                        child: CreateCar()
+                        ),
+                    )
+                    );
+                  },
+                  child: SizedBox(
+                    height: 40,
+                    
+                    child: Text(
+                      "+ add car",
+                      style: TextStyle(
+                        color: brandBlue,
+                        fontFamily: "SF",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500
+                      ),
+                    ),
                   ),
                 )
               ],

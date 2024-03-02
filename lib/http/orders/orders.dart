@@ -126,7 +126,11 @@ class DriverOrder{
   SeatsInfo seatsInfo;
   double price;
   Preferences preferences;
+  String status;
+  String? bookedStatus;
   DriverOrder({
+    required this.bookedStatus,
+    required this.status,
     required this.userId,
     required this.orderId,
     required this.clientAutoId,
@@ -162,10 +166,10 @@ class UserOrderFullInformation extends DriverOrder{
   bool isBooked;
   int? driverId;
   bool isDriver;
-  String bookedStatus;
   Automobile automobile;
   UserOrderFullInformation({
-    required this.bookedStatus,
+    required super.bookedStatus,
+    required super.status,
     required super.userId,
     required this.isDriver,
     required this.automobile,
@@ -246,6 +250,33 @@ class HttpUserOrder{
     dio.interceptors.add(authInterceptor);
   }
 
+  Future<int> hideOrderBooking(int orderId)async{
+
+  String access = tokenStorage.accessToken;
+  
+  try{
+   Response response = await dio.put(
+    "${baseAppUrl}client/order/$orderId/hide",
+    options: Options(
+      headers: {
+        "Authorization":"Bearer $access"
+      }
+    )
+    );
+    print(response.data);
+    return 0;
+  }catch(e ){
+    if(e is DioException){
+      final error = e;
+      if(error.response!=null && error.response!.data["code"]!=null){
+        return error.response!.data["code"];
+      }
+    }
+      return -1;
+  }
+ 
+ }
+
  Future<int> createUserOrder(UserOrder userOrder)async{
 
   String access = tokenStorage.accessToken;
@@ -266,7 +297,7 @@ class HttpUserOrder{
     return 0;
   }catch(e){
     print(e);
-      return -1;
+      rethrow;
   }
  
  }
@@ -342,6 +373,8 @@ class HttpUserOrder{
     List<DriverOrder> driverOrder=[];
     List<dynamic> orders=response.data["data"];
     driverOrder=orders.map((el) =>DriverOrder(
+      status: el["status"],
+      bookedStatus: el["booked_status"],
       userId:  el["order_id"]??-1,
       orderId: el["order_id"], 
       clientAutoId: el["client_auto_id"], 
@@ -583,6 +616,7 @@ class HttpUserOrder{
        
 
      final fullOrderInfo=  UserOrderFullInformation(
+      status: _mapResponse["status"],
       bookedStatus: _mapResponse["booked_status"]??"_",
       userId: _mapResponse["user_id"]??-1,
       isDriver: _mapResponse["is_driver"],
@@ -643,7 +677,14 @@ class HttpUserOrder{
       print(response.data);
       return 0;
     } catch (e) {
-      return 1;
+      if(e is DioException) {
+        final error=e;
+         if(error.response!=null && error.response!.data!=null  && error.response!.data!["code"]!=null){
+            return error.response!.data!["code"]!;
+         }
+      }
+     
+      return -1;
     }
   }
 
@@ -708,6 +749,8 @@ class HttpUserOrder{
     List<DriverOrder> driverOrder=[];
     List<dynamic> orders=response.data["data"];
     driverOrder=orders.map((el) =>DriverOrder(
+      status: el["status"],
+      bookedStatus: el["booked_status"],
       clientAutoId: -1,
       endCountryName: el["end_point"]["city"],
       startCountryName: el["start_point"]["city"],

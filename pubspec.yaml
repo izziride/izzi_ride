@@ -8,6 +8,8 @@ environment:
 
 dependencies:
   dio: ^5.4.0
+  firebase_core: ^2.24.2
+  firebase_messaging: ^14.7.10
   flutter:
     sdk: flutter
   flutter_calendar_carousel: ^2.4.2
@@ -24,6 +26,7 @@ dependencies:
   package_info_plus: ^4.1.0
   path_provider: ^2.1.2
   pdf_viewer_plugin: ^2.0.1
+  provider: ^6.1.2
   share: ^2.0.4
   shared_preferences: ^2.2.2
   shimmer: ^3.0.0

@@ -54,12 +54,19 @@ abstract class _UserRepo with Store {
   }
 
   @observable
-  ObservableList<UserCar> userCar = ObservableList();
+  ObservableList<UserCar>? userCar;
+
+  @observable
+  bool carHasError=false;
 
   @action
   Future<void> getUserCar()async{
-   List<UserCar> listCar= await HttpUserCar().getUserCar();
-   userCar=ObservableList.of(listCar);
+   List<UserCar>? listCar= await HttpUserCar().getUserCar();
+   if(listCar!=null){
+      userCar=ObservableList.of(listCar);
+   }else{
+    carHasError=true;
+   }
   }
 
   
@@ -111,11 +118,9 @@ abstract class _UserRepo with Store {
 
   @action
   Future<void> getUserBookedOrders()async{
-   List<DriverOrder> listOrders= await HttpUserOrder().myTrips();
-   if(listOrders.isNotEmpty){
-      userBookedOrders=ObservableList.of(listOrders);
-   }
-   isFirstLoadedBooked=true;
+    List<DriverOrder> listOrders= await HttpUserOrder().myTrips();
+    userBookedOrders=ObservableList.of(listOrders);
+    isFirstLoadedBooked=true;
   }
   @action
   Future<void> editStatusOrder(int orderId,String newStatus)async{

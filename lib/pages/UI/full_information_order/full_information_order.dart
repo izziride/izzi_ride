@@ -82,7 +82,7 @@ class _CardFullOrderState extends State<CardFullOrder> {
 
               
 
-              DriverOrder driverOrder =  DriverOrder( userId: fullUserOrder.userId, orderId: fullUserOrder.orderId, clientAutoId: fullUserOrder.clientAutoId, departureTime: fullUserOrder.departureTime, nickname: fullUserOrder.nickname, orderStatus: fullUserOrder.orderStatus, startCountryName: fullUserOrder.startCountryName, endCountryName: fullUserOrder.endCountryName, seatsInfo: fullUserOrder.seatsInfo, price: fullUserOrder.price, preferences: fullUserOrder.preferences);
+              DriverOrder driverOrder =  DriverOrder( userId: fullUserOrder.userId, orderId: fullUserOrder.orderId, clientAutoId: fullUserOrder.clientAutoId, departureTime: fullUserOrder.departureTime, nickname: fullUserOrder.nickname, orderStatus: fullUserOrder.orderStatus, startCountryName: fullUserOrder.startCountryName, endCountryName: fullUserOrder.endCountryName, seatsInfo: fullUserOrder.seatsInfo, price: fullUserOrder.price, preferences: fullUserOrder.preferences,bookedStatus: fullUserOrder.bookedStatus,status: fullUserOrder.status);
               FullOrderType fullOrderType=fullUserOrder.isDriver? FullOrderType.driver:FullOrderType.user;
               List<Travelers> travelers = fullUserOrder.travelers;
               int orderId=fullUserOrder.orderId;
@@ -103,7 +103,7 @@ class _CardFullOrderState extends State<CardFullOrder> {
                           opacity: isCanceled?0.5:1,
                           child: Column(
                             children: [
-                              CardOrder(side: (){}, driverOrder: driverOrder,full:true),
+                              CardOrder(side: (){}, driverOrder: driverOrder,full:true,variable: true,),
                               SizedBox(height: fullOrderType==FullOrderType.driver?24:0 ,),
                               fullOrderType==FullOrderType.driver?FO_PassangerData(travelers:travelers,orderId: orderId,chatid: widget.chatid,):const SizedBox.shrink(),
                               const SizedBox(height: 24,),

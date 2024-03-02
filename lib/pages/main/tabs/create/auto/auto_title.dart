@@ -98,54 +98,6 @@ void checkValid(){
   @override
   Widget build(BuildContext context) {
 
-  //validation
-
-
-// checked(){
-//      if(car.name.name.isEmpty&&clicked){
-//       validManufacturer=false;
-//     }else{
-//       validManufacturer=true;
-//     }
-//      if(car.model.name.isEmpty&&clicked){
-//         validModel=false;
-//     }else{
-//       validModel=true;
-//     }
-//      if(_numberController.text.isEmpty&&clicked){
-//         validNumber=false;
-//     }else{
-//       validNumber=true;
-//     }
-//      if(_yearController.text.isEmpty&&clicked){
-     
-//         validYear=false;
-//     }else{
-//       validYear=true;
-//     }
-// }
-   
-//   checked();
-//     void checkValid(){
-//       clicked=true;
-//       checked();
-      
-//    if(validManufacturer&&validModel&&validNumber&&validYear){
-//       updateCarNumber(_numberController.text);
-//                                                updateYear(int.parse(_yearController.text));       
-//                                                storeApp.setCar(car);
-
-//                                                Navigator.push(
-//                               context,
-//                               MaterialPageRoute(
-//                                 builder: (context) => DopOptions(side: widget.side, count: defaultcountPass,preferences: defaultPreferences,carId: -1,createAuto:true)),
-//                                 );
-//     }
-//     setState(() {
-      
-//     });
-//  }
-  
     return Padding(
           padding: const EdgeInsets.only(top: 20,left: 15,right: 15),
           child: Column(

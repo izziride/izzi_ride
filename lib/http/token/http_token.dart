@@ -3,7 +3,7 @@ import 'package:temp/http/instanse.dart';
 import 'package:temp/localStorage/tokenStorage/token_storage.dart';
 //const baseUrl="https://ezride.pro/api/v1/refresh-token";
 
-const baseUrl="https://ezride.pro/api/v1/refresh-token";
+const baseUrl="https://ezride.pro/api/v1";
 
 class HttpToken{
   Dio dio=Dio();
@@ -20,7 +20,7 @@ class HttpToken{
     try{
         
       response = await dio.post(
-      baseUrl,
+      "$baseUrl/refresh-token",
       data:  {
         "token":token
       }
@@ -37,6 +37,27 @@ class HttpToken{
         }
       }
       return "noAuth";
+    }
+      
+  }
+  Future<int> pushToken(String platform,String token) async{
+
+     Response response;
+    try{
+        
+      response = await dio.put(
+      "$baseUrl/push-token",
+      data:  {
+        "platform":platform,
+        "token":token
+      }
+      );
+     print(response.data);
+
+      return 0;
+    }catch(e){
+
+      return -1;
     }
       
   }

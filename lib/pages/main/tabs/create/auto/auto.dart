@@ -1,14 +1,19 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:temp/constants/colors/colors.dart';
 import 'package:temp/http/user/http_user_car.dart';
 import 'package:temp/models/car/car.dart';
 import 'package:temp/pages/main/tabs/create/auto/auto_title.dart';
 import 'package:temp/pages/main/tabs/create/card_order/card_order_redact/UI/variable_car.dart';
 import 'package:temp/pages/main/tabs/create/dop_options/dop_options.dart';
+import 'package:temp/pages/main/tabs/profile/user_car/create_car.dart';
+import 'package:temp/pages/main/tabs/profile/user_car/provider/provider.dart';
 import 'package:temp/pages/main/tabs/search/result_search/bar_navigation.dart';
 import 'package:temp/repository/user_repo/user_repo.dart';
 
@@ -33,10 +38,10 @@ class _AutoState extends State<Auto> {
 
 
   void checkUserCar()async{
-    if(userRepository.userCar.isEmpty){
+    if(userRepository.userCar==null){
         await userRepository.getUserCar();
     }
-    if(userRepository.userCar.isEmpty){
+    if(userRepository.userCar!=null&& userRepository.userCar!.isEmpty){
       setState(() {
               currentWidget=  AutoTitle(
                   side:widget.side
@@ -44,7 +49,7 @@ class _AutoState extends State<Auto> {
             });
     }else{
       setState(() {
-        currentautoId=userRepository.userCar[0].carId;
+        currentautoId=userRepository.userCar![0].carId;
       });
     } 
   }
@@ -65,7 +70,7 @@ class _AutoState extends State<Auto> {
             elevation: 1,
             
         ),
-        body:userRepository.userCar.length==0
+        body:userRepository.userCar==null ||  userRepository.userCar!.length==0
         ?currentWidget
         : Padding(
          padding: const EdgeInsets.only(left: 0,right: 0),
@@ -85,25 +90,42 @@ class _AutoState extends State<Auto> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                  
-                                    for(int i=0;i<userRepository.userCar.length;i++) 
+                                    for(int i=0;i<userRepository.userCar!.length;i++) 
                                       InkWell(
                                         highlightColor: Colors.transparent,
                                         splashColor: Colors.transparent,
                                         onTap: () {
                                          setState(() {
-                                            currentautoId=userRepository.userCar[i].carId;
+                                            currentautoId=userRepository.userCar![i].carId;
                                             print(currentautoId);
                                          });
                                         },
-                                        child: VariableCar( pressed: currentautoId==userRepository.userCar[i].carId,userCar:userRepository.userCar[i])
+                                        child: VariableCar( pressed: currentautoId==userRepository.userCar![i].carId,userCar:userRepository.userCar![i])
                                         ),
-                                    Text(
-                                      "+ add car",
-                                      style: TextStyle(
-                                        color: brandBlue,
-                                        fontFamily: "SF",
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500
+                                    GestureDetector(
+                                      onTap: () {
+                                         Navigator.push(
+                                        context, MaterialPageRoute(
+                                          builder: (context) 
+                                          => ChangeNotifierProvider<DataProvider>(
+                                            create: (context) => DataProvider(),
+                                            
+                                            child: CreateCar()
+                                            ),
+                                        )
+                                        );
+                                      },
+                                      child: SizedBox(
+                                        height: 40,
+                                        child: Text(
+                                          "+ add car",
+                                          style: TextStyle(
+                                            color: brandBlue,
+                                            fontFamily: "SF",
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500
+                                          ),
+                                        ),
                                       ),
                                     )
                                   ],
@@ -112,10 +134,10 @@ class _AutoState extends State<Auto> {
                                          padding: EdgeInsets.only(bottom: 32),
                                           child: InkWell(
                                                             onTap: (){
-                                                              int carIndex=userRepository.userCar.indexWhere((element) => element.carId==currentautoId);
+                                                              int carIndex=userRepository.userCar!.indexWhere((element) => element.carId==currentautoId);
                                                               Navigator.push(
                                                                 context, 
-                                                                MaterialPageRoute(builder: (context) => DopOptions(side: widget.side, preferences: userRepository.userCar[carIndex].preferences , count: userRepository.userCar[carIndex].numberOfSeats, carId: currentautoId,createAuto: false,))
+                                                                MaterialPageRoute(builder: (context) => DopOptions(side: widget.side, preferences: userRepository.userCar![carIndex].preferences , count: userRepository.userCar![carIndex].numberOfSeats, carId: currentautoId,createAuto: false,))
                                                                 );
                                                              
                                                             },

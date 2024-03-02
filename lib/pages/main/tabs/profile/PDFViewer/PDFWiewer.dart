@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:pdf_viewer_plugin/pdf_viewer_plugin.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
+import 'package:temp/pages/main/tabs/search/result_search/bar_navigation.dart';
 
 
 const conditionPdf="http://ezride.pro/docs/condition-use.pdf";
@@ -69,12 +71,19 @@ class _PDFWiewerState extends State<PDFWiewer> {
         elevation: 0,
       ),
       body: pdfFlePath==null?Center(child: CircularProgressIndicator())
-      :PdfView(
-        
-        path: pdfFlePath!,
-        
-
-        )
+      :Column(
+        children: [
+          BarNavigation(back: true, title: widget.pdftype==PDFTYPE.policy?"Privacy Policy":"Terms of Use"),
+          Expanded(
+            child: PdfView(
+              
+              path: pdfFlePath!,
+              
+            
+              ),
+          ),
+        ],
+      )
     );
   }
 }

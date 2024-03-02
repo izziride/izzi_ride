@@ -4,6 +4,7 @@ import 'package:temp/http/orders/orders.dart';
 import 'package:temp/models/preferences/preferences.dart';
 import 'package:temp/pages/UI/app_popup.dart';
 import 'package:temp/pages/main/tabs/create/card_order/card_order_redact/card_order_redact.dart';
+import 'package:temp/pages/main/tabs/profile/user_car/components/create_modal.dart';
 import 'package:temp/repository/user_repo/user_repo.dart';
 
 class PreferencesWithSeats extends Preferences{
@@ -54,63 +55,35 @@ class _ReductDopOptionsState extends State<ReductDopOptions> {
   }
 
   void saveNewData(Preferences preferences)async{
-  
-        Navigator.pop(context);   
-        showDialog(context: context,
-         builder: (context) {
-           return WillPopScope(
-            onWillPop: ()async {
-              return  false;
+        showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10)
+          ),
+          child: CreateModal(
+            completed: (){
+              widget.update();
+              userRepository.getUserFullInformationOrderWithouOrderId();
+              Navigator.pop(context);
             },
-             child: Dialog(
-                      
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14)
-                      ),
-                      child: SizedBox(
-                        height: 70,
-                        child: Center(
-                          child:  Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              SizedBox(width: 40,),
-                              CircularProgressIndicator(),
-                              SizedBox(width: 40,),
-                              Text(
-                                "Wait...",
-                                style: TextStyle(
-                                  fontFamily: "SF",
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 13,
-                                  color: Colors.black,
-                                  
-                                ),
-                                )
-                            ],
-                          ),
-                        ),
-                      )
-                      ),
-           );
-         },); 
-
-       int result =await HttpUserOrder().editDriverOrder(
+            errorFn: (){},
+            future: HttpUserOrder().editDriverOrder(
                           widget.carId, 
                           newDataUserOrder!.seats+1, 
                           _textController.text,
                           preferences,
                           widget.orderId
-                          );
-                          if(result==0){
-                            widget.update();
-                            userRepository.getUserFullInformationOrderWithouOrderId();
-                            Navigator.pop(context);  
-                            Navigator.pop(context);  
-                          }else{
-                             Navigator.pop(context); 
-                          }
+                          ),
+          ),
+        );
+        },
+      );
                          
   }
+
 
   @override
   void initState() {
@@ -215,6 +188,7 @@ class _ReductDopOptionsState extends State<ReductDopOptions> {
                           childCarSeat: newDataUserOrder!.preferences.childCarSeat, 
                           animals: newDataUserOrder!.preferences.animals
                           );
+                          Navigator.pop(context);
                           saveNewData(preferences);
                        
                       }, 

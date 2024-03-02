@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:temp/constants/colors/colors.dart';
 import 'package:temp/http/chats/http_chats.dart';
 import 'package:temp/http/orders/orders.dart';
@@ -7,6 +8,7 @@ import 'package:temp/pages/UI/app_popup.dart';
 import 'package:temp/pages/UI/full_information_order/full_information_order.dart';
 import 'package:temp/pages/main/tabs/chat/chat_page.dart';
 import 'package:temp/pages/main/tabs/create/card_order/card_order_redact/card_order_redact.dart';
+import 'package:temp/pages/main/tabs/profile/user_car/components/create_modal.dart';
 import 'package:temp/repository/user_repo/user_repo.dart';
 
 class FO_BookedStatusInfo extends StatefulWidget {
@@ -31,8 +33,14 @@ class _FO_BookedStatusInfoState extends State<FO_BookedStatusInfo> {
   List<Widget> infoByStatus= [];
 
   @override
+  void initState() {
+    
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    String bookedStatus=widget.fullUserOrder.bookedStatus;
+    String? bookedStatus=widget.fullUserOrder.bookedStatus;
     String orderStatus=widget.fullUserOrder.orderStatus;
     print(bookedStatus);
     if(orderStatus=="canceled"){
@@ -41,8 +49,61 @@ class _FO_BookedStatusInfoState extends State<FO_BookedStatusInfo> {
      if(bookedStatus=="canceled"){
       infoByStatus.add(bookedStatusCanceled());
     }
+    if(infoByStatus.isNotEmpty){
+      infoByStatus.add(hideButton());
+    }
     return Column(
       children: infoByStatus,
+    );
+  }
+
+
+ hideOreder(){
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10)
+          ),
+          child: CreateModal(
+            completed: (){
+              userRepository.getUserBookedOrders();
+              Navigator.pop(context);
+            },
+            errorFn: (){},
+            future: HttpUserOrder().hideOrderBooking(widget.fullUserOrder.orderId),
+          ),
+        );
+      },
+      );
+      
+  }
+
+
+  Widget hideButton(){
+    return GestureDetector(
+      onTap: hideOreder,
+      child: Container(
+                height: 60,
+                width: double.infinity,
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(horizontal: 15),
+                decoration: BoxDecoration(
+                  color: brandBlue,
+                  borderRadius: BorderRadius.circular(10)
+                ),
+                child: Text(
+                  "Hide order",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: "Inter",
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600
+                  ),
+                ),
+              ),
     );
   }
 

@@ -1,8 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:temp/constants/colors/colors.dart';
+import 'package:temp/firebase/firebase.dart';
 import 'package:temp/pages/main/tabs/chat/chat.dart';
 import 'package:temp/pages/main/tabs/create/create.dart';
 import 'package:temp/pages/main/tabs/my_roads/my_roads.dart';
@@ -21,6 +23,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
 
+  FirebaseDriver firebaseDriver=FirebaseDriver();
 int _indexTab=0;
 
   getUserInfo() async {
@@ -39,6 +42,7 @@ int _indexTab=0;
     if(userRepository.isAuth){
         userRepository.getUserInfo();
         appSocket.connect();
+        firebaseDriver.init();
     }
      
       super.initState();
@@ -63,6 +67,7 @@ int _indexTab=0;
           elevation: 0,
         ),
         body: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
           clipBehavior: Clip.none,
           children: [
              const Search(),

@@ -28,15 +28,31 @@ mixin _$UserRepo on _UserRepo, Store {
   late final _$userCarAtom = Atom(name: '_UserRepo.userCar', context: context);
 
   @override
-  ObservableList<UserCar> get userCar {
+  ObservableList<UserCar>? get userCar {
     _$userCarAtom.reportRead();
     return super.userCar;
   }
 
   @override
-  set userCar(ObservableList<UserCar> value) {
+  set userCar(ObservableList<UserCar>? value) {
     _$userCarAtom.reportWrite(value, super.userCar, () {
       super.userCar = value;
+    });
+  }
+
+  late final _$carHasErrorAtom =
+      Atom(name: '_UserRepo.carHasError', context: context);
+
+  @override
+  bool get carHasError {
+    _$carHasErrorAtom.reportRead();
+    return super.carHasError;
+  }
+
+  @override
+  set carHasError(bool value) {
+    _$carHasErrorAtom.reportWrite(value, super.carHasError, () {
+      super.carHasError = value;
     });
   }
 
@@ -276,6 +292,7 @@ mixin _$UserRepo on _UserRepo, Store {
     return '''
 userInfo: ${userInfo},
 userCar: ${userCar},
+carHasError: ${carHasError},
 userOrders: ${userOrders},
 isFirstLoaded: ${isFirstLoaded},
 isFirstLoadedBooked: ${isFirstLoadedBooked},

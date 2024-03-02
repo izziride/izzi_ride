@@ -73,7 +73,7 @@ class HttpUserCar{
  
  }
 
- Future<List<UserCar>> getUserCar()async{
+ Future<List<UserCar>?> getUserCar()async{
    String access= tokenStorage.accessToken;
   if(access=="no") return [];
    
@@ -110,7 +110,7 @@ class HttpUserCar{
 
     return userCar;
   }catch(e){
-    return [];
+    return null;
   }
  }
 

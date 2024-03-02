@@ -5,9 +5,11 @@ import 'package:temp/http/chats/http_chats.dart';
 import 'package:temp/http/orders/orders.dart';
 import 'package:temp/models/chat/message.dart';
 import 'package:temp/pages/UI/app_popup.dart';
+import 'package:temp/pages/UI/full_information_order/components/booked_error_modal.dart';
 import 'package:temp/pages/UI/full_information_order/full_information_order.dart';
 import 'package:temp/pages/main/tabs/chat/chat_page.dart';
 import 'package:temp/pages/main/tabs/create/card_order/card_order_redact/card_order_redact.dart';
+import 'package:temp/pages/main/tabs/profile/user_car/components/create_modal.dart';
 import 'package:temp/repository/chats_repo/chats_repo.dart';
 import 'package:temp/repository/user_repo/user_repo.dart';
 
@@ -36,9 +38,98 @@ class _FO_BookedStatusActionState extends State<FO_BookedStatusAction> {
       
     });
   }
+
+  showErrorBokkedModal(int statusCode){
+    showDialog(
+      context: context,
+      
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+          child: BookedErrorModal(statusCode:statusCode)
+          );
+      },
+      );
+  }
+
+
+  bookOrder(){
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10)
+          ),
+          child: CreateModal(
+            completed: (){
+              userRepository.getUserFullInformationOrder(widget.fullUserOrder.orderId);
+              userRepository.getUserBookedOrders();
+            },
+            errorFn: (){},
+            future: HttpUserOrder().orderBook(widget.fullUserOrder.orderId,widget.seats),
+          ),
+        );
+      },
+      );      
+  }
+
+  cancelOrderDriver(){
+                                          
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10)
+          ),
+          child: CreateModal(
+            completed: (){
+              if(widget.chatid!=null){
+                chatsRepository.updateStatusChat(widget.chatid!);
+                Message newmsg=Message(content: "Driver cancelled order", status: 0, frontContentId: "",chatId: widget.chatid!, time:"",id: -1,senderClientId: -1,type: "1" );
+                chatsRepository.addMessage(newmsg);
+                
+              }
+              Navigator.pop(context);
+            },
+            errorFn: (){},
+            future: userRepository.cancelOrder(widget.fullUserOrder.orderId, ""),
+          ),
+        );
+      },
+      );      
+  }
+cancelOrderClient(){                                          
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10)
+          ),
+          child: CreateModal(
+            completed: (){
+              userRepository.getUserFullInformationOrder(widget.fullUserOrder.orderId);
+              userRepository.getUserBookedOrders();
+              Navigator.pop(context);
+            },
+            errorFn: (){},
+            future: HttpUserOrder().orderCancel(widget.fullUserOrder.orderId),
+          ),
+        );
+      },
+      );      
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    String bookedStatus=widget.fullUserOrder.bookedStatus;
+    String? bookedStatus=widget.fullUserOrder.bookedStatus;
     String orderStatus=widget.fullUserOrder.orderStatus;
     print(bookedStatus);
     if(bookedStatus=="canceled"||orderStatus=="canceled"){
@@ -73,11 +164,8 @@ class _FO_BookedStatusActionState extends State<FO_BookedStatusAction> {
                                       MaterialPageRoute(builder: (context) => MessagePage(chatId: chatId),)
                                       );
                                 }else{
-                                  int result= await HttpUserOrder().orderBook(widget.fullUserOrder.orderId,widget.seats);
-                                  if(result==0){
-                                    userRepository.getUserFullInformationOrder(widget.fullUserOrder.orderId);
-                                    userRepository.getUserBookedOrders();
-                                  }
+                                  bookOrder();
+                                  
                                 }
                               }
                               tapBlocked=false;
@@ -119,25 +207,15 @@ class _FO_BookedStatusActionState extends State<FO_BookedStatusAction> {
                                       borderRadius: BorderRadius.circular(14)
                                     ),
                                     child: AppPopup(warning: false, title: "Cancel ride?", description: "Do you really want to\ncancel your ride?", pressYes: ()async{
-                                        int result;
+                                        Navigator.pop(context);
                                         if(widget.fullOrderType==FullOrderType.user){
-                                           result = await HttpUserOrder().orderCancel(widget.fullUserOrder.orderId);
-                                           userRepository.getUserFullInformationOrder(widget.fullUserOrder.orderId);
+                                          cancelOrderClient();
+                                          
                                         }else{
-                                          result=await userRepository.cancelOrder(widget.fullUserOrder.orderId, "");
-                                          if(widget.chatid!=null){
-                                              chatsRepository.updateStatusChat(widget.chatid!);
-                                              Message newmsg=Message(content: "Driver cancelled order", status: 0, frontContentId: "",chatId: widget.chatid!, time:"",id: -1,senderClientId: -1,type: "1" );
-                                              chatsRepository.addMessage(newmsg);
-                                              
-                                            }
+                                          cancelOrderDriver();
+                                          
                                         }
-                                    if(result==0){
-                                      setState(() {
-                                        Navigator.pop(context);
-                                        Navigator.pop(context);
-                                      });
-                                    }
+                                    
                                     }, pressNo: ()=>Navigator.pop(context)),
                                     );
                                   
