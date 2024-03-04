@@ -61,7 +61,7 @@ class _CreateCarState extends State<CreateCar> {
   void checkValid(BuildContext context){
     final dataProvider=context.read<DataProvider>();
     if(step==0){
-      _pageController.animateToPage(step+1, duration: Duration(milliseconds: 400), curve: Curves.linear);
+     
       if(dataProvider.carName.isEmpty){
         dataProvider.validManufacturer=false;
       }
@@ -82,7 +82,7 @@ class _CreateCarState extends State<CreateCar> {
       ){
         _userCarDrivers.numberFocusNode.unfocus();
         _userCarDrivers.yearFocusNode.unfocus();
-        
+         _pageController.animateToPage(step+1, duration: Duration(milliseconds: 400), curve: Curves.linear);
       }
     }
     if(step==1){
