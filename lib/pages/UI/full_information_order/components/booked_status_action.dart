@@ -5,6 +5,7 @@ import 'package:temp/http/chats/http_chats.dart';
 import 'package:temp/http/orders/orders.dart';
 import 'package:temp/models/chat/message.dart';
 import 'package:temp/pages/UI/app_popup.dart';
+import 'package:temp/pages/UI/feedback/feed_back_page.dart';
 import 'package:temp/pages/UI/full_information_order/components/booked_error_modal.dart';
 import 'package:temp/pages/UI/full_information_order/full_information_order.dart';
 import 'package:temp/pages/main/tabs/chat/chat_page.dart';
@@ -245,7 +246,34 @@ cancelOrderClient(){
                           ),
                         )
                         :SizedBox.shrink(),
-                        SizedBox(height: 30,)
+                        SizedBox(height: 12,),
+                        true?GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                              context, MaterialPageRoute(builder: (context) => FeedBack(),)
+                              );
+                          },
+                          child: Container(
+                                height: 60,
+                                width: double.infinity,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: Color.fromRGBO(242, 243, 245, 1),
+                                  borderRadius: BorderRadius.circular(10)
+                                ),
+                                child: Text(
+                                  "feedback",
+                                  style: TextStyle(
+                                    color: brandBlue,
+                                    fontFamily: "Inter",
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600
+                                  ),
+                                ),
+                              ),
+                        ):SizedBox.shrink(),
+                        SizedBox(height: 30,),
+
       ],
     );
   }
