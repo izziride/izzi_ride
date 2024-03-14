@@ -368,7 +368,7 @@ class _MessagePageState extends State<MessagePage> {
                       SizedBox(
                           width: double.infinity,
                           height: double.infinity,
-                          child: Image.asset("assets/image/bg4.jpg",width: 20,height: 20, repeat: ImageRepeat.repeat,)
+                          child: Image.asset("assets/image/bg5.png",width: 20,height: 20, repeat: ImageRepeat.repeat,)
                           ),
                       Observer(
                         builder: (context) {
