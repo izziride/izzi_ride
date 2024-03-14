@@ -51,6 +51,7 @@ class _CardFullOrderState extends State<CardFullOrder> {
   @override
   void dispose() {
     userRepository.userOrderFullInformation=null;
+    userRepository.userOrderFullInformationError=false;
     print("dis");
     super.dispose();
   }
@@ -103,7 +104,7 @@ class _CardFullOrderState extends State<CardFullOrder> {
                           opacity: isCanceled?0.5:1,
                           child: Column(
                             children: [
-                              CardOrder(side: (){}, driverOrder: driverOrder,full:true,variable: true,),
+                              CardOrder(rate: fullUserOrder.driverRate, side: (){}, driverOrder: driverOrder,full:true,variable: true,),
                               SizedBox(height: fullOrderType==FullOrderType.driver?24:0 ,),
                               fullOrderType==FullOrderType.driver?FO_PassangerData(travelers:travelers,orderId: orderId,chatid: widget.chatid,):const SizedBox.shrink(),
                               const SizedBox(height: 24,),

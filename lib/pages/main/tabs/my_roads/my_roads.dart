@@ -91,6 +91,7 @@ class _MyRoadsState extends State<MyRoads> {
                             child: Stack(
                               children: [
                                 CardOrder(
+                                  rate: null,
                                   variable:modalView?variable==index:true,
                                   driverOrder: myTrips[index],
                                   side: (){setState(() {

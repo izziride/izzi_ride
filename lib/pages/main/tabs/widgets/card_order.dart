@@ -11,7 +11,8 @@ final DriverOrder driverOrder;
 final Function side;
 final bool full;
 final bool variable;
-const CardOrder({required this.variable, required this.side, required this.driverOrder,required this.full,super.key});
+final double? rate;
+const CardOrder({required this.rate, required this.variable, required this.side, required this.driverOrder,required this.full,super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -200,7 +201,23 @@ const CardOrder({required this.variable, required this.side, required this.drive
                                                 fontWeight: FontWeight.w500,
                                                 color: Color.fromRGBO(51, 51, 51, 1)
                                           ),
-                                  )
+                                  ),
+                                  SizedBox(width: 10,),
+                                  full?Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "${rate}",
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(51, 51, 51, 1),
+                                          fontFamily: "Inter",
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600
+                                        ),
+                                      ),
+                                      Icon(Icons.star,size: 20,color: Color.fromARGB(255, 240, 217, 11))
+                                    ],
+                                ):SizedBox.shrink(),
                                 ],
                               ),
                               Padding(
@@ -224,7 +241,7 @@ const CardOrder({required this.variable, required this.side, required this.drive
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Free places",
+                                "Seats",
                                 style: const TextStyle(
                                       fontFamily: "SF",
                                       fontSize: 12,

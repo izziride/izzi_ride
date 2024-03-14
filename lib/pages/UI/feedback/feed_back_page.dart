@@ -3,10 +3,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:temp/constants/colors/colors.dart';
+import 'package:temp/http/orders/orders.dart';
 import 'package:temp/pages/main/tabs/search/result_search/bar_navigation.dart';
+import 'package:temp/repository/user_repo/user_repo.dart';
 
 class FeedBack extends StatefulWidget {
-  const FeedBack({super.key});
+  final int orderId;
+  final int userIdForRate;
+  const FeedBack({super.key,required this.orderId,required this.userIdForRate});
 
   @override
   State<FeedBack> createState() => _FeedBackState();
@@ -16,6 +20,19 @@ class _FeedBackState extends State<FeedBack> {
 
 
   int feedBack=-1;
+
+  void back(){
+    Navigator.pop(context);
+  }
+
+  void sendRate()async{
+   int result=await HttpUserOrder().rateUser(widget.orderId, "", feedBack+1, widget.userIdForRate);
+   if(result==0){
+    back();
+    userRepository.getUserFullInformationOrder(widget.orderId);
+    
+   }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,14 +71,13 @@ class _FeedBackState extends State<FeedBack> {
                 ),
                 SizedBox(height: 100,)
               ],
+              
              ),
            ),
-           Padding(
+           feedBack!=-1?Padding(
             padding: EdgeInsets.symmetric(horizontal: 15),
              child: GestureDetector(
-                            onTap: (){
-                              
-                            },
+                            onTap: sendRate,
                             child: Container(
                                   height: 60,
                                   width: double.infinity,
@@ -81,7 +97,7 @@ class _FeedBackState extends State<FeedBack> {
                                   ),
                                 ),
                           ),
-           ),
+           ):SizedBox(height: 60,),
            SizedBox(height: 20,)
         ],
       ),

@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
@@ -163,11 +164,14 @@ class UserOrderFullInformation extends DriverOrder{
   List<Travelers> travelers;
   List<Location> location;
   String? comment;
-  bool isBooked;
   int? driverId;
   bool isDriver;
   Automobile automobile;
+  double driverRate;
+  int orderRate;
   UserOrderFullInformation({
+    required this.orderRate,
+    required this.driverRate,
     required super.bookedStatus,
     required super.status,
     required super.userId,
@@ -186,8 +190,7 @@ class UserOrderFullInformation extends DriverOrder{
     required super.price, 
     required super.preferences,
     required this.travelers,
-    required this.location,
-    required this.isBooked
+    required this.location
     });
   
 }
@@ -249,6 +252,39 @@ class HttpUserOrder{
     final authInterceptor = AuthInterceptor(dio);
     dio.interceptors.add(authInterceptor);
   }
+
+  Future<int> rateUser(int orderId,String comment,int rate,int reviewedId)async{
+
+    String access = tokenStorage.accessToken;
+  
+    try{
+    Response response = await dio.post(
+      "${baseAppUrl}order/review",
+      data: {
+        "order_id":orderId,
+        "comment":comment,
+        "rate":rate,
+        "reviewed_id":reviewedId
+      },
+      options: Options(
+        headers: {
+          "Authorization":"Bearer $access"
+        }
+      )
+      );
+      print(response.data);
+      return 0;
+    }catch(e ){
+      if(e is DioException){
+        final error = e;
+        if(error.response!=null && error.response!.data["code"]!=null){
+          return error.response!.data["code"];
+        }
+      }
+        return -1;
+    }
+ 
+ }
 
   Future<int> hideOrderBooking(int orderId)async{
 
@@ -616,6 +652,8 @@ class HttpUserOrder{
        
 
      final fullOrderInfo=  UserOrderFullInformation(
+      orderRate: _mapResponse["order_rating"]??0,
+      driverRate: (_mapResponse["driver_rate"]??0)+0.0,
       status: _mapResponse["status"],
       bookedStatus: _mapResponse["booked_status"]??"_",
       userId: _mapResponse["user_id"]??-1,
@@ -649,7 +687,6 @@ class HttpUserOrder{
         ),
       location: _locations,
       travelers: _travelers,
-      isBooked: _mapResponse["is_booked"]
       );
       return fullOrderInfo;
     } catch (e) {

@@ -8,8 +8,9 @@ import 'package:temp/pages/registration/registration_page.dart';
 List<Widget> assetsOnboard=[
   SvgPicture.asset("assets/svg/onboard_4.2.svg",height: 300),
   SvgPicture.asset("assets/svg/onboard_2.2.svg",height: 300),
-  SvgPicture.asset("assets/svg/onboard_3.2.svg",height: 300),
   SvgPicture.asset("assets/svg/onboard_1.2.svg",height: 300,),
+  SvgPicture.asset("assets/svg/onboard_3.2.svg",height: 300),
+  
 ];
 
 
@@ -33,8 +34,9 @@ class _MyAppState extends State<Onboard> {
 List<String> upText=[
 "Don't have a car, but planing a trip and looking for a ride?",
 "Going to a trip on your car and don't know how to save on it? It's easy!",
-"Dont forget to share your experience.",
 "Did you find your ridemates already?"
+"Dont forget to share your experience.",
+
 
 ];
 
@@ -49,7 +51,13 @@ List<Widget> images=[
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Create a ride between Cities and States. Share your coats with ridemates. Save on your trip.",style: TextStyle(color: Colors.white,fontFamily: "SF",fontSize: 18,fontWeight: FontWeight.w400,height: 1)),
+            const Text("Create a ride between Cities and States. Share your costs with ridemates. Save on your trip.",style: TextStyle(color: Colors.white,fontFamily: "SF",fontSize: 18,fontWeight: FontWeight.w400,height: 1)),
+          ],
+          ),
+          Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text("Great. Chat with ridemates directly through the app and meet them at the agreed time and location.",style: TextStyle(color: Colors.white,fontFamily: "SF",fontSize: 18,fontWeight: FontWeight.w400,height: 1)),
           ],
           ),
           Column(
@@ -59,12 +67,7 @@ List<Widget> images=[
 
           ],
           ),
-          Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text("Great. Chat with ridemates directly through the app and meet them at the agreed time and location.",style: TextStyle(color: Colors.white,fontFamily: "SF",fontSize: 18,fontWeight: FontWeight.w400,height: 1)),
-          ],
-          )
+          
   ];
 
   @override
