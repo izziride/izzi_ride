@@ -296,32 +296,7 @@ cancelOrderClient(){
                           ),
                         )
                         :SizedBox.shrink(),
-                        SizedBox(height: 12,),
-                        true?GestureDetector(
-                          onTap: (){
-                            Navigator.push(
-                              context, MaterialPageRoute(builder: (context) => FeedBack(),)
-                              );
-                          },
-                          child: Container(
-                                height: 60,
-                                width: double.infinity,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: Color.fromRGBO(242, 243, 245, 1),
-                                  borderRadius: BorderRadius.circular(10)
-                                ),
-                                child: Text(
-                                  "feedback",
-                                  style: TextStyle(
-                                    color: brandBlue,
-                                    fontFamily: "Inter",
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600
-                                  ),
-                                ),
-                              ),
-                        ):SizedBox.shrink(),
+                     
                         SizedBox(height: 30,),
 
       ],
