@@ -11,7 +11,7 @@ final DriverOrder driverOrder;
 final Function side;
 final bool full;
 final bool variable;
-final double? rate;
+final double rate;
 const CardOrder({required this.rate, required this.variable, required this.side, required this.driverOrder,required this.full,super.key});
 
   @override
@@ -203,7 +203,7 @@ const CardOrder({required this.rate, required this.variable, required this.side,
                                           ),
                                   ),
                                   SizedBox(width: 10,),
-                                  full?Row(
+                                  Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
@@ -217,7 +217,7 @@ const CardOrder({required this.rate, required this.variable, required this.side,
                                       ),
                                       Icon(Icons.star,size: 20,color: Color.fromARGB(255, 240, 217, 11))
                                     ],
-                                ):SizedBox.shrink(),
+                                ),
                                 ],
                               ),
                               Padding(

@@ -94,9 +94,8 @@ class _CardOrderReductState extends State<CardOrderReduct> {
                       children: [
                         VariableAuto(
                           carIdInOrder:newCarIdInOrder,
-                          updateOrderId:updateNewCarIdInOrder
                         ),
-                        SizedBox(height: 40,),
+                        SizedBox(height: 20,),
                         ReductDopOptions(preferencesWithSeats: PreferencesWithSeats.combine(widget.preferences, widget.seats),carId:widget.carIdInOrder,orderId:widget.orderId,update:widget.update),
                  
                       ],

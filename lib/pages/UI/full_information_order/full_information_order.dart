@@ -83,7 +83,7 @@ class _CardFullOrderState extends State<CardFullOrder> {
 
               
 
-              DriverOrder driverOrder =  DriverOrder( userId: fullUserOrder.userId, orderId: fullUserOrder.orderId, clientAutoId: fullUserOrder.clientAutoId, departureTime: fullUserOrder.departureTime, nickname: fullUserOrder.nickname, orderStatus: fullUserOrder.orderStatus, startCountryName: fullUserOrder.startCountryName, endCountryName: fullUserOrder.endCountryName, seatsInfo: fullUserOrder.seatsInfo, price: fullUserOrder.price, preferences: fullUserOrder.preferences,bookedStatus: fullUserOrder.bookedStatus,status: fullUserOrder.status);
+              DriverOrder driverOrder =  DriverOrder(driverRate: fullUserOrder.driverRate,  userId: fullUserOrder.userId, orderId: fullUserOrder.orderId, clientAutoId: fullUserOrder.clientAutoId, departureTime: fullUserOrder.departureTime, nickname: fullUserOrder.nickname, orderStatus: fullUserOrder.orderStatus, startCountryName: fullUserOrder.startCountryName, endCountryName: fullUserOrder.endCountryName, seatsInfo: fullUserOrder.seatsInfo, price: fullUserOrder.price, preferences: fullUserOrder.preferences,bookedStatus: fullUserOrder.bookedStatus,status: fullUserOrder.status);
               FullOrderType fullOrderType=fullUserOrder.isDriver? FullOrderType.driver:FullOrderType.user;
               List<Travelers> travelers = fullUserOrder.travelers;
               int orderId=fullUserOrder.orderId;

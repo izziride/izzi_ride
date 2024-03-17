@@ -129,7 +129,9 @@ class DriverOrder{
   Preferences preferences;
   String status;
   String? bookedStatus;
+  double driverRate;
   DriverOrder({
+    required this.driverRate,
     required this.bookedStatus,
     required this.status,
     required this.userId,
@@ -167,11 +169,10 @@ class UserOrderFullInformation extends DriverOrder{
   int? driverId;
   bool isDriver;
   Automobile automobile;
-  double driverRate;
+
   int orderRate;
   UserOrderFullInformation({
     required this.orderRate,
-    required this.driverRate,
     required super.bookedStatus,
     required super.status,
     required super.userId,
@@ -180,6 +181,7 @@ class UserOrderFullInformation extends DriverOrder{
     this.driverId,
     this.comment,
     required super.orderId, 
+    required super.driverRate,
     required super.clientAutoId, 
     required super.departureTime, 
     required super.nickname, 
@@ -409,6 +411,7 @@ class HttpUserOrder{
     List<DriverOrder> driverOrder=[];
     List<dynamic> orders=response.data["data"];
     driverOrder=orders.map((el) =>DriverOrder(
+      driverRate: el["driver_rate"]+0.0,
       status: el["status"],
       bookedStatus: el["booked_status"],
       userId:  el["order_id"]??-1,
@@ -786,6 +789,7 @@ class HttpUserOrder{
     List<DriverOrder> driverOrder=[];
     List<dynamic> orders=response.data["data"];
     driverOrder=orders.map((el) =>DriverOrder(
+      driverRate: el["driver_rate"]+0.0,
       status: el["status"],
       bookedStatus: el["booked_status"],
       clientAutoId: -1,

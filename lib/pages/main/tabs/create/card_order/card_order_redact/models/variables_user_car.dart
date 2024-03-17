@@ -6,8 +6,7 @@ import 'package:temp/pages/main/tabs/create/card_order/card_order_redact/UI/vari
 
 class VariableAuto extends StatefulWidget {
   final int carIdInOrder;
-  final Function updateOrderId;
-  const VariableAuto({required this.updateOrderId, required this.carIdInOrder, super.key});
+  const VariableAuto({ required this.carIdInOrder, super.key});
 
   @override
   State<VariableAuto> createState() => _VariableAutoState();
@@ -41,28 +40,13 @@ class _VariableAutoState extends State<VariableAuto> {
             );
           }
           List<UserCar> usercars=snapshot.data!;
+          UserCar? current=usercars.firstWhere((element) => element.carId==widget.carIdInOrder,);
           
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                for(int i=0;i<usercars.length;i++) 
-                  InkWell(
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                    onTap: () {
-                      widget.updateOrderId(usercars[i].carId);
-                    },
-                    child: VariableCar( pressed: widget.carIdInOrder==usercars[i].carId,userCar:usercars[i])
-                    ),
-                Text(
-                  "+ Add car",
-                  style: TextStyle(
-                    color: brandBlue,
-                    fontFamily: "SF",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500
-                  ),
-                )
+                current!=null?VariableCar( pressed:true, userCar:current!):SizedBox.shrink(),
+                  
               ],
           );
           
