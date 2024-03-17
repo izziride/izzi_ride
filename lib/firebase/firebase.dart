@@ -18,6 +18,8 @@ class FirebaseDriver{
     }
     });
     final apnsToken = await FirebaseMessaging.instance.getToken();
+    print("FB");
+    print(apnsToken);
     if(apnsToken!=null){
       String platform="";
       if(Platform.isAndroid){

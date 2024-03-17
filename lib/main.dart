@@ -30,7 +30,7 @@ void main() async {
    await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
 );  
-  
+  FirebaseMessaging.instance.requestPermission();
   int isWelcome =await FirstWelcome().getWelocme();
   
   runApp(const App());
