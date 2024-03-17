@@ -88,8 +88,13 @@ class HttpUserCar{
         }
       )
     );
+    
     List<UserCar> userCar=[];
+    if(response.data["data"]==null){
+      return [];
+    }
     List<dynamic>list= response.data["data"];
+    
     userCar=list.map(
       (el) =>UserCar(
         carId: el["car_id"], 

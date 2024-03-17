@@ -535,7 +535,7 @@ class HttpUserOrder{
      
     List<dynamic> orders=response.data["data"];
     driverOrder=orders.map((el) =>DriverOrderFind(
-      bookedStatus: el["booked_status"]??-1,
+      bookedStatus: el["booked_status"]??"",
       orderId: el["order_id"], 
       driverId: el["driver_id"],
       driverCar: el["driver_car"], 
@@ -821,15 +821,16 @@ class HttpUserOrder{
   Future<int> editDriverOrder(int carId, int seats,String comment,Preferences preferences,int orderId)async{
     String access= tokenStorage.accessToken;
     try {
-
-      Response response=await dio.put(
-        "${baseAppUrl}order/$orderId",
-        data: {
+      Map data={
           "car_id":carId,
           "number_of_seats":seats,
           "comment":comment,
           "preference":preferences.toJson()
-        },
+        };
+        print(data);
+      Response response=await dio.put(
+        "${baseAppUrl}order/$orderId",
+        data: data,
         options: Options(
           headers: {
             "Authorization":"Bearer $access"
