@@ -141,7 +141,7 @@ class _MessagePageState extends State<MessagePage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                chatInfo.chatMembers[0].clientName+widget.chatId.toString(),
+                                chatInfo.chatMembers[0].clientName,
                                 style: TextStyle(
                                   fontFamily: "SF",
                                   fontWeight: FontWeight.w500,

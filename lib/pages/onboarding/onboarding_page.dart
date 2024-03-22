@@ -34,7 +34,7 @@ class _MyAppState extends State<Onboard> {
 List<String> upText=[
 "Don't have a car, but planing a trip and looking for a ride?",
 "Going to a trip on your car and don't know how to save on it? It's easy!",
-"Did you find your ridemates already?"
+"Did you find your ridemates already?",
 "Dont forget to share your experience.",
 
 

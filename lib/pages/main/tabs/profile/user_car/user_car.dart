@@ -49,34 +49,42 @@ int currentCar=0;
               child: variableAuto()
               ),
           ),
-          Padding(
-                            padding: EdgeInsets.only(bottom: 25,left: 15,right: 15),
-                            child: InkWell(
-                                              onTap: (){
-                                              },
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                width: double.infinity,
-                                                height: 60,
-                                                decoration: BoxDecoration(
-                                                  color:brandBlue,
-                                                  borderRadius: BorderRadius.circular(10)
-                                                  
-                                                ),
-                                                child: Text(
-                                                  "Continue",
-                                                  style: TextStyle(
-                            color:Colors.white,
-                            fontFamily: "Inter",
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600
+          Builder(
+            builder: (context) {
+
+              bool isCar=userRepository.userCar!=null&&userRepository.userCar!.length>0;
+              
+
+              return Padding(
+                                padding: EdgeInsets.only(bottom: 25,left: 15,right: 15),
+                                child:isCar? InkWell(
+                                                  onTap: (){
+                                                  },
+                                                  child: Container(
+                                                    alignment: Alignment.center,
+                                                    width: double.infinity,
+                                                    height: 60,
+                                                    decoration: BoxDecoration(
+                                                      color:brandBlue,
+                                                      borderRadius: BorderRadius.circular(10)
+                                                      
+                                                    ),
+                                                    child: Text(
+                                                      "Continue",
+                                                      style: TextStyle(
+                                color:Colors.white,
+                                fontFamily: "Inter",
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
-                                              ),
-                                            
-                              
-                                          ),
-                          )
+                                                
+                                  
+                                              ):SizedBox.shrink(),
+                              );
+            }
+          )
         ],
       ),
     );
