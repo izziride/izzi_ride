@@ -68,7 +68,7 @@ List list=[];
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14)
                     ),
-                    child: AppPopup(warning:true, title: "Delete account", description: "Are you sure you want to delete your account?\nAll data will be deleted!", pressYes: ()async{
+                    child: AppPopup(warning:true, title: "Delete account", description: "Are you sure you want to\ndelete your account?\nAll data will be deleted!", pressYes: ()async{
                       
                       int result = await HttpUser().deleteUser();
                       if(result==0){
