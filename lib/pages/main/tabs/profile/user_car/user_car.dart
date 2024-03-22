@@ -52,26 +52,36 @@ int currentCar=0;
           Builder(
             builder: (context) {
 
-              bool isCar=userRepository.userCar!=null&&userRepository.userCar!.length>0;
+             
               
 
               return Padding(
                                 padding: EdgeInsets.only(bottom: 25,left: 15,right: 15),
-                                child:isCar? InkWell(
-                                                  onTap: (){
-                                                  },
-                                                  child: Container(
-                                                    alignment: Alignment.center,
-                                                    width: double.infinity,
-                                                    height: 60,
-                                                    decoration: BoxDecoration(
-                                                      color:brandBlue,
-                                                      borderRadius: BorderRadius.circular(10)
-                                                      
-                                                    ),
-                                                    child: Text(
-                                                      "Continue",
-                                                      style: TextStyle(
+                                child:InkWell(
+                                  onTap: (){
+                                    Navigator.push(
+                                      context, MaterialPageRoute(
+                                        builder: (context) 
+                                        => ChangeNotifierProvider<DataProvider>(
+                                          create: (context) => DataProvider(),
+                                          
+                                          child: CreateCar()
+                                          ),
+                                      )
+                                      );
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    width: double.infinity,
+                                    height: 60,
+                                    decoration: BoxDecoration(
+                                      color:brandBlue,
+                                      borderRadius: BorderRadius.circular(10)
+                                      
+                                    ),
+                                    child: Text(
+                                      "Add",
+                                      style: TextStyle(
                                 color:Colors.white,
                                 fontFamily: "Inter",
                                 fontSize: 16,
@@ -81,7 +91,7 @@ int currentCar=0;
                                                   ),
                                                 
                                   
-                                              ):SizedBox.shrink(),
+                                              )
                               );
             }
           )
