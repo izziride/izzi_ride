@@ -232,7 +232,7 @@ class _MyAppState extends State<Registration> {
                       ),
                       step==0
                       ?Text(
-                        "Whether you're creating an account to creat a ride or find a ride, lets start with your number",
+                        "Whether you're creating an account to create a ride or find a ride, let's start with your number",
                         style:  TextStyle(
                         fontFamily: "Inter",
                         fontWeight: FontWeight.w400,

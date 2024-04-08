@@ -201,7 +201,7 @@ class _SearchCitySearch extends State<SearchCitySearch> {
         ),
         body: Column(
           children: [
-        BarNavigation(back: true, title: "Road "+arguments.hint),
+        BarNavigation(back: true, title: arguments.hint),
         Padding(
           padding: const EdgeInsets.only(left: 15, right: 15),
           child: Column(

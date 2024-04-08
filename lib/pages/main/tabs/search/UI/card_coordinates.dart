@@ -84,7 +84,7 @@ final clickedButton = await FlutterPlatformAlert.showAlert(
                       color: brandBlack,
                       fontSize: 14,
                       fontFamily: "SF",
-                      fontWeight: FontWeight.w500
+                      fontWeight: FontWeight.w400
                     ),
                     )
                 ],

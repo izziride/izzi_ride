@@ -187,7 +187,7 @@ class _MyRoadsState extends State<MyRoads> {
                   ),
               ),
                 Text(
-                "On this page you will find rides you already booked.",
+                "On this page you will find rides you've already booked.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: brandBlack,

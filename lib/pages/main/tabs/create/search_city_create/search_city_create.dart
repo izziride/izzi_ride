@@ -112,10 +112,10 @@ class _SearchFromState extends State<SearchFrom> {
           PlacesAutocompleteResponse response = await places.autocomplete(
     text,
     language: "us", 
-    types: ["postal_code","sublocality","administrative_area_level_3","locality","street_address"],
+    types: ["postal_code","sublocality","administrative_area_level_3","locality","street_address","food"],
     components: [Component(Component.country, "us")], 
   );
-  print(response.predictions);
+  inspect(response.predictions);
     setState(() {
       _cityList=response.predictions;
     });
@@ -150,7 +150,7 @@ class _SearchFromState extends State<SearchFrom> {
         ),
         body: Column(
           children: [
-        BarNavigation(back: true, title: "Road ${arguments.hint}"),
+        BarNavigation(back: true, title: "${arguments.hint}"),
         Padding(
           padding: const EdgeInsets.only(left: 15, right: 15),
           child: Column(

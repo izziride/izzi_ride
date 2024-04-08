@@ -105,7 +105,7 @@ void _showDialogPage(BuildContext context){
                                 builder: (context) {
                                   return CardCoordinates(
                                     valid:!isFromEmpty,
-                                  hint: "from",
+                                  hint: "From",
                                   name: createRepo.fromCity,
                                   icon: SvgPicture.asset(
                                         "assets/svg/geoFrom.svg"
@@ -128,7 +128,7 @@ void _showDialogPage(BuildContext context){
                             builder: (context) {
                               return CardCoordinates(
                                 valid:!isToEmpty,
-                              hint: "to",
+                              hint: "To",
                               name: createRepo.toCity,
                               icon: SvgPicture.asset(
                                     "assets/svg/geoTo.svg"

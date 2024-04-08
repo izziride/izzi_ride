@@ -54,7 +54,7 @@ class _CalendareState extends State<Calendare> {
               style: TextStyle(
                 fontFamily: "SF",
                 fontSize: 14,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w400,
                 color: brandBlack
               ),
               )
