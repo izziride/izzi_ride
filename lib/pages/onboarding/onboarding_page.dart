@@ -33,7 +33,7 @@ class _MyAppState extends State<Onboard> {
  
 List<String> upText=[
 "Don't have a car, but planning a trip and looking for a ride?",
-"Going to a trip on your car and don't know how to save on it? It's easy!",
+"Going on a trip on your car and don't know how to save on it? It's easy!",
 "Did you find your ridemates already?",
 "Dont forget to share your experience.",
 
@@ -63,7 +63,7 @@ List<Widget> images=[
           Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("After you arrived, go to the app and rate your ridemates. Share your experience. Let others know more about your ridemates. Make your trip more rewerding with iZZi Ride.",style: TextStyle(color: Colors.white,fontFamily: "SF",fontSize: 18,fontWeight: FontWeight.w400,height: 1)),
+            const Text("After you've arrived at the final destination, go to the app and rate your ridemates. Share your experience. Let others know more about your ridemates. Make your trip more rewerding with iZZi Ride.",style: TextStyle(color: Colors.white,fontFamily: "SF",fontSize: 18,fontWeight: FontWeight.w400,height: 1)),
 
           ],
           ),
