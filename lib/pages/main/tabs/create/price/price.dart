@@ -345,7 +345,7 @@ class _PriceState extends State<Price> {
                                               )
                                             ),
                                             child: Text(
-                                              "20\$",
+                                              "\$20",
                                               style: TextStyle(
                                                 color: Color.fromRGBO(85, 85, 85, 1),
                                                 fontFamily: "SF",
@@ -376,7 +376,7 @@ class _PriceState extends State<Price> {
                                                 )
                                               ),
                                               child: Text(
-                                                "40\$",
+                                                "\$40",
                                                 style: TextStyle(
                                                   color: Color.fromRGBO(85, 85, 85, 1),
                                                   fontFamily: "SF",
@@ -406,7 +406,7 @@ class _PriceState extends State<Price> {
                                               )
                                             ),
                                             child: Text(
-                                              "60\$",
+                                              "\$60",
                                               style: TextStyle(
                                                 color: Color.fromRGBO(85, 85, 85, 1),
                                                 fontFamily: "SF",

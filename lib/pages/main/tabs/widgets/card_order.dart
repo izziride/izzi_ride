@@ -106,7 +106,7 @@ const CardOrder({required this.rate, required this.variable, required this.side,
                                  Padding(
                                   padding: EdgeInsets.only(top: 4),
                                   child: Text(
-                                    driverOrder.startCountryName,
+                                    driverOrder.startCountryName[0].toUpperCase()+ driverOrder.startCountryName.substring(1),
                                     style: TextStyle(
                                           fontFamily: "SF",
                                           fontSize: 16,
@@ -146,7 +146,7 @@ const CardOrder({required this.rate, required this.variable, required this.side,
                                 Padding(
                                   padding: EdgeInsets.only(top:4),
                                   child: Text(
-                                    driverOrder.endCountryName,
+                                    driverOrder.endCountryName[0].toUpperCase()+ driverOrder.endCountryName.substring(1),
                                     style: TextStyle(
                                           fontFamily: "SF",
                                           fontSize: 16,

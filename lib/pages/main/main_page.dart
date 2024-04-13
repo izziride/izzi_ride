@@ -98,7 +98,6 @@ int _indexTab=0;
               
             ),
             labelStyle: TextStyle(
-              
               color: brandGrey,
               fontFamily: "Inter",
               fontSize: 12,
