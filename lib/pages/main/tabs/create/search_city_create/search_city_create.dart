@@ -115,7 +115,7 @@ class _SearchFromState extends State<SearchFrom> {
     types: ["postal_code","sublocality","administrative_area_level_3","locality","street_address"],
     components: [Component(Component.country, "us")], 
   );
-  inspect(response.predictions);
+  inspect(response);
     setState(() {
       _cityList=response.predictions;
     });

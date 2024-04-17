@@ -12,7 +12,7 @@ if (localPropertiesFile.exists()) {
     }
 }
 
-def flutterVersionCode = "2"
+def flutterVersionCode = "3"
 if (flutterVersionCode == null) {
     flutterVersionCode = '2'
 }
@@ -33,10 +33,10 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file('izzi-key.keystore')
-            storePassword 'IZZIRide2024'
-            keyAlias 'izzi-alias'
-            keyPassword 'IZZIRide2024'
+            storeFile file('izzistore.jks')
+            storePassword 'izzipass'
+            keyAlias 'izzikey'
+            keyPassword 'izzipass'
         }
     }
     kotlinOptions {
