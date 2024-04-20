@@ -288,6 +288,17 @@ mixin _$UserRepo on _UserRepo, Store {
   }
 
   @override
+  dynamic deleteUserBookedOrders(int orderId) {
+    final _$actionInfo = _$_UserRepoActionController.startAction(
+        name: '_UserRepo.deleteUserBookedOrders');
+    try {
+      return super.deleteUserBookedOrders(orderId);
+    } finally {
+      _$_UserRepoActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 userInfo: ${userInfo},

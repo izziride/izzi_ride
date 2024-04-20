@@ -106,7 +106,7 @@ void _showDialogPage(BuildContext context){
                   child: ListView.builder(
                     itemCount: orders.length,
                     itemBuilder: (context, index) {
-                      return CardOrder(rate:orders[index].driverRate , variable: true, driverOrder: orders[index],side: (){setState(() {
+                      return CardOrder(rate:orders[index].driverRate , variable: false, driverOrder: orders[index],side: (){setState(() {
                         
                       });},full: false,);
                     },

@@ -9,8 +9,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:temp/pages/main/tabs/search/result_search/bar_navigation.dart';
 
 
-const conditionPdf="http://ezride.pro/docs/condition-use.pdf";
-const policyPdf="http://ezride.pro/docs/private-policy.pdf";
+const conditionPdf="https://ezride.pro/docs/condition-use.pdf";
+const policyPdf="https://ezride.pro/docs/private-policy.pdf";
 
 
 enum PDFTYPE{
@@ -32,7 +32,6 @@ class _PDFWiewerState extends State<PDFWiewer> {
 
   Future<String> downloadAndSavePdf() async {
     File file=File("");
-   
     final directory = await getApplicationDocumentsDirectory();
     if(widget.pdftype==PDFTYPE.condition){
        file = File('${directory.path}/sample.pdf');

@@ -116,6 +116,10 @@ abstract class _UserRepo with Store {
   @observable
   ObservableList<DriverOrder> userBookedOrders = ObservableList();
 
+  @action deleteUserBookedOrders(int orderId){
+    userBookedOrders=ObservableList.of(userBookedOrders.where((element) => element.orderId!=orderId));
+  }
+
   @action
   Future<void> getUserBookedOrders()async{
     List<DriverOrder> listOrders= await HttpUserOrder().myTrips();

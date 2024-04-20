@@ -106,7 +106,7 @@ const CardOrder({required this.rate, required this.variable, required this.side,
                                  Padding(
                                   padding: EdgeInsets.only(top: 4),
                                   child: Text(
-                                    driverOrder.startCountryName[0].toUpperCase()+ driverOrder.startCountryName.substring(1),
+                                   driverOrder.startCountryName[0].toUpperCase()+ driverOrder.startCountryName.substring(1),
                                     style: TextStyle(
                                           fontFamily: "SF",
                                           fontSize: 16,
@@ -146,7 +146,7 @@ const CardOrder({required this.rate, required this.variable, required this.side,
                                 Padding(
                                   padding: EdgeInsets.only(top:4),
                                   child: Text(
-                                    driverOrder.endCountryName[0].toUpperCase()+ driverOrder.endCountryName.substring(1),
+                                   driverOrder.endCountryName[0].toUpperCase()+ driverOrder.endCountryName.substring(1),
                                     style: TextStyle(
                                           fontFamily: "SF",
                                           fontSize: 16,
@@ -352,10 +352,32 @@ const CardOrder({required this.rate, required this.variable, required this.side,
               ),
             
           ),
-          !variable?Container(
+          variable?Container(
               height:full? 214:262,
               width: double.infinity,
-            color: Color.fromRGBO(109, 106, 106, 0.507),
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(136, 148, 173, 0.836),
+                borderRadius: BorderRadius.circular(12)
+              ),
+              child: Center(
+                child:  Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(driverOrder.bookedStatus=="unbooked"?Icons.info: Icons.done,size:  40,),
+                    (driverOrder.bookedStatus!="unbooked"&&driverOrder.status!="finished")
+                    ?Text(
+                            "You are a participant in the trip.\nCan't hide.",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: brandBlue,
+                              fontFamily: "SF",
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800
+                            ),
+                          ):SizedBox.shrink(),
+                  ],
+                )
+              ),
           ):SizedBox.shrink()
         ],
       ),
