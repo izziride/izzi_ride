@@ -81,92 +81,94 @@ class _AutoState extends State<Auto> {
                builder: (context) {
 
                  return Expanded(
-                   child: Padding(
-                      padding: const EdgeInsets.only(left: 15,right: 15),
-                     child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                         children: [
-                           Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                 
-                                    for(int i=0;i<userRepository.userCar!.length;i++) 
-                                      InkWell(
-                                        highlightColor: Colors.transparent,
-                                        splashColor: Colors.transparent,
+                   child: SingleChildScrollView(
+                     child: Padding(
+                        padding: const EdgeInsets.only(left: 15,right: 15),
+                       child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                           children: [
+                             Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                   
+                                      for(int i=0;i<userRepository.userCar!.length;i++) 
+                                        InkWell(
+                                          highlightColor: Colors.transparent,
+                                          splashColor: Colors.transparent,
+                                          onTap: () {
+                                           setState(() {
+                                              currentautoId=userRepository.userCar![i].carId;
+                                              print(currentautoId);
+                                           });
+                                          },
+                                          child: VariableCar( pressed: currentautoId==userRepository.userCar![i].carId,userCar:userRepository.userCar![i])
+                                          ),
+                                      GestureDetector(
                                         onTap: () {
-                                         setState(() {
-                                            currentautoId=userRepository.userCar![i].carId;
-                                            print(currentautoId);
-                                         });
+                                           Navigator.push(
+                                          context, MaterialPageRoute(
+                                            builder: (context) 
+                                            => ChangeNotifierProvider<DataProvider>(
+                                              create: (context) => DataProvider(),
+                                              
+                                              child: CreateCar()
+                                              ),
+                                          )
+                                          );
                                         },
-                                        child: VariableCar( pressed: currentautoId==userRepository.userCar![i].carId,userCar:userRepository.userCar![i])
-                                        ),
-                                    GestureDetector(
-                                      onTap: () {
-                                         Navigator.push(
-                                        context, MaterialPageRoute(
-                                          builder: (context) 
-                                          => ChangeNotifierProvider<DataProvider>(
-                                            create: (context) => DataProvider(),
-                                            
-                                            child: CreateCar()
+                                        child: SizedBox(
+                                          height: 40,
+                                          child: Text(
+                                            "+ add car",
+                                            style: TextStyle(
+                                              color: brandBlue,
+                                              fontFamily: "SF",
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500
                                             ),
-                                        )
-                                        );
-                                      },
-                                      child: SizedBox(
-                                        height: 40,
-                                        child: Text(
-                                          "+ add car",
-                                          style: TextStyle(
-                                            color: brandBlue,
-                                            fontFamily: "SF",
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500
                                           ),
                                         ),
-                                      ),
-                                    )
-                                  ],
-                              ),
-                              Padding(
-                                         padding: EdgeInsets.only(bottom: 32),
-                                          child: InkWell(
-                                                            onTap: (){
-                                                              int carIndex=userRepository.userCar!.indexWhere((element) => element.carId==currentautoId);
-                                                              Navigator.push(
-                                                                context, 
-                                                                MaterialPageRoute(builder: (context) => DopOptions(side: widget.side, preferences: userRepository.userCar![carIndex].preferences , count: userRepository.userCar![carIndex].numberOfSeats, carId: currentautoId,createAuto: false,))
-                                                                );
-                                                             
-                                                            },
-                                                            child: Container(
-                                                              alignment: Alignment.center,
-                                                              width: double.infinity,
-                                                              height: 60,
-                                                              decoration: BoxDecoration(
-                                                                color:brandBlue,
-                                                                borderRadius: BorderRadius.circular(10)
-                                                                
-                                                              ),
-                                                              child: Text(
-                                                                "Continue",
-                                                                style: TextStyle(
-                                          color:Colors.white,
-                                          fontFamily: "SF",
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600
+                                      )
+                                    ],
+                                ),
+                                Padding(
+                                           padding: EdgeInsets.only(bottom: 32),
+                                            child: InkWell(
+                                                              onTap: (){
+                                                                int carIndex=userRepository.userCar!.indexWhere((element) => element.carId==currentautoId);
+                                                                Navigator.push(
+                                                                  context, 
+                                                                  MaterialPageRoute(builder: (context) => DopOptions(side: widget.side, preferences: userRepository.userCar![carIndex].preferences , count: userRepository.userCar![carIndex].numberOfSeats, carId: currentautoId,createAuto: false,))
+                                                                  );
+                                                               
+                                                              },
+                                                              child: Container(
+                                                                alignment: Alignment.center,
+                                                                width: double.infinity,
+                                                                height: 60,
+                                                                decoration: BoxDecoration(
+                                                                  color:brandBlue,
+                                                                  borderRadius: BorderRadius.circular(10)
+                                                                  
+                                                                ),
+                                                                child: Text(
+                                                                  "Continue",
+                                                                  style: TextStyle(
+                                            color:Colors.white,
+                                            fontFamily: "SF",
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600
+                                                                  ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                          
-                                            
-                                                        ),
-                                        
-                              )
-                         ],
-                       ),
+                                                            
+                                              
+                                                          ),
+                                          
+                                )
+                           ],
+                         ),
+                     ),
                    ),
                  );
                }

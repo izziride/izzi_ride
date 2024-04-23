@@ -363,7 +363,7 @@ const CardOrder({required this.rate, required this.variable, required this.side,
                 child:  Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(driverOrder.bookedStatus=="unbooked"?Icons.info: Icons.done,size:  40,),
+                    Icon((driverOrder.bookedStatus!="unbooked"&&driverOrder.status!="finished")?Icons.info: Icons.done,size:  40,),
                     (driverOrder.bookedStatus!="unbooked"&&driverOrder.status!="finished")
                     ?Text(
                             "You are a participant in the trip.\nCan't hide.",
