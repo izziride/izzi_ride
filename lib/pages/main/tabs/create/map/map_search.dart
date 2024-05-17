@@ -7,7 +7,7 @@ import 'package:temp/pages/main/tabs/create/map/ui_map.dart';
 import 'package:temp/pages/main/tabs/create/search_city_create/search_city_create.dart';
 
 class MapSearch extends StatefulWidget{
-  final Function(String,String,double,double)  update;
+  final Function(String,String,double,double,String)  update;
   final String placeId;
   const MapSearch({required this.placeId, required this.update, super.key});
 

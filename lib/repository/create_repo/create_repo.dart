@@ -13,6 +13,9 @@ abstract class _CreateRepo with Store {
   @observable
   String fromState="";
 
+  String fromFullAddress="";
+  String toFullAddress="";
+
   @observable
   int fromCityId=0;
 

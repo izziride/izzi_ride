@@ -131,8 +131,8 @@ cancelOrderClient(){
   @override
   Widget build(BuildContext context) {
     String? bookedStatus=widget.fullUserOrder.bookedStatus;
-    String orderStatus=widget.fullUserOrder.orderStatus;
-    print(bookedStatus);
+    String orderStatus=widget.fullUserOrder.status;
+    print(orderStatus+"//");
     if(bookedStatus=="canceled"||orderStatus=="canceled"){
       return SizedBox(height: 40,);
     }
@@ -246,7 +246,7 @@ cancelOrderClient(){
                           ),
                         ),
                         SizedBox(height: 12,),
-                        (widget.fullOrderType==FullOrderType.driver||widget.fullUserOrder.bookedStatus=="accepted")? Padding(
+                        (widget.fullOrderType==FullOrderType.driver||widget.fullUserOrder.bookedStatus=="accepted"||widget.fullUserOrder.status=="finished")? Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           child: InkWell(
                             onTap: () {

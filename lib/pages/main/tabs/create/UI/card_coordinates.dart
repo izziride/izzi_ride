@@ -8,7 +8,7 @@ import 'package:temp/pages/main/tabs/create/search_city_create/search_city_creat
 class CardCoordinates extends StatefulWidget{
  final SvgPicture icon;
  final String hint;
- final Function(String,String,double,double)  update;
+ final Function(String,String,double,double,String)  update;
  final String name;
  final bool valid;
  const CardCoordinates({required this.valid, required this.name, required this.update, required this.icon,required this.hint, super.key});

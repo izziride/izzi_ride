@@ -110,7 +110,7 @@ void _showDialogPage(BuildContext context){
                                   icon: SvgPicture.asset(
                                         "assets/svg/geoFrom.svg"
                                         ),
-                                  update: (String city,String state,double lat,double lng){
+                                  update: (String city,String state,double lat,double lng,String fullAddress){
                                     setState(() {
                                       isFromEmpty=false;
                                     });
@@ -118,6 +118,7 @@ void _showDialogPage(BuildContext context){
                                       createRepo.updateFromState(state);
                                       createRepo.updateFromLat(lat);
                                       createRepo.updateFromLng(lng);
+                                      createRepo.fromFullAddress=fullAddress;
                                   },
                                 );
                                 },
@@ -133,7 +134,7 @@ void _showDialogPage(BuildContext context){
                               icon: SvgPicture.asset(
                                     "assets/svg/geoTo.svg"
                                     ),
-                              update: (String city,String state,double lat,double lng){
+                              update: (String city,String state,double lat,double lng,String fullAddress){
                                  setState(() {
                                       isToEmpty=false;
                                     });
@@ -141,6 +142,7 @@ void _showDialogPage(BuildContext context){
                                       createRepo.updateToState(state);
                                       createRepo.updateToLat(lat);
                                       createRepo.updateToLng(lng);
+                                      createRepo.toFullAddress=fullAddress;
                               },
                             );
                             },

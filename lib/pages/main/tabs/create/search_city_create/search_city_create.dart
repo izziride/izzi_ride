@@ -25,7 +25,7 @@ class MapPage {
 
 class SearchFrom extends StatefulWidget {
   final String city;
-  final Function(String,String,double,double)  update;
+  final Function(String,String,double,double,String)  update;
   const SearchFrom({required this.city, required this.update, super.key});
 
   

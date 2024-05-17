@@ -126,7 +126,7 @@ class _PriceState extends State<Price> {
             state: createRepo.fromState, 
             sortId: 1, 
             pickUp: true, 
-            location: "", 
+            location:createRepo.fromFullAddress, 
             longitude: createRepo.fromLng, 
             latitude: createRepo.fromLat, 
             departureTime: createRepo.generateCurrentDateTimeString()
@@ -136,7 +136,7 @@ class _PriceState extends State<Price> {
             state: createRepo.toState, 
             sortId: 2, 
             pickUp: false, 
-            location: "", 
+            location: createRepo.toFullAddress, 
             longitude: createRepo.toLng, 
             latitude: createRepo.toLat, 
             departureTime: DateTime.now().toIso8601String()

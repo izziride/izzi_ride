@@ -65,7 +65,7 @@ class FO_RideDetails extends StatelessWidget {
                                                     ),
                                                     SizedBox(height: 4,),
                                                     Text(
-                                                      startLocation.city,
+                                                      startLocation.location,
                                                       style: TextStyle(
                                                         color: Color.fromRGBO(0, 0, 0, 0.87),
                                                         fontFamily: "Inter",
@@ -102,7 +102,7 @@ class FO_RideDetails extends StatelessWidget {
                                                     ),
                                                     SizedBox(height: 4,),
                                                     Text(
-                                                      endLocation.city,
+                                                      endLocation.location,
                                                       style: TextStyle(
                                                         color: Color.fromRGBO(0, 0, 0, 0.87),
                                                         fontFamily: "Inter",

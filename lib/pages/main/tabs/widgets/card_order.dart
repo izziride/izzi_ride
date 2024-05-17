@@ -124,7 +124,20 @@ const CardOrder({required this.rate, required this.variable, required this.side,
                                 child: SizedBox(
                                     height: 30,
                                     width: double.infinity,
-                                  child: CustomPaint(
+                                  child: driverOrder.status=="finished"
+                                  ?Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                     "trip is over",
+                                      style: TextStyle(
+                                            fontFamily: "SF",
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.red
+                                      ),
+                                    ),
+                                  )
+                                  :CustomPaint(
                                     
                                     painter: DottedLinePainter(
                                       color: const Color.fromRGBO(217,217,217,1),
