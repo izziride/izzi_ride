@@ -14,12 +14,12 @@ import 'package:temp/pages/main/tabs/profile/user_car/components/create_modal.da
 import 'package:temp/repository/chats_repo/chats_repo.dart';
 import 'package:temp/repository/user_repo/user_repo.dart';
 
-class FO_BookedStatusAction extends StatefulWidget {
+class FO_BookedStatusActionDriver extends StatefulWidget {
   final FullOrderType fullOrderType;
   final UserOrderFullInformation fullUserOrder;
   final int seats;
   int? chatid=null;
-   FO_BookedStatusAction({
+   FO_BookedStatusActionDriver({
     super.key,
     required this.fullOrderType,
     required this.seats,
@@ -28,10 +28,10 @@ class FO_BookedStatusAction extends StatefulWidget {
     });
 
   @override
-  State<FO_BookedStatusAction> createState() => _FO_BookedStatusActionState();
+  State<FO_BookedStatusActionDriver> createState() => _FO_BookedStatusActionDriverState();
 }
 
-class _FO_BookedStatusActionState extends State<FO_BookedStatusAction> {
+class _FO_BookedStatusActionDriverState extends State<FO_BookedStatusActionDriver> {
 
   bool tapBlocked=false;
    void update(){
@@ -77,8 +77,7 @@ class _FO_BookedStatusActionState extends State<FO_BookedStatusAction> {
       );      
   }
 
-  cancelOrderDriver(){
-                                          
+  cancelOrderDriver(){                      
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -137,53 +136,29 @@ cancelOrderClient(){
       return SizedBox(height: 40,);
     }
     if(widget.fullUserOrder.status=="finished"){
-      if(widget.fullOrderType==FullOrderType.user){
-        bool isPermission=widget.fullUserOrder.orderRate==0;
+       
          return  GestureDetector(
-                          onTap: (){
-                            if(!isPermission){
-                              return;
-                            }
-                            Navigator.push(
-                              context, MaterialPageRoute(builder: (context) => FeedBack(orderId:widget.fullUserOrder.orderId,userIdForRate: widget.fullUserOrder.driverId!,),)
-                              );
-                          },
+                          onTap: cancelOrderDriver,
                           child: Container(
                                 height: 60,
                                 margin: EdgeInsets.only(bottom: 30,left: 15,right: 15),
                                 width: double.infinity,
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                  color: Color.fromRGBO(242, 243, 245, 1),
+                                  color: Color.fromARGB(255, 189, 24, 12),
                                   borderRadius: BorderRadius.circular(10)
                                 ),
-                                child:isPermission? Text(
-                                  "feedback",
+                                child:Text(
+                                  "Delete order",
                                   style: TextStyle(
-                                    color: brandBlue,
+                                    color: Colors.white,
                                     fontFamily: "Inter",
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600
                                   ),
-                                ):Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Rate: ${widget.fullUserOrder.orderRate}",
-                                      style: TextStyle(
-                                        color: brandBlue,
-                                        fontFamily: "Inter",
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600
-                                      ),
-                                    ),
-                                    Icon(Icons.star,size: 20,color: Color.fromARGB(255, 240, 217, 11))
-                                  ],
-                                ),
+                                )
                               ),
                         );
-      }
-      return SizedBox(height: 40,);
     }
     
     return Column(

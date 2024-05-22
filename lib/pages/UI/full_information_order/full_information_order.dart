@@ -11,11 +11,13 @@ import 'package:temp/constants/colors/colors.dart';
 import 'package:temp/http/chats/http_chats.dart';
 import 'package:temp/http/orders/orders.dart';
 import 'package:temp/pages/UI/app_popup.dart';
-import 'package:temp/pages/UI/full_information_order/components/booked_status_action.dart';
+import 'package:temp/pages/UI/full_information_order/client/full_order_client.dart';
+import 'package:temp/pages/UI/full_information_order/components/booked_status_action_driver.dart';
 import 'package:temp/pages/UI/full_information_order/components/booked_status_info.dart';
 import 'package:temp/pages/UI/full_information_order/components/info_in_the_map.dart';
 import 'package:temp/pages/UI/full_information_order/components/passanger_data.dart';
 import 'package:temp/pages/UI/full_information_order/components/ride_details.dart';
+import 'package:temp/pages/UI/full_information_order/driver/full_order_driver.dart';
 import 'package:temp/pages/main/tabs/chat/chat_page.dart';
 import 'package:temp/pages/main/tabs/create/card_order/card_order_redact/card_order_redact.dart';
 import 'package:temp/pages/main/tabs/search/result_search/bar_navigation.dart';
@@ -80,11 +82,15 @@ class _CardFullOrderState extends State<CardFullOrder> {
                   );
               }
               UserOrderFullInformation fullUserOrder=userRepository.userOrderFullInformation!;
-
+              FullOrderType fullOrderType=fullUserOrder.isDriver? FullOrderType.driver:FullOrderType.user;
+              if(fullOrderType==FullOrderType.driver){
+                return CardFullOrderDriver(userOrderFullInformation: fullUserOrder,chatid: widget.chatid,startLocation: widget.startLocation,endLocation: widget.endLocation,);
+              }else if(fullOrderType==FullOrderType.user){
+                CardFullOrderClient();
+              }
               
 
               DriverOrder driverOrder =  DriverOrder(driverRate: fullUserOrder.driverRate,  userId: fullUserOrder.userId, orderId: fullUserOrder.orderId, clientAutoId: fullUserOrder.clientAutoId, departureTime: fullUserOrder.departureTime, nickname: fullUserOrder.nickname, orderStatus: fullUserOrder.orderStatus, startCountryName: widget.startLocation, endCountryName: widget.endLocation, seatsInfo: fullUserOrder.seatsInfo, price: fullUserOrder.price, preferences: fullUserOrder.preferences,bookedStatus: fullUserOrder.bookedStatus,status: fullUserOrder.status);
-              FullOrderType fullOrderType=fullUserOrder.isDriver? FullOrderType.driver:FullOrderType.user;
               List<Travelers> travelers = fullUserOrder.travelers;
               int orderId=fullUserOrder.orderId;
               Location startLocation=fullUserOrder.location[0];
@@ -112,7 +118,7 @@ class _CardFullOrderState extends State<CardFullOrder> {
                               const SizedBox(height: 24,),
                               FO_RideDetails(automobile: automobile,comment: comment,countSeats: countSeats,endLocation: endLocation,startLocation: startLocation,),     
                               const SizedBox(height: 24,),
-                              FO_BookedStatusAction(fullOrderType: fullOrderType,fullUserOrder: fullUserOrder,seats: widget.seats??0,chatid: widget.chatid,)
+                             // FO_BookedStatusAction(fullOrderType: fullOrderType,fullUserOrder: fullUserOrder,seats: widget.seats??0,chatid: widget.chatid,)
                             ],
                           ),
                           )
