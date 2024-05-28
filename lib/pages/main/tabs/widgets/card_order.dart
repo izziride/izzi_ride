@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:temp/constants/colors/colors.dart';
@@ -53,314 +54,325 @@ const CardOrder({required this.rate, required this.variable, required this.side,
               height:full? 214:262,
               width: double.infinity,
               padding: const EdgeInsets.all(14),
-              child: Column(
+              child: Stack(
+                alignment: Alignment.topCenter,
                 children: [
+                  
                   Column(
-                       children: [
-                        Row(
-                          mainAxisAlignment:MainAxisAlignment.spaceBetween ,
-                          children: [
-                            ////1ый 
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                           children: [
+                            Row(
+                              mainAxisAlignment:MainAxisAlignment.spaceBetween ,
                               children: [
-                                Row(
+                                ////1ый 
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(2),
-                                        color: cardSearchGray
-                                      ),
-                                      padding: EdgeInsets.symmetric(horizontal: 4,vertical: 2),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(2),
+                                            color: cardSearchGray
+                                          ),
+                                          padding: EdgeInsets.symmetric(horizontal: 4,vertical: 2),
+                                          child: Text(
+                                            formattedDate,
+                                            style: const TextStyle(
+                                              fontFamily: "SF",
+                                              fontSize: 8,
+                                              fontWeight: FontWeight.w500,
+                                              color: Color.fromRGBO(51, 51, 51, 1)
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.only(left: 4)),
+                                        Container(
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(2),
+                                            color: cardSearchGray
+                                          ),
+                                          padding: EdgeInsets.symmetric(horizontal: 4,vertical: 2),
+                                          child: Text(
+                                            formattedTime,
+                                            style: const TextStyle(
+                                              fontFamily: "SF",
+                                              fontSize: 8,
+                                              fontWeight: FontWeight.w500,
+                                              color: Color.fromRGBO(51, 51, 51, 1)
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                     Padding(
+                                      padding: EdgeInsets.only(top: 4),
                                       child: Text(
-                                        formattedDate,
-                                        style: const TextStyle(
-                                          fontFamily: "SF",
-                                          fontSize: 8,
-                                          fontWeight: FontWeight.w500,
-                                          color: Color.fromRGBO(51, 51, 51, 1)
+                                       driverOrder.startCountryName[0].toUpperCase()+ driverOrder.startCountryName.substring(1),
+                                        style: TextStyle(
+                                              fontFamily: "SF",
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                              color: Color.fromRGBO(51, 51, 51, 1)
                                         ),
                                       ),
-                                    ),
-                                    Padding(padding: EdgeInsets.only(left: 4)),
-                                    Container(
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(2),
-                                        color: cardSearchGray
-                                      ),
-                                      padding: EdgeInsets.symmetric(horizontal: 4,vertical: 2),
-                                      child: Text(
-                                        formattedTime,
-                                        style: const TextStyle(
-                                          fontFamily: "SF",
-                                          fontSize: 8,
-                                          fontWeight: FontWeight.w500,
-                                          color: Color.fromRGBO(51, 51, 51, 1)
-                                        ),
-                                      ),
-                                    ),
+                                    )
                                   ],
                                 ),
-                                 Padding(
-                                  padding: EdgeInsets.only(top: 4),
-                                  child: Text(
-                                   driverOrder.startCountryName[0].toUpperCase()+ driverOrder.startCountryName.substring(1),
-                                    style: TextStyle(
-                                          fontFamily: "SF",
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                          color: Color.fromRGBO(51, 51, 51, 1)
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                            ///1ый
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 13,right: 13),
-                                child: SizedBox(
-                                    height: 30,
-                                    width: double.infinity,
-                                  child: driverOrder.status=="finished"
-                                  ?Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                     "trip is over",
-                                      style: TextStyle(
-                                            fontFamily: "SF",
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.red
+                                ///1ый
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 13,right: 13),
+                                    child: SizedBox(
+                                        height: 30,
+                                        width: double.infinity,
+                                      child: driverOrder.status=="finished"
+                                      ?SizedBox.shrink()
+                                      :CustomPaint(
+                                        
+                                        painter: DottedLinePainter(
+                                          color: const Color.fromRGBO(217,217,217,1),
+                                          dotSize: 2,
+                                          spacing: 2
+                                        ),
                                       ),
                                     ),
-                                  )
-                                  :CustomPaint(
-                                    
-                                    painter: DottedLinePainter(
-                                      color: const Color.fromRGBO(217,217,217,1),
-                                      dotSize: 2,
-                                      spacing: 2
-                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                            ///////3ый 
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  height: 14,
-                                  
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(top:4),
-                                  child: Text(
-                                   driverOrder.endCountryName[0].toUpperCase()+ driverOrder.endCountryName.substring(1),
-                                    style: TextStyle(
-                                          fontFamily: "SF",
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                          color: Color.fromRGBO(51, 51, 51, 1)
+                                ///////3ый 
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      height: 14,
+                                      
                                     ),
-                                  ),
-                                )
-                              ],
-                            )
-                            ///3ый
-                          ],
-                        ),
-                        Padding(padding: EdgeInsets.only(top:16)),
-                        Container(
-                          height: 52,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: cardSearchGray
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8,right: 7),
-                                    child: Container(
-                                        height: 40,
-                                        width: 40,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          color: const Color.fromRGBO(214, 214, 216, 1),
-                                          borderRadius: BorderRadius.circular(20)
-                                        ),
-                                        child: Text(
-                                          driverOrder.nickname.isNotEmpty ? driverOrder.nickname[0] : "!",
-                                          style: const TextStyle(
-                                                fontFamily: "SF",
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.white
-                                          ),
-                                        ),
-                                    ),
-                                  ),
-                                  Text(
-                                    driverOrder.nickname,
-                                    style: const TextStyle(
-                                                fontFamily: "SF",
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500,
-                                                color: Color.fromRGBO(51, 51, 51, 1)
-                                          ),
-                                  ),
-                                  SizedBox(width: 10,),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "${rate}",
+                                    Padding(
+                                      padding: EdgeInsets.only(top:4),
+                                      child: Text(
+                                       driverOrder.endCountryName[0].toUpperCase()+ driverOrder.endCountryName.substring(1),
                                         style: TextStyle(
-                                          color: Color.fromRGBO(51, 51, 51, 1),
-                                          fontFamily: "Inter",
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600
+                                              fontFamily: "SF",
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                              color: Color.fromRGBO(51, 51, 51, 1)
                                         ),
                                       ),
-                                      Icon(Icons.star,size: 20,color: Color.fromARGB(255, 240, 217, 11))
-                                    ],
-                                ),
-                                ],
+                                    )
+                                  ],
+                                )
+                                ///3ый
+                              ],
+                            ),
+                            Padding(padding: EdgeInsets.only(top:16)),
+                            Container(
+                              height: 52,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: cardSearchGray
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(right: 8.0),
-                                child: Text(
-                                  formattedNumber,
-                                  style: const TextStyle(
-                                      fontFamily: "SF",
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
-                                      color: Color.fromRGBO(51, 51, 51, 1)
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top:16,bottom: 13),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Seats",
-                                style: const TextStyle(
-                                      fontFamily: "SF",
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color.fromRGBO(51, 51, 51, 1)
-                                  ),
-                                ),
-                              Row(
+                              child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
-                                      for (int i = 0; i < driverOrder.seatsInfo.reserved; i++) Padding(
-                                        padding: const EdgeInsets.only(right: 5.7),
-                                        child: SvgPicture.asset("assets/svg/passenger.svg"),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 8,right: 7),
+                                        child: Container(
+                                            height: 40,
+                                            width: 40,
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                              color: const Color.fromRGBO(214, 214, 216, 1),
+                                              borderRadius: BorderRadius.circular(20)
+                                            ),
+                                            child: Text(
+                                              driverOrder.nickname.isNotEmpty ? driverOrder.nickname[0] : "!",
+                                              style: const TextStyle(
+                                                    fontFamily: "SF",
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Colors.white
+                                              ),
+                                            ),
+                                        ),
                                       ),
-                                      for (int i = 0; i < driverOrder.seatsInfo.free; i++) Padding(
-                                        padding: const EdgeInsets.only(right: 5.7),
-                                        child: SvgPicture.asset("assets/svg/passanger_empty.svg"),
+                                      Text(
+                                        driverOrder.nickname,
+                                        style: const TextStyle(
+                                                    fontFamily: "SF",
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Color.fromRGBO(51, 51, 51, 1)
+                                              ),
                                       ),
+                                      SizedBox(width: 10,),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "${rate}",
+                                            style: TextStyle(
+                                              color: Color.fromRGBO(51, 51, 51, 1),
+                                              fontFamily: "Inter",
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600
+                                            ),
+                                          ),
+                                          Icon(Icons.star,size: 20,color: Color.fromARGB(255, 240, 217, 11))
+                                        ],
+                                    ),
                                     ],
                                   ),
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 8.0),
+                                    child: Text(
+                                      formattedNumber,
+                                      style: const TextStyle(
+                                          fontFamily: "SF",
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                          color: Color.fromRGBO(51, 51, 51, 1)
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top:16,bottom: 13),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Seats",
+                                    style: const TextStyle(
+                                          fontFamily: "SF",
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: Color.fromRGBO(51, 51, 51, 1)
+                                      ),
+                                    ),
                                   Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(right: 8.17),
-                                        child: Stack(
-                                          alignment: Alignment.center,
-                                          children: [
-                                            SvgPicture.asset("assets/svg/childSeats.svg",color:driverOrder.preferences.childCarSeat?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
-                                            driverOrder.preferences.childCarSeat?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 1,color: Color.fromARGB(255, 169, 108, 104) ,)
-                                          ],
-                                        ),
+                                      Row(
+                                        children: [
+                                          for (int i = 0; i < driverOrder.seatsInfo.reserved; i++) Padding(
+                                            padding: const EdgeInsets.only(right: 5.7),
+                                            child: SvgPicture.asset("assets/svg/passenger.svg"),
+                                          ),
+                                          for (int i = 0; i < driverOrder.seatsInfo.free; i++) Padding(
+                                            padding: const EdgeInsets.only(right: 5.7),
+                                            child: SvgPicture.asset("assets/svg/passanger_empty.svg"),
+                                          ),
+                                        ],
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(right: 8.17),
-                                        child: Stack(
-                                          alignment: Alignment.center,
-                                          children: [
-                                            SvgPicture.asset("assets/svg/animals.svg",color:driverOrder.preferences.animals?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
-                                            driverOrder.preferences.animals?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 2,color: Color.fromARGB(255, 169, 108, 104)  ,)
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(right: 8.17),
-                                        child: Stack(
-                                          alignment: Alignment.center,
-                                          children: [
-                                            SvgPicture.asset("assets/svg/luggage.svg",color:driverOrder.preferences.luggage?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
-                                            driverOrder.preferences.luggage?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 2,color: Color.fromARGB(255, 169, 108, 104)  ,)
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(right: 0),
-                                        child: Stack(
-                                          alignment: Alignment.center,
-                                          children: [
-                                            SvgPicture.asset("assets/svg/smoking.svg",color:driverOrder.preferences.smoking?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
-                                            driverOrder.preferences.smoking?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 2,color: Color.fromARGB(255, 169, 108, 104)  ,)
-                                          ],
-                                        ),
-                                      ),
+                                      Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(right: 8.17),
+                                            child: Stack(
+                                              alignment: Alignment.center,
+                                              children: [
+                                                SvgPicture.asset("assets/svg/childSeats.svg",color:driverOrder.preferences.childCarSeat?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
+                                                driverOrder.preferences.childCarSeat?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 1,color: Color.fromARGB(255, 169, 108, 104) ,)
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(right: 8.17),
+                                            child: Stack(
+                                              alignment: Alignment.center,
+                                              children: [
+                                                SvgPicture.asset("assets/svg/animals.svg",color:driverOrder.preferences.animals?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
+                                                driverOrder.preferences.animals?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 2,color: Color.fromARGB(255, 169, 108, 104)  ,)
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(right: 8.17),
+                                            child: Stack(
+                                              alignment: Alignment.center,
+                                              children: [
+                                                SvgPicture.asset("assets/svg/luggage.svg",color:driverOrder.preferences.luggage?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
+                                                driverOrder.preferences.luggage?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 2,color: Color.fromARGB(255, 169, 108, 104)  ,)
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(right: 0),
+                                            child: Stack(
+                                              alignment: Alignment.center,
+                                              children: [
+                                                SvgPicture.asset("assets/svg/smoking.svg",color:driverOrder.preferences.smoking?Color.fromRGBO(64,123,255,1):Color.fromRGBO(173,179,188,1) ,),
+                                                driverOrder.preferences.smoking?SizedBox.shrink():Icon(Icons.close,size: 30,weight: 2,color: Color.fromARGB(255, 169, 108, 104)  ,)
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      )
                                     ],
                                   )
                                 ],
-                              )
-                            ],
-                          ),
-                        ),
-                        
-                       ],
-                  
-                  ),
-                  !full? InkWell(
-                    onTap: () {
-                       Navigator.push(context, MaterialPageRoute(builder: (context) => CardFullOrder(
-                        side: (){},
-                        fullOrderType: FullOrderType.user,
-                        startLocation: driverOrder.startCountryName,
-                        endLocation: driverOrder.endCountryName,
-                        orderId:driverOrder.orderId,
-                        seats: 4,
-                      ),));
-                    
-                    },
-                    child: Container(
-                          height: 48,
-                          width: double.infinity,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(242, 243, 245, 1),
-                            borderRadius: BorderRadius.circular(10)
-                          ),
-                          child: Text(
-                            "Ride details",
-                            style: TextStyle(
-                              color: Color.fromRGBO(64, 123, 255, 1),
-                              fontFamily: "Inter",
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600
+                              ),
                             ),
+                            
+                           ],
+                      
+                      ),
+                      !full? InkWell(
+                        onTap: () {
+                           Navigator.push(context, MaterialPageRoute(builder: (context) => CardFullOrder(
+                            side: (){},
+                            fullOrderType: FullOrderType.user,
+                            startLocation: driverOrder.startCountryName,
+                            endLocation: driverOrder.endCountryName,
+                            orderId:driverOrder.orderId,
+                            seats: 4,
+                          ),));
+                        
+                        },
+                        child: Container(
+                              height: 48,
+                              width: double.infinity,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: Color.fromRGBO(242, 243, 245, 1),
+                                borderRadius: BorderRadius.circular(10)
+                              ),
+                              child: Text(
+                                "Ride details",
+                                style: TextStyle(
+                                  color: Color.fromRGBO(64, 123, 255, 1),
+                                  fontFamily: "Inter",
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600
+                                ),
+                              ),
+                            ),
+                      ):SizedBox.shrink()
+                    ],
+                  ),
+                  if(driverOrder.status=="finished") 
+                  Positioned(
+                    top: 10,
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "COMPLETED",
+                          style: TextStyle(
+                                fontFamily: "SF",
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.red
                           ),
                         ),
-                  ):SizedBox.shrink()
+                      ),
+                  ),
                 ],
               ),
             

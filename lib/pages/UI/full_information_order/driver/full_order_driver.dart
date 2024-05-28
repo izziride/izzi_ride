@@ -47,7 +47,7 @@ class _CardFullOrderDriverState extends State<CardFullOrderDriver> {
                       children: [
                         CardOrder(rate: widget.userOrderFullInformation.driverRate, side: (){}, driverOrder: driverOrder,full:true,variable: false,),
                         SizedBox(height:24 ,),
-                        FO_PassangerData(travelers:travelers,orderId: orderId,chatid: widget.chatid,),
+                        FO_PassangerData(travelers:travelers,orderId: orderId,chatid: widget.chatid,orderStatus: widget.userOrderFullInformation.orderStatus,),
                         const SizedBox(height: 24,),
                         FO_InfoInTheMap(location:startLocation),
                         const SizedBox(height: 24,),

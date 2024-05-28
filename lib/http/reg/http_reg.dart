@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:temp/http/instanse.dart';
 const baseUrl="https://ezride.pro/api/v1/sign";
 const baseUrlOtp="https://ezride.pro/api/v1/otp";
@@ -27,7 +28,11 @@ class HttpReg{
       
       
       return response.data["data"];
-    }catch(e){
+    }catch(e,stackTrace){
+      Sentry.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
       inspect(e);
       DioException typeError= e as DioException;
 
@@ -50,7 +55,11 @@ class HttpReg{
       );
       inspect(response.data);
       return 0;
-    }catch(e){
+    }catch(e,stackTrace){
+      Sentry.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
         return -1;
     }
       

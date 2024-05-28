@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:temp/http/instanse.dart';
 import 'package:temp/localStorage/tokenStorage/token_storage.dart';
 import 'package:temp/models/chat/chat_info.dart';
@@ -49,8 +50,12 @@ class HttpChats{
         )
           );  
           return 0;
-        } catch (e) {
+        } catch (e,stackTrace) {
           print(e);
+          Sentry.captureException(
+            e,
+            stackTrace: stackTrace,
+          );
           return -1;
 
         }
@@ -102,8 +107,12 @@ class HttpChats{
           );
       
       return userChats;
-      } catch (e) {
+      } catch (e,stackTrace) {
         print(e);
+        Sentry.captureException(
+          e,
+          stackTrace: stackTrace,
+        );
         return null;
       }
     } 
@@ -157,8 +166,12 @@ class HttpChats{
         }
           ).toList();
       return userChats;
-      } catch (e) {
+      } catch (e,stackTrace) {
         print(e);
+        Sentry.captureException(
+          e,
+          stackTrace: stackTrace,
+        );
         return [];
       }
     } 
@@ -183,8 +196,12 @@ class HttpChats{
           print(response);
           int chatId=response.data["data"]["chat_id"];
           return chatId;
-        } catch (e) {
+        } catch (e,stackTrace) {
           print(e);
+          Sentry.captureException(
+            e,
+            stackTrace: stackTrace,
+          );
           return -1;
 
         }
@@ -209,8 +226,12 @@ class HttpChats{
           state: res["state"]
         );
         return userChatInfo;
-      } catch (e) {
+      } catch (e,stackTrace) {
         print(e);
+        Sentry.captureException(
+          e,
+          stackTrace: stackTrace,
+        );
         return null;
       }
     }
@@ -238,9 +259,13 @@ class HttpChats{
         );
         print(response.data);
         return 0;
-      } catch (e) {
+      } catch (e,stackTrace) {
         print(e);
         print("err fcm");
+        Sentry.captureException(
+          e,
+          stackTrace: stackTrace,
+        );
         return 1;
       }
     }
@@ -274,9 +299,13 @@ class HttpChats{
                 type: el["message_type"]??"1"
                 )).toList();
                 return listMessage;
-      } catch (e) {
+      } catch (e,stackTrace) {
         print("error messs");
         print(e);
+        Sentry.captureException(
+          e,
+          stackTrace: stackTrace,
+        );
         return [];
       }
     }
@@ -318,8 +347,12 @@ class HttpChats{
             unreadMsgs: t_chatInfo["unread_messages"]
             );
         return chatInfo;
-      } catch (e) {
+      } catch (e,stackTrace) {
         print(e);
+        Sentry.captureException(
+          e,
+          stackTrace: stackTrace,
+        );
         return null;
       }
     }

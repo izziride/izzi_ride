@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:temp/http/instanse.dart';
 import 'package:temp/localStorage/tokenStorage/token_storage.dart';
 import 'package:temp/models/user/user_data.dart';
@@ -32,7 +33,11 @@ class HttpUser{
       )
     );
     return 0;
-  }catch(e){
+  }catch (e,stackTrace){
+    Sentry.captureException(
+          e,
+          stackTrace: stackTrace,
+        );
       return -1;
   }
  
@@ -54,7 +59,11 @@ class HttpUser{
     );
     print(response.data);
     return 0;
-  }catch(e){
+  }catch (e,stackTrace){
+    Sentry.captureException(
+          e,
+          stackTrace: stackTrace,
+        );
       return -1;
   }
  
@@ -85,7 +94,11 @@ class HttpUser{
       nickname: res["nickname"]??"", 
       photo: res["photo"]??"", 
       surname: res["surname"]??"");
-  }catch(e){
+  }catch (e,stackTrace){
+    Sentry.captureException(
+          e,
+          stackTrace: stackTrace,
+        );
     print(e);
     return null;
   }
@@ -108,7 +121,11 @@ class HttpUser{
       print(response.data["data"]["permission"]);
       bool permissionVal=response.data["data"]["permission"]??false;
       return permissionVal;
-       } catch (e) {
+       } catch (e,stackTrace) {
+        Sentry.captureException(
+          e,
+          stackTrace: stackTrace,
+        );
          print(e);
          false;
        }
@@ -126,7 +143,11 @@ class HttpUser{
     );
     print(response.data);
     return 0;
-  }catch(e){
+  }catch (e,stackTrace){
+    Sentry.captureException(
+      e,
+      stackTrace: stackTrace,
+    );
       return -1;
   }
  

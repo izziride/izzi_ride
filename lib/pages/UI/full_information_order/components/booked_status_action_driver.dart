@@ -149,7 +149,7 @@ cancelOrderClient(){
                                   borderRadius: BorderRadius.circular(10)
                                 ),
                                 child:Text(
-                                  "Delete order",
+                                  "DELETE",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: "Inter",

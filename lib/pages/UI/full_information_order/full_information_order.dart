@@ -112,13 +112,13 @@ class _CardFullOrderState extends State<CardFullOrder> {
                             children: [
                               CardOrder(rate: fullUserOrder.driverRate, side: (){}, driverOrder: driverOrder,full:true,variable: false,),
                               SizedBox(height: fullOrderType==FullOrderType.driver?24:0 ,),
-                              fullOrderType==FullOrderType.driver?FO_PassangerData(travelers:travelers,orderId: orderId,chatid: widget.chatid,):const SizedBox.shrink(),
+                              fullOrderType==FullOrderType.driver?FO_PassangerData(travelers:travelers,orderId: orderId,chatid: widget.chatid,orderStatus:driverOrder.orderStatus ,):const SizedBox.shrink(),
                               const SizedBox(height: 24,),
                               FO_InfoInTheMap(location:startLocation),
                               const SizedBox(height: 24,),
                               FO_RideDetails(automobile: automobile,comment: comment,countSeats: countSeats,endLocation: endLocation,startLocation: startLocation,),     
                               const SizedBox(height: 24,),
-                             // FO_BookedStatusAction(fullOrderType: fullOrderType,fullUserOrder: fullUserOrder,seats: widget.seats??0,chatid: widget.chatid,)
+                              FO_BookedStatusActionDriver(fullOrderType: fullOrderType,fullUserOrder: fullUserOrder,seats: widget.seats??0,chatid: widget.chatid,)
                             ],
                           ),
                           )

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:temp/http/instanse.dart';
 import 'package:temp/localStorage/tokenStorage/token_storage.dart';
 import 'package:temp/models/car/car.dart';
@@ -66,7 +67,11 @@ class HttpUserCar{
     );
     print(response.data);
     return response.data["data"]["car_id"];
-  }catch(e){
+  }catch(e,stackTrace){
+    Sentry.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
     print(e);
       return -1;
   }
@@ -114,7 +119,11 @@ class HttpUserCar{
     print(response.data);
 
     return userCar;
-  }catch(e){
+  }catch(e,stackTrace){
+    Sentry.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
     return null;
   }
  }

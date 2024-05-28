@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:string_to_color/string_to_color.dart';
 import 'package:temp/constants/colors/colors.dart';
@@ -11,13 +12,18 @@ import 'package:temp/pages/main/tabs/chat/chat_page.dart';
 import 'package:temp/repository/chats_repo/chats_repo.dart';
 import 'package:temp/repository/user_repo/user_repo.dart';
 
-class FO_PassangerData extends StatelessWidget {
+class FO_PassangerData extends StatefulWidget {
   final List<Travelers>travelers;
   int? chatid=null;
   final int orderId;
-  FO_PassangerData({super.key,required this.travelers,required this.orderId,this.chatid});
+  final String orderStatus;
+  FO_PassangerData({super.key,required this.travelers,required this.orderId,this.chatid,required this.orderStatus});
 
+  @override
+  State<FO_PassangerData> createState() => _FO_PassangerDataState();
+}
 
+class _FO_PassangerDataState extends State<FO_PassangerData> {
   openModalDeleteUser(String name,int clientId,BuildContext context){
         showDialog(
           context: context, 
@@ -28,10 +34,10 @@ class FO_PassangerData extends StatelessWidget {
                     ),
                     child: AppPopup(warning: false, title: "Delete User?", description: "Do you really want to\ndelete"+name+"?", pressYes: ()async{
                       
-                      await userRepository.deleteUserByOrder(orderId, clientId);
-                      if(chatid!=null){
-                        chatsRepository.updateStatusChat(chatid!);
-                         Message newmsg=Message(content: "Driver removed you from order", status: 0, frontContentId: "",chatId: chatid!, time:"",id: -1,senderClientId: -1,type: "1" );
+                      await userRepository.deleteUserByOrder(widget.orderId, clientId);
+                      if(widget.chatid!=null){
+                        chatsRepository.updateStatusChat(widget.chatid!);
+                         Message newmsg=Message(content: "Driver removed you from order", status: 0, frontContentId: "",chatId: widget.chatid!, time:"",id: -1,senderClientId: -1,type: "1" );
                         chatsRepository.addMessage(newmsg);
                         
                       }
@@ -40,6 +46,20 @@ class FO_PassangerData extends StatelessWidget {
                     );
           }
           );
+  }
+
+
+
+
+  void ratePeople(BuildContext context,Travelers travelers){
+    showDialog(
+      context: context, 
+      builder: (context) {
+        return Dialog(
+          child: FeedBackModal(travelers: travelers,orderId: widget.orderId,)
+        );
+      },
+    );
   }
 
   @override
@@ -67,7 +87,7 @@ class FO_PassangerData extends StatelessWidget {
                                                           ),
                                           ),
                                         ),
-                                        travelers.length==0
+                                        widget.travelers.length==0
                                         ?
                                         Container(
                                           width: double.infinity,
@@ -102,7 +122,7 @@ class FO_PassangerData extends StatelessWidget {
                                         : Column(
                                           children: [
                                               
-                                              for (int i=0,a = -(travelers.length-1); a < travelers.length; a++,i++ ) 
+                                              for (int i=0,a = -(widget.travelers.length-1); a < widget.travelers.length; a++,i++ ) 
                                               i%2==1?Container(height: 2,color: const Color.fromARGB(255, 214, 214, 214),margin: EdgeInsets.symmetric(horizontal: 5,vertical: 15),) :
                                               Padding(
                                                 padding: const EdgeInsets.only(right: 10),
@@ -118,10 +138,10 @@ class FO_PassangerData extends StatelessWidget {
                                                               alignment: Alignment.center,
                                                               decoration: BoxDecoration(
                                                                 borderRadius: BorderRadius.circular(20),
-                                                                color: ColorUtils.stringToColor(travelers[((i+1)/2).toInt()].nickname)
+                                                                color: ColorUtils.stringToColor(widget.travelers[((i+1)/2).toInt()].nickname)
                                                               ),
                                                               child:Text(
-                                                                      travelers[((i+1)/2).toInt()].nickname[0],
+                                                                      widget.travelers[((i+1)/2).toInt()].nickname[0],
                                                                       style: TextStyle(
                                                                         fontFamily: "SF",
                                                                         fontSize: 25,
@@ -133,19 +153,25 @@ class FO_PassangerData extends StatelessWidget {
                                                       
                                                       SizedBox(width: 10,),
                                                       Text(
-                                                        travelers[((i+1)/2).toInt()].nickname,
+                                                        widget.travelers[((i+1)/2).toInt()].nickname,
                                                         textAlign: TextAlign.center,
                                                       ),
+                                                      SizedBox(width: 10,),
+                                                      Text(
+                                                        widget.travelers[((i+1)/2).toInt()].rate==0?"0":widget.travelers[((i+1)/2).toInt()].rate.toString(),
+                                                        textAlign: TextAlign.center,
+                                                      ),
+                                                        Icon(Icons.star,size: 20,color: Color.fromARGB(255, 240, 217, 11))
                                                       ],
                                                     ),
                                                       
-                                                      Row(
+                                                      widget.orderStatus!="finished"?Row(
                                                         children: [
                                                           Column(
                                                             children: [
                                                               GestureDetector(
                                                                 onTap: () async{
-                                                                  int chatId=await HttpChats().getChatId(orderId,travelers[((i+1)/2).toInt()].userId);
+                                                                  int chatId=await HttpChats().getChatId(widget.orderId,widget.travelers[((i+1)/2).toInt()].userId);
                                                                     
                                                                     Navigator.push(
                                                                       context, 
@@ -160,11 +186,70 @@ class FO_PassangerData extends StatelessWidget {
                                                             children: [
                                                               GestureDetector(
                                                                 onTap: () {
-                                                                    openModalDeleteUser(travelers[((i+1)/2).toInt()].nickname,travelers[((i+1)/2).toInt()].userId,context);
+                                                                    openModalDeleteUser(widget.travelers[((i+1)/2).toInt()].nickname,widget.travelers[((i+1)/2).toInt()].userId,context);
                                                                   },
                                                                 child: Icon(Icons.dangerous,color: Colors.red,size: 20,)),
                                                             ],
                                                           )
+                                                        ],
+                                                      )
+                                                      :Row(
+                                                        children: [
+                                                          widget.travelers[((i+1)/2).toInt()].driverRate==null
+                                                          ? GestureDetector(
+                                                            onTap:()=> ratePeople(context,widget.travelers[((i+1)/2).toInt()]),
+                                                            child: Container(
+                                                              decoration: BoxDecoration(
+                                                                color: brandBlue,
+                                                                borderRadius: BorderRadius.circular(12)
+                                                              ),
+                                                              padding: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
+                                                              child: Text(
+                                                                "RATE",
+                                                                textAlign: TextAlign.center,
+                                                                style:  TextStyle(
+                                                                  color: Colors.white,
+                                                                  fontFamily: "SF",
+                                                                  fontWeight: FontWeight.w400,
+                                                                  fontSize: 14
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          )
+                                                          :Builder(
+                                                            builder: (context) {
+
+                                                              int variableCount=0;
+                                                              variableCount= widget.travelers[((i+1)/2).toInt()].driverRate!.toInt();
+                                                              return Row(
+                                                                children: [
+                                                                  // Container(
+                                                                  //   width: 1.5,
+                                                                  //   height: 15,
+                                                                  //   color: Colors.black,
+                                                                  // ),
+                                                                  SizedBox(width: 10,),
+                                                                  Text(
+                                                                    "RATE: ${variableCount}",
+                                                                    textAlign: TextAlign.center,
+                                                                    style:  TextStyle(
+                                                                      fontFamily: "SF",
+                                                                      fontWeight: FontWeight.w400,
+                                                                      fontSize: 14
+                                                                    ),
+                                                                  ),
+                                                                  tappedStar(true),
+                                                                  // for(int j=0;j<variableCount;j++)
+                                                                  // tappedStar(true),
+                                                                  // for(int j=0;j<5-variableCount;j++)
+                                                                  // tappedStar(false),
+                                                                ],
+                                                              );
+                                                            },
+                                                          ),
+                                                          
+                                                          
+                                                          
                                                         ],
                                                       ),
 
@@ -178,4 +263,104 @@ class FO_PassangerData extends StatelessWidget {
                                     ),
                                   );
   }
+Widget tappedStar(bool variable){
+      return Icon(Icons.star,size: 20,color: variable?Color.fromARGB(255, 240, 217, 11):Color.fromARGB(144, 158, 158, 158)
+      );
+    }
+ 
+}
+
+
+
+class FeedBackModal extends StatefulWidget {
+  final Travelers travelers;
+  final int orderId;
+  const FeedBackModal({super.key,required this.travelers,required this.orderId});
+
+  @override
+  State<FeedBackModal> createState() => _FeedBackModalState();
+}
+
+class _FeedBackModalState extends State<FeedBackModal> {
+
+
+  void feedPeople()async{
+    final result=await HttpUserOrder().rateUser(widget.orderId, "", feedBack+1, widget.travelers.userId);
+    if(result==0){
+      userRepository.getUserFullInformationOrder(widget.orderId);
+    }
+    feedBack=-1;
+    Navigator.pop(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+            height: 300,
+            child: Column(
+              children: [
+                SizedBox(height: 20,),
+                Text(
+                  "Rate "+widget.travelers.nickname,
+                  style: TextStyle(
+                            fontFamily: "SF",
+                            fontSize: 25,
+                            fontWeight: FontWeight.w500,
+                            color: brandBlack
+                          ),
+                          
+                ),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      tappedStar(0),
+                      tappedStar(1),
+                      tappedStar(2),
+                      tappedStar(3),
+                      tappedStar(4),               
+                    ],
+                  ),
+                ),
+                feedBack!=-1? GestureDetector(
+                  onTap: feedPeople,
+                  child: Container(
+                    height: 40,
+                    width: 80,
+                    decoration: BoxDecoration(
+                      color: brandBlue,
+                      borderRadius: BorderRadius.circular(12)
+                    ),
+                    
+                    alignment: Alignment.center,
+                    child:  Text(
+                      "OK",
+                      textAlign: TextAlign.center,
+                      style:  TextStyle(
+                        color: Colors.white,
+                        fontFamily: "SF",
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14
+                      ),
+                    ),
+                  ),
+                ):SizedBox(height: 40,),
+                SizedBox(height: 30,)
+              ],
+            ),
+          );
+  }
+
+    int feedBack=-1;
+    Widget tappedStar(int index){
+      return GestureDetector(
+        onTap: () {
+          setState(() {
+            feedBack=index;
+          });
+        },
+        child: Icon(Icons.star,size: 50,color: feedBack>=index?Color.fromARGB(255, 240, 217, 11):Color.fromARGB(144, 158, 158, 158),)
+      );
+    }
 }

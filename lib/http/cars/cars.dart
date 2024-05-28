@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:temp/http/instanse.dart';
 
 class CarModel{
@@ -12,7 +13,8 @@ class CarsHttp{
 
 
   Future<List<CarModel>> getName(String text)async{
-    Dio dio=Dio();
+    try {
+       Dio dio=Dio();
     Response response;
 
     AuthInterceptor interceptor=AuthInterceptor(dio);
@@ -30,10 +32,19 @@ class CarsHttp{
       carModels = data.map((item) => CarModel(item["id"], item["name"])).toList();
   
     return carModels;
+    } catch (e,stackTrace) {
+      Sentry.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
+      return [];
+    }
+   
   }
 
   Future<List<CarModel>> getModel(String text,int id)async{
-    Dio dio=Dio();
+    try {
+      Dio dio=Dio();
     Response response;
 
     AuthInterceptor interceptor=AuthInterceptor(dio);
@@ -52,6 +63,13 @@ class CarsHttp{
       carModels = data.map((item) => CarModel(item["id"], item["name"])).toList();
   
     return carModels;
+    } catch (e,stackTrace) {
+      Sentry.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
+      return [];
+    }
   }
 
 }

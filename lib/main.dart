@@ -12,7 +12,7 @@ import 'package:temp/pages/onboarding/onboarding_page.dart';
 import 'package:temp/pages/registration/registration_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 
 
@@ -32,8 +32,24 @@ void main() async {
 );  
   FirebaseMessaging.instance.requestPermission();
   int isWelcome =await FirstWelcome().getWelocme();
-  
-  runApp(const App());
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = 'https://1a0d118aeebbe7536812333bd35edebf@o4507332964450304.ingest.us.sentry.io/4507333042700288';
+      // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+      // We recommend adjusting this value in production.
+      options.tracesSampleRate = 1.0;
+      // The sampling rate for profiling is relative to tracesSampleRate
+      // Setting to 1.0 will profile 100% of sampled transactions:
+      options.profilesSampleRate = 1.0;
+    },
+    appRunner: () => runApp(App()),
+  );
+  FlutterError.onError = (error) {
+   Sentry.captureException(
+      error,
+    );
+  };
+ // runApp(const App());
   } catch (e) {
     print(e);
     Dio().post(

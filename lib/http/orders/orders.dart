@@ -3,6 +3,7 @@ import 'dart:ffi';
 
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:temp/http/instanse.dart';
 import 'package:temp/http/user/http_user_car.dart';
 import 'package:temp/localStorage/tokenStorage/token_storage.dart';
@@ -199,9 +200,13 @@ class UserOrderFullInformation extends DriverOrder{
 class Travelers{
   int userId;
   String nickname;
+  double rate;
+  double? driverRate;
   Travelers({
     required this.userId,
-    required this.nickname
+    required this.nickname,
+    required this.driverRate,
+    required this.rate
   });
 }
 class PointLocation{
@@ -276,7 +281,11 @@ class HttpUserOrder{
       );
       print(response.data);
       return 0;
-    }catch(e ){
+    }catch (e,stackTrace ){
+      Sentry.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
       if(e is DioException){
         final error = e;
         if(error.response!=null && error.response!.data["code"]!=null){
@@ -303,7 +312,11 @@ class HttpUserOrder{
     );
     print(response.data);
     return 0;
-  }catch(e ){
+  }catch (e,stackTrace ){
+    Sentry.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
     if(e is DioException){
       final error = e;
       if(error.response!=null && error.response!.data["code"]!=null){
@@ -333,7 +346,11 @@ class HttpUserOrder{
    print("create---");
     print(response.data);
     return 0;
-  }catch(e){
+  }catch (e,stackTrace){
+    Sentry.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
     print(e);
       rethrow;
   }
@@ -359,7 +376,11 @@ class HttpUserOrder{
 
       print(response.data);
       return 0;
-    }catch(e){
+    }catch (e,stackTrace){
+      Sentry.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
       print(e);
         return -1;
     }
@@ -384,7 +405,11 @@ class HttpUserOrder{
 
       print(response.data);
       return 0;
-    }catch(e){
+    }catch (e,stackTrace){
+      Sentry.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
       print(e);
         return -1;
     }
@@ -437,7 +462,11 @@ class HttpUserOrder{
       )).toList();
        print(driverOrder);
     return driverOrder;
-    } catch (e) {
+    } catch (e,stackTrace) {
+      Sentry.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
       print(e);
       return [];
     }
@@ -503,7 +532,11 @@ class HttpUserOrder{
         )
       )).toList();
     return driverOrder;
-    } catch (e) {
+    } catch (e,stackTrace) {
+      Sentry.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
       print(e);
       return [];
     }
@@ -569,7 +602,11 @@ class HttpUserOrder{
         )
       )).toList();
     return driverOrder;
-    } catch (e) {
+    } catch (e,stackTrace) {
+      Sentry.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
       print(e);
       return [];
     }
@@ -604,7 +641,7 @@ class HttpUserOrder{
       List<dynamic> list=response.data["data"];
       List<String> similarList=list.map<String>((e) => e as String).toList();
       return similarList;
-    } catch (e) {
+    } catch (e,stackTrace) {
       print(e);
       return [];
     }
@@ -647,7 +684,9 @@ class HttpUserOrder{
         _travelers=_travelersResponse.map((el) {
         return Travelers(
           userId: el["id"], 
-          nickname: el["nickname"]
+          nickname: el["nickname"],
+          rate: el["rate"]+.0,
+          driverRate: el["driver_rate"]!=null?el["driver_rate"]+.0:null
           );
       },).toList();
       }
@@ -692,8 +731,12 @@ class HttpUserOrder{
       travelers: _travelers,
       );
       return fullOrderInfo;
-    } catch (e) {
+    } catch (e,stackTrace) {
        print(e);
+       Sentry.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
       return null;
      
     }
@@ -716,7 +759,11 @@ class HttpUserOrder{
       );
       print(response.data);
       return 0;
-    } catch (e) {
+    } catch (e,stackTrace) {
+      Sentry.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
       if(e is DioException) {
         final error=e;
          if(error.response!=null && error.response!.data!=null  && error.response!.data!["code"]!=null){
@@ -741,7 +788,7 @@ class HttpUserOrder{
       );
       print(response.data);
       return 0;
-    } catch (e) {
+    } catch (e,stackTrace) {
       return 1;
     }
   }
@@ -764,7 +811,11 @@ class HttpUserOrder{
       print("cancel");
       print(response.data);
       return 0;
-    } catch (e) {
+    } catch (e,stackTrace) {
+      Sentry.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
       print(e);
       return 1;
     }
@@ -816,7 +867,11 @@ class HttpUserOrder{
       )).toList();
       return driverOrder;
       
-    } catch (e) {
+    } catch (e,stackTrace) {
+      Sentry.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
       print(e);
       return [];
     }
@@ -843,7 +898,11 @@ class HttpUserOrder{
       );
       print(response.data);
       return 0;
-    } catch (e) {
+    } catch (e,stackTrace) {
+      Sentry.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
       print(e);
       return 1;      
     }
@@ -867,7 +926,11 @@ class HttpUserOrder{
       );
       print(response.data);
       return 0;
-        } catch (e) {
+        } catch (e,stackTrace) {
+          Sentry.captureException(
+            e,
+            stackTrace: stackTrace,
+          );
           print(e);
           return -1;
         }
