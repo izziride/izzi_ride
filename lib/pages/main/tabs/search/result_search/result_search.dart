@@ -10,6 +10,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:temp/http/orders/orders.dart';
 import 'package:temp/pages/main/tabs/search/UI/search_card/search_card_search.dart';
 import 'package:temp/pages/main/tabs/search/result_search/bar_navigation.dart';
+import 'package:temp/pages/main/tabs/widgets/card_order.dart';
 import 'package:temp/repository/search_repo/search_repo.dart';
 
 class ResultSearch extends StatefulWidget{
@@ -71,8 +72,10 @@ class _ResultSearchState extends State<ResultSearch> {
                           child: Image.asset("assets/image/otherCity1.png",),
                         ));
                         for(int i=0;i<otherOrder.length;i++){
+                          final driverOrder= DriverOrder(driverRate: otherOrder[i].driverRate, bookedStatus: otherOrder[i].bookedStatus, status: "", userId: otherOrder[i].driverId, orderId: otherOrder[i].orderId, clientAutoId: otherOrder[i].driverId, departureTime: otherOrder[i].departureTime, nickname: otherOrder[i].nickname, orderStatus: "", startCountryName: otherOrder[i].startPoint.city, endCountryName: otherOrder[i].endPoint.city, seatsInfo: otherOrder[i].seatsInfo, price: otherOrder[i].price, preferences: otherOrder[i].preferences);
                           listotherOrder.add(
-                            CardsearchOrderSearch(driverOrder: otherOrder[i],seats:searchRepo.personCount)
+                            CardOrder(rate: otherOrder[i].driverRate, variable: false, side: (){}, driverOrder: driverOrder, full: false)
+                            //CardsearchOrderSearch(driverOrder: otherOrder[i],seats:searchRepo.personCount)
                           );
                         }
                        
@@ -96,9 +99,12 @@ class _ResultSearchState extends State<ResultSearch> {
                     if(otherOrder.length>0){
                       setState(() {
                         for(int i=0;i<otherOrder.length;i++){
+                          final driverOrder= DriverOrder(driverRate: otherOrder[i].driverRate, bookedStatus: otherOrder[i].bookedStatus, status: "", userId: otherOrder[i].driverId, orderId: otherOrder[i].orderId, clientAutoId: otherOrder[i].driverId, departureTime: otherOrder[i].departureTime, nickname: otherOrder[i].nickname, orderStatus: "", startCountryName: otherOrder[i].startPoint.city, endCountryName: otherOrder[i].endPoint.city, seatsInfo: otherOrder[i].seatsInfo, price: otherOrder[i].price, preferences: otherOrder[i].preferences);
+                          
                         // listOrder= listOrder.sublist(1,listOrder.length);
                           listOrder.insert(0,
-                            CardsearchOrderSearch(driverOrder: otherOrder[i],seats:searchRepo.personCount)
+                          CardOrder(rate: otherOrder[i].driverRate, variable: false, side: (){}, driverOrder: driverOrder, full: false)
+                           // CardsearchOrderSearch(driverOrder: otherOrder[i],seats:searchRepo.personCount)
                           );
                         }
                        //listOrder.insert(0,otherOrder);

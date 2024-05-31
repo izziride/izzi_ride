@@ -224,11 +224,14 @@ class _MessagePageState extends State<MessagePage> {
                                           String formattedTime="";
                                           String formattedDate="";
                                           String current_time=chatsRepository.chats[widget.chatId.toString()]!.createdAt;
+                                          print(current_time);
                                           if(current_time!=""){
                                           DateTime time = DateTime.parse(current_time);
-                                          time.add(Duration(hours: DateTime.now().timeZoneOffset.inHours));
+                                          print(time.toString());
+                                          print(time.month);
+                                          time= time.add(Duration(hours: DateTime.now().timeZoneOffset.inHours));
                                           formattedTime= DateFormat('hh:mm a', 'en_US').format(time);
-                                          formattedDate= DateFormat('yyyy.mm.dd', 'en_US').format(time);
+                                          formattedDate= DateFormat('yyyy.MM.dd', 'en_US').format(time);
                                           }
 
                                             return Row(

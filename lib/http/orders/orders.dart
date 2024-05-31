@@ -4,6 +4,7 @@ import 'dart:ffi';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:temp/helpers/error_impl.dart';
 import 'package:temp/http/instanse.dart';
 import 'package:temp/http/user/http_user_car.dart';
 import 'package:temp/localStorage/tokenStorage/token_storage.dart';
@@ -232,6 +233,7 @@ class DriverOrderFind{
   double price;
   Preferences preferences;
   SeatsInfo seatsInfo;
+  double driverRate;
   DriverOrderFind({
     this.clientReservedSeats,
     required this.bookedStatus,
@@ -244,7 +246,8 @@ class DriverOrderFind{
     required this.endPoint,
     required this.price,
     required this.preferences,
-    required this.seatsInfo
+    required this.seatsInfo,
+    required this.driverRate
   });
 }
 
@@ -523,7 +526,7 @@ class HttpUserOrder{
         free: el["seats"]["free"]
       ), 
       price:el["order_price"]+0.0, 
-      
+      driverRate:el["driver_rate"]+.0 ,
       preferences: Preferences(
         smoking: el["preference"]["smoking"], 
         luggage: el["preference"]["luggage"], 
@@ -532,7 +535,14 @@ class HttpUserOrder{
         )
       )).toList();
     return driverOrder;
-    } catch (e,stackTrace) {
+    } catch ( e,stackTrace) {
+      if(e is Error){
+        final stackTrace = e.stackTrace;
+        
+      }
+
+      
+      
       Sentry.captureException(
         e,
         stackTrace: stackTrace,
@@ -577,6 +587,7 @@ class HttpUserOrder{
       driverCar: el["driver_car"], 
       departureTime: el["departure_time"],
       nickname: el["driver_nickname"], 
+      driverRate:el["driver_rate"]+.0 ,
       startPoint:PointLocation(
         city: el["start_point"]["city"],
         longitude: el["start_point"]["longitude"],

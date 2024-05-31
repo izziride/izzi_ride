@@ -10,6 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import 'package:temp/constants/colors/colors.dart';
 import 'package:temp/firebase/firebase.dart';
+import 'package:temp/localStorage/rate_modal/rate_modal.dart';
 import 'package:temp/pages/main/tabs/chat/chat.dart';
 import 'package:temp/pages/main/tabs/create/create.dart';
 import 'package:temp/pages/main/tabs/my_roads/my_roads.dart';
@@ -32,6 +33,8 @@ class _MainPageState extends State<MainPage> {
   FirebaseDriver firebaseDriver=FirebaseDriver();
 int _indexTab=0;
 
+  int viewConterHomePage=0;
+
   getUserInfo() async {
     userRepository.getUserInfo();
   }
@@ -43,8 +46,15 @@ int _indexTab=0;
     });
   }
 
+  checkRate()async{
+    String result=await RateModalStorage().getRate();
+    if(result=="+") viewConterHomePage=2;
+  }
+
 
   startRateDialog()async{
+    
+
     RateMyApp rateMyApp = RateMyApp(
       preferencesPrefix: 'rateMyApp_',
       minDays: 0,
@@ -64,6 +74,7 @@ rateMyApp.showStarRateDialog(
         return [ // Return a list of actions (that will be shown at the bottom of the dialog).
           GestureDetector(
             onTap: ()async {
+              RateModalStorage().setRate();
               launch('https://apps.apple.com/us/app/izzi-ride/id6449208978');
               print('Thanks for the ' + (stars == null ? '0' : stars.round().toString()) + ' star(s) !');
               // You can handle the result as you want (for instance if the user puts 1 star then open your contact page, if he puts more then open the store page, etc...).
@@ -90,7 +101,7 @@ rateMyApp.showStarRateDialog(
 
   @override
   void initState() {
-    startRateDialog();
+    checkRate();
     if(userRepository.isAuth){
         userRepository.getUserInfo();
         appSocket.connect();
@@ -105,7 +116,9 @@ rateMyApp.showStarRateDialog(
 
   @override
   Widget build(BuildContext context) {
-    
+    if(viewConterHomePage==1){
+      Future.delayed(Duration(milliseconds: 500)).then((value) => startRateDialog(),);
+    }
     return DefaultTabController(
       length: 5,
       child: Scaffold(
@@ -140,6 +153,9 @@ rateMyApp.showStarRateDialog(
           child:  TabBar(
             onTap: (value) {
               setState(() {
+                if(_indexTab!=0&&value==0){
+                  viewConterHomePage=viewConterHomePage+1;
+                }
                 _indexTab=value;
               });
             },
