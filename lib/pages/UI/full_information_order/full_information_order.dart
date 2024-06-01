@@ -12,6 +12,7 @@ import 'package:temp/http/chats/http_chats.dart';
 import 'package:temp/http/orders/orders.dart';
 import 'package:temp/pages/UI/app_popup.dart';
 import 'package:temp/pages/UI/full_information_order/client/full_order_client.dart';
+import 'package:temp/pages/UI/full_information_order/client/give_awai.dart';
 import 'package:temp/pages/UI/full_information_order/components/booked_status_action_driver.dart';
 import 'package:temp/pages/UI/full_information_order/components/booked_status_info.dart';
 import 'package:temp/pages/UI/full_information_order/components/info_in_the_map.dart';
@@ -113,7 +114,7 @@ class _CardFullOrderState extends State<CardFullOrder> {
                               CardOrder(rate: fullUserOrder.driverRate, side: (){}, driverOrder: driverOrder,full:true,variable: false,),
                               SizedBox(height: fullOrderType==FullOrderType.driver?24:0 ,),
                               fullOrderType==FullOrderType.driver?FO_PassangerData(travelers:travelers,orderId: orderId,chatid: widget.chatid,orderStatus:driverOrder.orderStatus ,):const SizedBox.shrink(),
-                              const SizedBox(height: 24,),
+                              fullOrderType==FullOrderType.user??fullUserOrder.orderStatus=="finished" ?FO_GiveWay(code: fullUserOrder.giveAway,):const SizedBox(height: 24,),
                               FO_InfoInTheMap(location:startLocation),
                               const SizedBox(height: 24,),
                               FO_RideDetails(automobile: automobile,comment: comment,countSeats: countSeats,endLocation: endLocation,startLocation: startLocation,),     
