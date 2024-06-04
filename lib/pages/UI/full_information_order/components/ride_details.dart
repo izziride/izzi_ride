@@ -165,7 +165,7 @@ class FO_RideDetails extends StatelessWidget {
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                      Text(
-                                                      "Car",
+                                                      "Vehicle",
                                                       style: TextStyle(
                                                         color: Color.fromRGBO(0, 0, 0, 0.87),
                                                         fontFamily: "Inter",

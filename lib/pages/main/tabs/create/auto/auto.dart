@@ -59,6 +59,10 @@ class _AutoState extends State<Auto> {
     checkUserCar();
     super.initState();
   }
+
+  String mode="variable";
+  List<int> carIdForRemove=[];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +80,50 @@ class _AutoState extends State<Auto> {
          padding: const EdgeInsets.only(left: 0,right: 0),
          child:  Column(
            children: [
-               BarNavigation(back: true, title: "My cars"),
+              mode=="variable"
+              ? BarNavigation(back: true, title: "My cars")
+              :Container(
+                height: 70,
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: brandBlue,
+                      width: 2
+                    )
+                  )
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                margin: EdgeInsets.only(bottom: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          carIdForRemove=[];
+                          mode="variable";
+                        });
+                      },
+                      child: Icon(Icons.close,size: 35,color: brandBlue,)
+                    ),
+                    GestureDetector(
+                      onTap: ()async {
+                        for(int i=0;i<carIdForRemove.length;i++){
+                            await userRepository.deleteUserCar(carIdForRemove[i]);
+                          }
+                        setState(() {
+                          
+                          checkUserCar();
+                          carIdForRemove=[];
+                          mode="variable";
+                        });
+                      },
+                      child: Icon(Icons.delete_forever,size: 35,color: brandBlue,)
+                    ),
+                    
+                  ],
+                ),
+              ),
              Observer(
                builder: (context) {
 
@@ -87,7 +134,7 @@ class _AutoState extends State<Auto> {
                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                            children: [
-                             Column(
+                             mode=="variable"? Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                    
@@ -97,41 +144,90 @@ class _AutoState extends State<Auto> {
                                           splashColor: Colors.transparent,
                                           onTap: () {
                                            setState(() {
+                                              
                                               currentautoId=userRepository.userCar![i].carId;
                                               print(currentautoId);
+                                              
                                            });
                                           },
-                                          child: VariableCar( pressed: currentautoId==userRepository.userCar![i].carId,userCar:userRepository.userCar![i])
+                                          child: VariableCar( pressed:currentautoId==userRepository.userCar![i].carId ,userCar:userRepository.userCar![i],decoreColor: brandBlue,)
                                           ),
-                                      GestureDetector(
-                                        onTap: () {
-                                           Navigator.push(
-                                          context, MaterialPageRoute(
-                                            builder: (context) 
-                                            => ChangeNotifierProvider<DataProvider>(
-                                              create: (context) => DataProvider(),
-                                              
-                                              child: CreateCar()
+                                      if(mode=="variable") Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                               Navigator.push(
+                                              context, MaterialPageRoute(
+                                                builder: (context) 
+                                                => ChangeNotifierProvider<DataProvider>(
+                                                  create: (context) => DataProvider(),
+                                                  
+                                                  child: CreateCar()
+                                                  ),
+                                              )
+                                              );
+                                            },
+                                            child: SizedBox(
+                                              height: 40,
+                                              child: Text(
+                                                "+ add vehicle",
+                                                style: TextStyle(
+                                                  color: brandBlue,
+                                                  fontFamily: "SF",
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500
+                                                ),
                                               ),
-                                          )
-                                          );
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            mode="remove";
+                                          });
                                         },
                                         child: SizedBox(
                                           height: 40,
                                           child: Text(
-                                            "+ add car",
+                                            "remove vehicle",
                                             style: TextStyle(
-                                              color: brandBlue,
+                                              color: Colors.red,
                                               fontFamily: "SF",
                                               fontSize: 14,
+                                              
                                               fontWeight: FontWeight.w500
                                             ),
                                           ),
                                         ),
                                       )
+                                        ],
+                                      )
+
                                     ],
+                                )
+                                :Column(
+                                  children: [
+                                    for(int i=0;i<userRepository.userCar!.length;i++) 
+                                        InkWell(
+                                          highlightColor: Colors.transparent,
+                                          splashColor: Colors.transparent,
+                                          onTap: () {
+                                           setState(() {
+                                            int findIndex = carIdForRemove.firstWhere((element) => element==userRepository.userCar![i].carId,orElse: () => -1,);
+                                              if(findIndex==-1){
+                                                carIdForRemove.add(userRepository.userCar![i].carId);
+                                              }else{
+                                                carIdForRemove=carIdForRemove.where((element) => element!=userRepository.userCar![i].carId).toList();
+                                              }
+                                              
+                                           });
+                                          },
+                                          child: VariableCar( pressed:carIdForRemove.firstWhere((element) => element==userRepository.userCar![i].carId,orElse: () => -1,)!=-1 ,userCar:userRepository.userCar![i],decoreColor:  Colors.red)
+                                          ),
+                                  ],
                                 ),
-                                Padding(
+                                if(mode=="variable")Padding(
                                            padding: EdgeInsets.only(bottom: 32),
                                             child: InkWell(
                                                               onTap: (){
@@ -167,7 +263,8 @@ class _AutoState extends State<Auto> {
                                           
                                 )
                            ],
-                         ),
+                         )
+                         ,
                      ),
                    ),
                  );

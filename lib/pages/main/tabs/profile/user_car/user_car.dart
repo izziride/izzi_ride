@@ -148,33 +148,64 @@ Widget variableAuto(){
             crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 for(int i=0;i<usercars.length;i++) 
-                  VariableCar( pressed: true,userCar:usercars[i]),
-                GestureDetector(
-                  onTap: () {
-                   Navigator.push(
-                    context, MaterialPageRoute(
-                      builder: (context) 
-                      => ChangeNotifierProvider<DataProvider>(
-                        create: (context) => DataProvider(),
+                  VariableCar( pressed: true,userCar:usercars[i],decoreColor:brandBlue),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                       Navigator.push(
+                        context, MaterialPageRoute(
+                          builder: (context) 
+                          => ChangeNotifierProvider<DataProvider>(
+                            create: (context) => DataProvider(),
+                            
+                            child: CreateCar()
+                            ),
+                        )
+                        );
+                      },
+                      child: SizedBox(
+                        height: 40,
                         
-                        child: CreateCar()
+                        child: Text(
+                          "+ add vehicle",
+                          style: TextStyle(
+                            color: brandBlue,
+                            fontFamily: "SF",
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500
+                          ),
                         ),
-                    )
-                    );
-                  },
-                  child: SizedBox(
-                    height: 40,
-                    
-                    child: Text(
-                      "+ add car",
-                      style: TextStyle(
-                        color: brandBlue,
-                        fontFamily: "SF",
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500
                       ),
                     ),
-                  ),
+                    GestureDetector(
+                      onTap: () {
+                       Navigator.push(
+                        context, MaterialPageRoute(
+                          builder: (context) 
+                          => ChangeNotifierProvider<DataProvider>(
+                            create: (context) => DataProvider(),
+                            
+                            child: CreateCar()
+                            ),
+                        )
+                        );
+                      },
+                      child: SizedBox(
+                        height: 40,
+                        
+                        child: Text(
+                          "remove vehicle",
+                          style: TextStyle(
+                            color: brandBlue,
+                            fontFamily: "SF",
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               ],
           );

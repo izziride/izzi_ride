@@ -153,7 +153,7 @@ class _ReductDopOptionsState extends State<ReductDopOptions> {
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(0),
                     border: InputBorder.none,
-                    hintText: "How will you go, do you plan stops, rules of behavior in the car, etc.",
+                    hintText: "How will you go, do you plan stops, rules of behavior in the vehicle, etc.",
                     hintMaxLines: 2,
                     hintStyle: TextStyle(
                       fontFamily: "Poppins",

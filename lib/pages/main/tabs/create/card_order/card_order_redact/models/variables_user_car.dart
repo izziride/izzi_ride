@@ -45,7 +45,7 @@ class _VariableAutoState extends State<VariableAuto> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                current!=null?VariableCar( pressed:true, userCar:current!):SizedBox.shrink(),
+                current!=null?VariableCar( pressed:true, userCar:current!,decoreColor: brandBlue,):SizedBox.shrink(),
                   
               ],
           );

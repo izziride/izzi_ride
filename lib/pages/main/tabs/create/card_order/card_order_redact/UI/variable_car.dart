@@ -7,7 +7,8 @@ import 'package:temp/models/car/car.dart';
 class VariableCar extends StatelessWidget {
   final bool pressed;
   final UserCar userCar;
-  const VariableCar({required this.pressed,required this.userCar, super.key});
+  final Color decoreColor;
+  const VariableCar({required this.pressed,required this.userCar, super.key,required this.decoreColor});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class VariableCar extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
                 border: Border.all(
-                  color:pressed? brandBlue:Color.fromRGBO(233, 235, 238, 1),
+                  color:pressed? decoreColor:Color.fromRGBO(233, 235, 238, 1),
                   style: BorderStyle.solid,
                   width: 1
                 ),
@@ -74,7 +75,7 @@ class VariableCar extends StatelessWidget {
             decoration:BoxDecoration(
              borderRadius: BorderRadius.circular(12),
              border: Border.all(
-              color: pressed?brandBlue:Color.fromRGBO(173, 179, 188, 1),
+              color: pressed?decoreColor:Color.fromRGBO(173, 179, 188, 1),
               width: pressed?7:2
              ) 
             ) ,

@@ -8,6 +8,7 @@ import 'package:temp/constants/colors/colors.dart';
 import 'package:temp/http/user/http_user.dart';
 import 'package:temp/localStorage/tokenStorage/token_storage.dart';
 import 'package:temp/pages/UI/app_popup.dart';
+import 'package:temp/pages/locator/locator.dart';
 import 'package:temp/pages/main/tabs/profile/PDFViewer/PDFWiewer.dart';
 import 'package:temp/pages/main/tabs/profile/Paragraf/paragraf.dart';
 import 'package:temp/pages/main/tabs/profile/Punkt/punkt.dart';
@@ -57,6 +58,10 @@ List list=[];
   Punkt(punkt: "Terms of Use",onTap: (context)async{
 
       Navigator.push(context, MaterialPageRoute(builder: (context) => PDFWiewer(pdftype: PDFTYPE.condition),));
+  }),
+  Punkt(punkt: "Locator",onTap: (context)async{
+
+      Navigator.push(context, MaterialPageRoute(builder: (context) => LocatorPage(),));
   }),
   //Punkt(punkt: "Invite friends",onTap: share),
   //Punkt(punkt: "Rate the application",onTap: (context){}),

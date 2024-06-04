@@ -123,7 +123,7 @@ class _CreateCarState extends State<CreateCar> {
           child:  Column(
               
               children: [
-                BarNavigation(back: true, title: "Create car"),
+                BarNavigation(back: true, title: "Create vehicle"),
                 Expanded(
                   child: Stack(
                     alignment: Alignment.bottomCenter,

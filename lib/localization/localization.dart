@@ -7,11 +7,11 @@ class LocalizationManager{
     "app_name":"Easy Ride",
     "test":"test",
     "onboarding":{
-        "title":"Your first car without\na driver's license",
+        "title":"Your first vehicle without\na driver's license",
         "one_info":"Goes to meet people who just got their\nlicense",
         "two_info":"Our company is a leader by the number of\ncars in the fleet",
-        "three":"We will pay for you, all expenses related to\nthe car",
-        "four":"Choose between regular car models\nor exclusive ones",
+        "three":"We will pay for you, all expenses related to\nthe vehicle",
+        "four":"Choose between regular vehicle models\nor exclusive ones",
         "button":"next",
         "skip":"skip"
     },

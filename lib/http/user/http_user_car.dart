@@ -50,6 +50,32 @@ class HttpUserCar{
     dio.interceptors.add(authInterceptor);
   }
 
+Future<int> deleteUserCar(int carId)async{
+
+  String access= tokenStorage.accessToken;
+  if(access=="no") return -1;
+
+  try{
+   Response response = await dio.delete(
+    baseUrl+"/${carId}",
+    options: Options(
+      headers: {
+        "Authorization":"Bearer $access"
+      }
+    )
+    );
+    print(response.data);
+    return 0;
+  }catch(e,stackTrace){
+    Sentry.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
+    print(e);
+      return -1;
+  }
+ 
+ }
  Future<int> createUserCar(ClientCar clientCar)async{
 
   String access= tokenStorage.accessToken;

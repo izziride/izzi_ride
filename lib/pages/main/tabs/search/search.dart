@@ -57,13 +57,13 @@ void search(){
       });
     }
     if(!isFromEmpty&&!isToEmpty){
-     
-  Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_)=>const ResultSearch()
-        )
-        );
+      searchRepo.updatePersonCount(personCount);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_)=>const ResultSearch()
+            )
+            );
     }
 }
 
@@ -129,7 +129,11 @@ void search(){
                       ),
                      Expanded(
                       flex: 20,
-                      child: PersonCount(count:personCount,update:setPersonCount)
+                      child: Observer(
+                        builder: (context) {
+                          return PersonCount(count:searchRepo.personCount,update:searchRepo.updatePersonCount);
+                        }
+                      )
                       )
                   ],
                 ),

@@ -12,6 +12,7 @@ import 'package:temp/pages/main/tabs/chat/chat_page.dart';
 import 'package:temp/pages/main/tabs/create/card_order/card_order_redact/card_order_redact.dart';
 import 'package:temp/pages/main/tabs/profile/user_car/components/create_modal.dart';
 import 'package:temp/repository/chats_repo/chats_repo.dart';
+import 'package:temp/repository/search_repo/search_repo.dart';
 import 'package:temp/repository/user_repo/user_repo.dart';
 
 class FO_BookedStatusActionDriver extends StatefulWidget {
@@ -68,9 +69,12 @@ class _FO_BookedStatusActionDriverState extends State<FO_BookedStatusActionDrive
             completed: (){
               userRepository.getUserFullInformationOrder(widget.fullUserOrder.orderId);
               userRepository.getUserBookedOrders();
+              
             },
-            errorFn: (){},
-            future: HttpUserOrder().orderBook(widget.fullUserOrder.orderId,widget.seats),
+            errorFn: (){
+
+            },
+            future: HttpUserOrder().orderBook(widget.fullUserOrder.orderId,searchRepo.personCount),
           ),
         );
       },

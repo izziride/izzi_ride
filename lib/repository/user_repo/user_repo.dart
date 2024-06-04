@@ -69,7 +69,13 @@ abstract class _UserRepo with Store {
    }
   }
 
-  
+  @action
+  Future<void> deleteUserCar(int carId)async{
+   int result= await HttpUserCar().deleteUserCar(carId);
+   if(result==0){
+      userCar=ObservableList.of(userCar!.where((element) => element.carId!=carId).toList());
+   }
+  }
 
   @observable
   ObservableList<DriverOrder> userOrders = ObservableList();

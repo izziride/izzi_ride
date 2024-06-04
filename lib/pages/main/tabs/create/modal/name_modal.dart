@@ -64,7 +64,7 @@ Map<MyEnum,dynamic> funcModel ={
   Widget build(BuildContext context) {
     return Column(
       children: [
-       BarNavigation(back: true, title: "Select your car make"),
+       BarNavigation(back: true, title: "Select your vehicle make"),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Container(

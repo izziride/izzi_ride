@@ -109,7 +109,7 @@ class _Page_InfoCarState extends State<Page_InfoCar> {
                       ),
                       decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Plate number of the car",
+                        hintText: "Plate number of the vehicle",
                         counterText: ""
                       ),
                       inputFormatters: [
@@ -146,7 +146,7 @@ class _Page_InfoCarState extends State<Page_InfoCar> {
               ),
                                 decoration: const InputDecoration(
               border: InputBorder.none,
-              hintText: "Year of manufacture of the car",
+              hintText: "Year of manufacture of the vehicle",
               counterText: ""
                                 ),
               keyboardType: TextInputType.number,

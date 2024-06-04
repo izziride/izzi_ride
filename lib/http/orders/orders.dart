@@ -757,6 +757,8 @@ class HttpUserOrder{
 
   Future<int> orderBook(int orderId,int seats )async{
     String access= tokenStorage.accessToken;
+    print("orderId: $orderId");
+    print("seats:"+seats.toString());
     try {
       Response response=await dio.post(
         baseAppUrl+"order/book",

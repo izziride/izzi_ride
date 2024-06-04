@@ -103,7 +103,7 @@ void checkValid(){
           child: Column(
             
             children: [
-              BarNavigation(back: true, title: "Car selection"),
+              BarNavigation(back: true, title: "Vehicle selection"),
               Expanded(
                 child: Stack(
                   alignment: Alignment.bottomCenter,
@@ -146,7 +146,7 @@ void checkValid(){
                         ),
                         decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: "Plate number of the car",
+                          hintText: "Plate number of the vehicle",
                           counterText: ""
                         ),
                         inputFormatters: [
@@ -183,7 +183,7 @@ void checkValid(){
                         ),
                                           decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Year of manufacture of the car",
+                        hintText: "Year of manufacture of the vehicle",
                         counterText: ""
                                           ),
                         keyboardType: TextInputType.number,
