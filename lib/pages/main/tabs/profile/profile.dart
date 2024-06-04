@@ -59,10 +59,10 @@ List list=[];
 
       Navigator.push(context, MaterialPageRoute(builder: (context) => PDFWiewer(pdftype: PDFTYPE.condition),));
   }),
-  Punkt(punkt: "Locator",onTap: (context)async{
+  // Punkt(punkt: "Locator",onTap: (context)async{
 
-      Navigator.push(context, MaterialPageRoute(builder: (context) => LocatorPage(),));
-  }),
+  //     Navigator.push(context, MaterialPageRoute(builder: (context) => LocatorPage(),));
+  // }),
   //Punkt(punkt: "Invite friends",onTap: share),
   //Punkt(punkt: "Rate the application",onTap: (context){}),
   Punkt(warning: true, punkt: "Delete account",onTap: (context){
