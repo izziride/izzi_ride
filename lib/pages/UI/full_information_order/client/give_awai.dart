@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:temp/constants/colors/colors.dart';
 
 class FO_GiveWay extends StatefulWidget {
   final String code;
@@ -27,15 +28,15 @@ class _FO_GiveWayState extends State<FO_GiveWay> {
           ),
           margin: EdgeInsets.all(20),
           width: double.infinity,
-          height: 80,
+          height: 100,
           alignment: Alignment.center,
           child: Column(
             children: [
               SizedBox(height: 5,),
               Text(
-                  "Gift code!!!",
+                  "GIFT CODE",
                   style: TextStyle(
-                    color: Color.fromARGB(255, 143, 27, 211),
+                    color: brandBlue,
                     fontFamily: "Inter",
                     fontSize: 25,
                     fontWeight: FontWeight.w600
@@ -45,15 +46,7 @@ class _FO_GiveWayState extends State<FO_GiveWay> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                                widget.code,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontFamily: "Inter",
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600
-                                ),
-                              ),
+                    
                               SizedBox(width: 20,),
                               GestureDetector(
                                 onTap: () async{
@@ -67,16 +60,30 @@ class _FO_GiveWayState extends State<FO_GiveWay> {
                                   });
                                 },
                                 child: Container(
-                                  height: 30,
-                                  width: 80,
+                                  height: 50,
+                                  width: 250,
                                   decoration: BoxDecoration(
-                                    color: Colors.grey,
-                                    borderRadius: BorderRadius.circular(5)
+                                    
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(
+                                      color: brandBlue,
+                                    )
+                              
                                   ),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(Icons.copy,size: 20,),
+                                      Text(
+                                        widget.code,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontFamily: "Inter",
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600
+                                        ),
+                                      ),
+                                      SizedBox(width: 30,),
+                                      Icon(Icons.copy,size: 15,),
                                       Text(
                                       "copy",
                                       style: TextStyle(

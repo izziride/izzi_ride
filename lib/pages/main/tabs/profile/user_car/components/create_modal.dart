@@ -77,12 +77,14 @@ class _CreateModalState extends State<CreateModal> {
               constraints: BoxConstraints(
                 maxHeight: 250,
                 minHeight: 80,
+                 
               ),
                 
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
                       children: [
                         Column(
                           children: [
@@ -99,6 +101,7 @@ class _CreateModalState extends State<CreateModal> {
                             Icon(Icons.cancel,color: Color.fromARGB(255, 206, 41, 19),),
                           ],
                         ),
+                        SizedBox(height: 20,),
                         GestureDetector(
                           onTap: () {
                             Navigator.pop(context);

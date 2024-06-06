@@ -115,7 +115,7 @@ class _Page_InfoCarState extends State<Page_InfoCar> {
                       inputFormatters: [
                         UpperCaseTextFormatter()
                       ],
-                      maxLength: 10,
+                      maxLength: 7,
                       textCapitalization: TextCapitalization.sentences
                     ),
                     ),

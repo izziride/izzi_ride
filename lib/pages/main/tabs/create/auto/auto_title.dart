@@ -78,8 +78,15 @@ void checkValid(){
   if(_numberController.text.isEmpty){
     validNumber=false;
   }
+  
   if(_yearController.text.isEmpty){
     validYear=false;
+  }else{
+    int year=int.parse(_yearController.text);
+    
+    if(year<1900||year>DateTime.now().year){
+      validYear=false;
+    }
   }
   setState(() {
     
@@ -103,7 +110,7 @@ void checkValid(){
           child: Column(
             
             children: [
-              BarNavigation(back: true, title: "Vehicle selection"),
+              BarNavigation(back: true, title: "Add a new vehicle"),
               Expanded(
                 child: Stack(
                   alignment: Alignment.bottomCenter,
@@ -144,6 +151,7 @@ void checkValid(){
                           fontWeight: FontWeight.w500,
                           color: brandBlack
                         ),
+                        
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: "Plate number of the vehicle",
@@ -152,7 +160,7 @@ void checkValid(){
                         inputFormatters: [
                           UpperCaseTextFormatter()
                         ],
-                          maxLength: 10,
+                          maxLength: 7,
                           textCapitalization: TextCapitalization.sentences
                                           ),
                                 ),

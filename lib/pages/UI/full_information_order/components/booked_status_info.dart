@@ -72,7 +72,9 @@ class _FO_BookedStatusInfoState extends State<FO_BookedStatusInfo> {
               userRepository.getUserBookedOrders();
               Navigator.pop(context);
             },
-            errorFn: (){},
+            errorFn: (){
+              
+            },
             future: HttpUserOrder().hideOrderBooking(widget.fullUserOrder.orderId),
           ),
         );

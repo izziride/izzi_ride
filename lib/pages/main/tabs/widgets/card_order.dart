@@ -28,12 +28,12 @@ const CardOrder({required this.rate, required this.variable, required this.side,
     String formattedTime = DateFormat('HH:mm').format(dateTime);
     formattedTime = formattedTime.split(':').map((segment) => segment.padLeft(2, '0')).join(':');
 
-    NumberFormat formatter = NumberFormat('###,###.00\$','ru_RU');
+    NumberFormat formatter = NumberFormat('\$#,##0','en_US',);
     formatter.minimumFractionDigits = 2;
     formatter.maximumFractionDigits = 2;
     
     String formattedNumber = formatter.format(driverOrder.price);
-    
+    String priceFormatted=driverOrder.price.toStringAsFixed(0);
     return Padding(
       padding: const EdgeInsets.only(left: 15,right: 15,top: 10),
       child: Stack(
@@ -230,7 +230,7 @@ const CardOrder({required this.rate, required this.variable, required this.side,
                                   Padding(
                                     padding: EdgeInsets.only(right: 8.0),
                                     child: Text(
-                                      formattedNumber,
+                                      "\$"+priceFormatted,
                                       style: const TextStyle(
                                           fontFamily: "SF",
                                           fontSize: 16,

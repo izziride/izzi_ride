@@ -71,8 +71,14 @@ class _CreateCarState extends State<CreateCar> {
       if(dataProvider.carNumber.isEmpty){
         dataProvider.validNumber=false;
       }
-      if(dataProvider.carYear.length<4){
+      
+      if(dataProvider.carYear.isEmpty){
         dataProvider.validYear=false;
+      }else{
+        int year=int.parse(dataProvider.carYear);
+        if(year<1900||year>DateTime.now().year){
+          dataProvider.validYear=false;
+        }
       }
       if(
         dataProvider.carName.isNotEmpty&&
@@ -123,7 +129,7 @@ class _CreateCarState extends State<CreateCar> {
           child:  Column(
               
               children: [
-                BarNavigation(back: true, title: "Create vehicle"),
+                BarNavigation(back: true, title: "Add a new vehicle"),
                 Expanded(
                   child: Stack(
                     alignment: Alignment.bottomCenter,

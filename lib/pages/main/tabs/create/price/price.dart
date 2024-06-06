@@ -98,8 +98,8 @@ class _PriceState extends State<Price> {
         animals: createRepo.animals
         )
     );
-   int carId=await HttpUserCar().createUserCar(clientCar);
-  
+   
+    int carId = await userRepository.addUserCar(clientCar);
    return carId;
   }
 

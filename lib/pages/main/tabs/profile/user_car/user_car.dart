@@ -25,9 +25,12 @@ class _UserAutoUIState extends State<UserAutoUI> {
 
 int currentCar=0;
 
+
+ 
+
  @override
   void initState() {
-   
+  
     super.initState();
   }
 
@@ -42,14 +45,57 @@ int currentCar=0;
       ),
       body: Column(
         children: [
-          BarNavigation(back: true, title: "My cars"),
+          mode=="variable"
+              ? BarNavigation(back: true, title: "My vehicles")
+              :Container(
+                height: 70,
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: brandBlue,
+                      width: 2
+                    )
+                  )
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                margin: EdgeInsets.only(bottom: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          carIdForRemove=[];
+                          mode="variable";
+                        });
+                      },
+                      child: Icon(Icons.close,size: 35,color: brandBlue,)
+                    ),
+                     GestureDetector(
+                      onTap: ()async {
+                        for(int i=0;i<carIdForRemove.length;i++){
+                            await userRepository.deleteUserCar(carIdForRemove[i]);
+                          }
+                        setState(() {
+                          
+                          
+                          carIdForRemove=[];
+                          mode="variable";
+                        });
+                      },
+                      child: Icon(Icons.delete_forever,size: 35,color: brandBlue,)
+                    ),
+                    
+                  ],
+                ),
+              ),
           Expanded(
             child: Padding(
               padding: EdgeInsets.only(left: 15,right: 15),
               child: variableAuto()
               ),
           ),
-          Builder(
+          if(mode=="variable")Builder(
             builder: (context) {
 
              
@@ -99,7 +145,8 @@ int currentCar=0;
       ),
     );
   }
-
+  String mode="variable";
+  List<int> carIdForRemove=[];
 
 Widget variableAuto(){
     return Observer(
@@ -108,6 +155,7 @@ Widget variableAuto(){
             return Text("error");
           }
           if(userRepository.userCar==null){
+            
             userRepository.getUserCar();
               return Column(
               children: [
@@ -116,6 +164,7 @@ Widget variableAuto(){
               ],
             );
           }
+          print(userRepository.userCar);
           List<UserCar> usercars=userRepository.userCar!;
           if(usercars.isEmpty){
             return  Container(
@@ -144,71 +193,60 @@ Widget variableAuto(){
             );
           }
           currentCar=usercars[0].carId;
-          return  Column(
+          return mode=="variable"? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 for(int i=0;i<usercars.length;i++) 
                   VariableCar( pressed: true,userCar:usercars[i],decoreColor:brandBlue),
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                       Navigator.push(
-                        context, MaterialPageRoute(
-                          builder: (context) 
-                          => ChangeNotifierProvider<DataProvider>(
-                            create: (context) => DataProvider(),
-                            
-                            child: CreateCar()
-                            ),
-                        )
-                        );
-                      },
-                      child: SizedBox(
-                        height: 40,
-                        
-                        child: Text(
-                          "+ add vehicle",
-                          style: TextStyle(
-                            color: brandBlue,
-                            fontFamily: "SF",
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500
-                          ),
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                       Navigator.push(
-                        context, MaterialPageRoute(
-                          builder: (context) 
-                          => ChangeNotifierProvider<DataProvider>(
-                            create: (context) => DataProvider(),
-                            
-                            child: CreateCar()
-                            ),
-                        )
-                        );
-                      },
-                      child: SizedBox(
-                        height: 40,
-                        
-                        child: Text(
-                          "remove vehicle",
-                          style: TextStyle(
-                            color: brandBlue,
-                            fontFamily: "SF",
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                )
+                if(mode=="variable") Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                         
+                                          GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            mode="remove";
+                                          });
+                                        },
+                                        child: SizedBox(
+                                          height: 40,
+                                          child: Text(
+                                            "- remove vehicle",
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                              fontFamily: "SF",
+                                              fontSize: 14,
+                                              
+                                              fontWeight: FontWeight.w500
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                        ],
+                                      )
               ],
-          );
+          )
+          :Column(
+          children: [
+            for(int i=0;i<userRepository.userCar!.length;i++) 
+                InkWell(
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  onTap: () {
+                  setState(() {
+                    int findIndex = carIdForRemove.firstWhere((element) => element==userRepository.userCar![i].carId,orElse: () => -1,);
+                      if(findIndex==-1){
+                        carIdForRemove.add(userRepository.userCar![i].carId);
+                      }else{
+                        carIdForRemove=carIdForRemove.where((element) => element!=userRepository.userCar![i].carId).toList();
+                      }
+                      
+                  });
+                  },
+                  child: VariableCar( pressed:carIdForRemove.firstWhere((element) => element==userRepository.userCar![i].carId,orElse: () => -1,)!=-1 ,userCar:userRepository.userCar![i],decoreColor:  Colors.red)
+                  ),
+          ],
+        );
           
         },
         );

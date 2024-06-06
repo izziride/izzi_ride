@@ -89,7 +89,7 @@ void _showDialogPage(BuildContext context){
   }
     return  Column(
             children: [
-              BarNavigation(back: widget.back, title: "Create a ride to find a ridemate",),
+              BarNavigation(back: widget.back, title: "Create a ride",),
               Image.asset("assets/image/my_trips.png",width: winWidth*imageKF,),
                Expanded(
                  child: Padding(

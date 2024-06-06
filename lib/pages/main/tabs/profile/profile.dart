@@ -110,7 +110,7 @@ List list=[];
         0, 
         [
           const Paragraf(paragraf: "For drivers"),
-  Punkt(punkt: "My cars",onTap: (context){
+  Punkt(punkt: "My vehicles",onTap: (context){
     Navigator.push(context,
     MaterialPageRoute(builder: (context) => UserAutoUI()));
   },),]

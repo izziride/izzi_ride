@@ -139,7 +139,7 @@ cancelOrderClient(){
     if(bookedStatus=="canceled"||orderStatus=="canceled"){
       return SizedBox(height: 40,);
     }
-    if(widget.fullUserOrder.status=="finished"){
+    if(widget.fullUserOrder.status=="finished"&&widget.fullUserOrder.isDriver ){
        
          return  GestureDetector(
                           onTap: cancelOrderDriver,
@@ -153,7 +153,7 @@ cancelOrderClient(){
                                   borderRadius: BorderRadius.circular(10)
                                 ),
                                 child:Text(
-                                  "DELETE",
+                                   "DELETE",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: "Inter",

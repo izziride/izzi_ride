@@ -322,10 +322,7 @@ class HttpUserOrder{
         stackTrace: stackTrace,
       );
     if(e is DioException){
-      final error = e;
-      if(error.response!=null && error.response!.data["code"]!=null){
-        return error.response!.data["code"];
-      }
+      throw e;
     }
       return -1;
   }

@@ -81,7 +81,7 @@ class _AutoState extends State<Auto> {
          child:  Column(
            children: [
               mode=="variable"
-              ? BarNavigation(back: true, title: "My cars")
+              ? BarNavigation(back: true, title: "My vehicles")
               :Container(
                 height: 70,
                 decoration: BoxDecoration(
@@ -190,7 +190,7 @@ class _AutoState extends State<Auto> {
                                         child: SizedBox(
                                           height: 40,
                                           child: Text(
-                                            "remove vehicle",
+                                            "- remove vehicle",
                                             style: TextStyle(
                                               color: Colors.red,
                                               fontFamily: "SF",

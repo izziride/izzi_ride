@@ -77,6 +77,17 @@ abstract class _UserRepo with Store {
    }
   }
 
+  @action
+  Future<int> addUserCar(ClientCar car)async{
+   int result= await HttpUserCar().createUserCar(car);
+   if(result!=-1){
+    getUserCar();
+    return result;
+   }
+    return -1;
+  }
+
+
   @observable
   ObservableList<DriverOrder> userOrders = ObservableList();
 
