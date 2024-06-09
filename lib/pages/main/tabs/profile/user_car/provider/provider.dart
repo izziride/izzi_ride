@@ -106,6 +106,7 @@ class DataProvider extends ChangeNotifier {
   updateModel(String newModel,int modelId){
     _carModel=newModel;
     _carModelId=modelId;
+    _validModel = true;
       notifyListeners(); 
   }
 

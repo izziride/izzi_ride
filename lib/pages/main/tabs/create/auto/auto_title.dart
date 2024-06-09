@@ -44,12 +44,15 @@ class _AutoTitleState extends State<AutoTitle> {
 
   updateModel(String newModel,int modelId){
     createRepo.updateCarModel(newModel,modelId);
+    setState(() {
+      validModel=true; 
+    });
   }
 
   updateName(String newName,int mnameId){
     createRepo.updateCarNamet(newName,mnameId);
     setState(() {
-      
+      validManufacturer=true;
     });
   }
 
