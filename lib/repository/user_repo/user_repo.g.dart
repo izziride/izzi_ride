@@ -170,6 +170,22 @@ mixin _$UserRepo on _UserRepo, Store {
     return _$getUserCarAsyncAction.run(() => super.getUserCar());
   }
 
+  late final _$deleteUserCarAsyncAction =
+      AsyncAction('_UserRepo.deleteUserCar', context: context);
+
+  @override
+  Future<void> deleteUserCar(int carId) {
+    return _$deleteUserCarAsyncAction.run(() => super.deleteUserCar(carId));
+  }
+
+  late final _$addUserCarAsyncAction =
+      AsyncAction('_UserRepo.addUserCar', context: context);
+
+  @override
+  Future<int> addUserCar(ClientCar car) {
+    return _$addUserCarAsyncAction.run(() => super.addUserCar(car));
+  }
+
   late final _$getUserOrdersAsyncAction =
       AsyncAction('_UserRepo.getUserOrders', context: context);
 
@@ -240,6 +256,14 @@ mixin _$UserRepo on _UserRepo, Store {
   Future<int> cancelOrder(int orderId, String comment) {
     return _$cancelOrderAsyncAction
         .run(() => super.cancelOrder(orderId, comment));
+  }
+
+  late final _$hideOrderAsyncAction =
+      AsyncAction('_UserRepo.hideOrder', context: context);
+
+  @override
+  Future<int> hideOrder(int orderId, String comment) {
+    return _$hideOrderAsyncAction.run(() => super.hideOrder(orderId, comment));
   }
 
   late final _$deleteUserByAsyncAction =

@@ -205,9 +205,20 @@ abstract class _UserRepo with Store {
   }
 
 
-  @action
+ @action
   Future<int> cancelOrder(int orderId,String comment)async{
-   int status= await HttpUserOrder().orderDriverCancel(orderId, "");
+   int status= await HttpUserOrder().cancelOrder(orderId,"");
+   if(status==0){
+    final newOrders=userOrders.where((element) => element.orderId!=orderId).toList();
+    userOrders=ObservableList.of(newOrders);
+    return 0;
+   }else{
+    throw new Error();
+   }
+  }
+  @action
+  Future<int> hideOrder(int orderId,String comment)async{
+   int status= await HttpUserOrder().hideOrderBooking(orderId);
    if(status==0){
     final newOrders=userOrders.where((element) => element.orderId!=orderId).toList();
     userOrders=ObservableList.of(newOrders);

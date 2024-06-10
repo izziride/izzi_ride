@@ -109,6 +109,27 @@ class _FO_BookedStatusActionDriverState extends State<FO_BookedStatusActionDrive
       },
       );      
   }
+  hideOrderDriver(){                      
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10)
+          ),
+          child: CreateModal(
+            completed: (){
+              
+              Navigator.pop(context);
+            },
+            errorFn: (){},
+            future: userRepository.hideOrder(widget.fullUserOrder.orderId, ""),
+          ),
+        );
+      },
+      );      
+  }
 cancelOrderClient(){                                          
     showDialog(
       context: context,
@@ -215,7 +236,7 @@ cancelOrderClient(){
                     borderRadius: BorderRadius.circular(10)
                   ),
                   child: Text(
-                    "DELETED",
+                    "HIDE",
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: "Inter",
@@ -237,7 +258,7 @@ cancelOrderClient(){
     if(widget.fullUserOrder.status=="finished"&&widget.fullUserOrder.isDriver ){
        
          return  GestureDetector(
-                          onTap: cancelOrderDriver,
+                          onTap: hideOrderDriver,
                           child: Container(
                                 height: 60,
                                 margin: EdgeInsets.only(bottom: 30,left: 15,right: 15),

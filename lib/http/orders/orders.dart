@@ -392,7 +392,7 @@ class HttpUserOrder{
     if(access=="no") return -1;
     try{
     Response response = await dio.put(
-      baseAppUrl+"/order/cancel",
+      baseAppUrl+"order/cancel",
       data: {
         "order_id":orderId,
         "comment":comment
