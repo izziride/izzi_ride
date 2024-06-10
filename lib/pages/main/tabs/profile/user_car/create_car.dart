@@ -81,10 +81,10 @@ class _CreateCarState extends State<CreateCar> {
         }
       }
       if(
-        dataProvider.carName.isNotEmpty&&
-        dataProvider.carModel.isNotEmpty&&
-        dataProvider.carNumber.isNotEmpty&&
-        dataProvider.carYear.length>=4
+        dataProvider.validManufacturer&&
+        dataProvider.validModel&&
+        dataProvider.validNumber&&
+        dataProvider.validYear
       ){
         _userCarDrivers.numberFocusNode.unfocus();
         _userCarDrivers.yearFocusNode.unfocus();

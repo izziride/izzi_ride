@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:temp/constants/colors/colors.dart';
 import 'package:temp/http/chats/http_chats.dart';
 import 'package:temp/http/orders/orders.dart';
@@ -136,6 +138,99 @@ cancelOrderClient(){
     String? bookedStatus=widget.fullUserOrder.bookedStatus;
     String orderStatus=widget.fullUserOrder.status;
     print(orderStatus+"//");
+    if(!widget.fullUserOrder.isDriver&&orderStatus=="finished"){
+      
+        return Column(
+        children: [
+           Builder(
+             builder: (context) {
+              if(widget.fullUserOrder.orderRate!=null){
+               return Container(
+                  height: 60,
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(242, 243, 245, 1),
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: Text(
+                    "Rate:${widget.fullUserOrder.orderRate}",
+                    style: TextStyle(
+                      color: brandBlue,
+                      fontFamily: "Inter",
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600
+                    ),
+                  ),
+                );
+              }else{
+                  return Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => FeedBack(orderId: widget.fullUserOrder.orderId, userIdForRate: widget.fullUserOrder.driverId!),));
+                              },
+                              child: Container(
+                                height: 60,
+                                width: double.infinity,
+                                alignment: Alignment.center,
+                                margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                                decoration: BoxDecoration(
+                                  color: brandBlue,
+                                  borderRadius: BorderRadius.circular(10)
+                                ),
+                                child: Text(
+                                  "Rate driver",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: "Inter",
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+              }
+                
+             }
+           ),
+           GestureDetector(
+            onTap: ()async {
+             final result=await HttpUserOrder().hideOrderBooking(widget.fullUserOrder.orderId);
+             if(result==0){
+              await userRepository.getUserBookedOrders();
+              Navigator.pop(context);
+             }
+            },
+             child: Container(
+                  height: 60,
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                  decoration: BoxDecoration(
+                    color: brandBlue,
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: Text(
+                    "DELETED",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "Inter",
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600
+                    ),
+                  ),
+                ),
+           ),
+          
+        ],
+      );
+      
+       
+    }
     if(bookedStatus=="canceled"||orderStatus=="canceled"){
       return SizedBox(height: 40,);
     }
@@ -153,7 +248,7 @@ cancelOrderClient(){
                                   borderRadius: BorderRadius.circular(10)
                                 ),
                                 child:Text(
-                                   "DELETE",
+                                   "HIDE",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: "Inter",

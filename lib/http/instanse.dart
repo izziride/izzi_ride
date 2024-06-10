@@ -1,6 +1,8 @@
 
 import 'package:dio/dio.dart';
 import 'package:temp/app_information/app_information.dart';
+import 'package:temp/http/token/http_token.dart';
+import 'package:temp/http/user/http_user.dart';
 import 'package:temp/localStorage/tokenStorage/token_storage.dart';
 
 
@@ -29,7 +31,8 @@ class AuthInterceptor extends Interceptor {
 
     if (err.response?.statusCode == 401&&repeatCounter.isEven) {
       repeatCounter++;
-      //TODO REFRESH
+      
+      await HttpToken().refreshToken();
       return  await dio.request(
           err.requestOptions.path, 
           data:  err.requestOptions.data,

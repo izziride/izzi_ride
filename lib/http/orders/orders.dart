@@ -172,7 +172,7 @@ class UserOrderFullInformation extends DriverOrder{
   bool isDriver;
   Automobile automobile;
   String giveAway;
-  int orderRate;
+  int? orderRate;
   UserOrderFullInformation({
     required this.orderRate,
     required super.bookedStatus,
@@ -704,7 +704,7 @@ class HttpUserOrder{
 
      final fullOrderInfo=  UserOrderFullInformation(
       giveAway: _mapResponse["giveaway_code"]??"",
-      orderRate: _mapResponse["order_rating"]??0,
+      orderRate: _mapResponse["order_rating"],
       driverRate: (_mapResponse["driver_rate"]??0)+0.0,
       status: _mapResponse["status"],
       bookedStatus: _mapResponse["booked_status"]??"_",

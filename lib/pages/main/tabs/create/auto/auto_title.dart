@@ -72,7 +72,9 @@ class _AutoTitleState extends State<AutoTitle> {
 
 void checkValid(){
   
-  if(createRepo.carName.isEmpty){
+  try {
+    print("valida");
+    if(createRepo.carName.isEmpty){
     validManufacturer=false;
   }
   if(createRepo.carModel.isEmpty){
@@ -94,6 +96,10 @@ void checkValid(){
   setState(() {
     
   });
+  print(validManufacturer);
+  print(validModel);
+  print(validNumber);
+  print(validYear);
   if(validManufacturer&&validModel&&validNumber&&validYear){
     createRepo.updateCarNumber(_numberController.text);
     createRepo.updateCarYear(_yearController.text);
@@ -103,11 +109,14 @@ void checkValid(){
                                 builder: (context) => DopOptions(side: widget.side, count: defaultcountPass,preferences: Preferences(smoking: false, luggage: false, childCarSeat: false, animals: false),carId: -1,createAuto:true)),
                                 );
   }
+  } catch (e) {
+    print(e);
+  }
 }
 
   @override
   Widget build(BuildContext context) {
-
+    print('validManufacturer');
     return Padding(
           padding: const EdgeInsets.only(top: 20,left: 15,right: 15),
           child: Column(
@@ -212,8 +221,9 @@ void checkValid(){
                             bottom: 32,
                             left: 0,
                             right: 0,
-                            child: InkWell(
+                            child: GestureDetector(
                                               onTap: (){
+                                                
                                                checkValid();
                                                
                                               },
@@ -230,7 +240,7 @@ void checkValid(){
                                                   "Continue",
                                                   style: TextStyle(
                             color:Colors.white,
-                            fontFamily: "Inter",
+                            fontFamily: "SF",
                             fontSize: 16,
                             fontWeight: FontWeight.w600
                                                   ),
