@@ -348,10 +348,27 @@ class HttpUserOrder{
     print(response.data);
     return 0;
   }catch (e,stackTrace){
-    Sentry.captureException(
+    if(e is DioException){
+      
+      Sentry.captureException(
+        {
+          "error":e,
+          "info":{
+            "response":e.response?.data??"NO RESPONSE",
+            "message":e.message??"NO MESSAGE",
+            "reqdata":e.requestOptions.data??"NO DATA",
+            "context":"create user driver order"
+          }
+        },
+        stackTrace: stackTrace,
+      );
+    }else{
+      Sentry.captureException(
         e,
         stackTrace: stackTrace,
       );
+    }
+    
     print(e);
       rethrow;
   }

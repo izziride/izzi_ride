@@ -102,7 +102,7 @@ Future<void> setupInteractedMessage(BuildContext context) async {
   @override
   void initState() {
     super.initState();
-    setupInteractedMessage(context);
+    //setupInteractedMessage(context);
   }
 
 

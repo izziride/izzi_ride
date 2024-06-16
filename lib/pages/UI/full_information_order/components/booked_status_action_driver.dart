@@ -220,10 +220,14 @@ cancelOrderClient(){
            ),
            GestureDetector(
             onTap: ()async {
-             final result=await HttpUserOrder().hideOrderBooking(widget.fullUserOrder.orderId);
-             if(result==0){
-              await userRepository.getUserBookedOrders();
-              Navigator.pop(context);
+             try {
+               final result=await HttpUserOrder().hideOrderBooking(widget.fullUserOrder.orderId);
+              if(result==0){
+                await userRepository.getUserBookedOrders();
+                Navigator.pop(context);
+              }
+             } catch (e) {
+               
              }
             },
              child: Container(
