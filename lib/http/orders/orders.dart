@@ -304,7 +304,7 @@ class HttpUserOrder{
   Future<int> hideOrderBooking(int orderId)async{
 
   String access = tokenStorage.accessToken;
-  
+  print(orderId);
   try{
    Response response = await dio.put(
     "${baseAppUrl}client/order/$orderId/hide",
@@ -317,6 +317,7 @@ class HttpUserOrder{
     print(response.data);
     return 0;
   }catch (e,stackTrace ){
+    print(e);
     Sentry.captureException(
         e,
         stackTrace: stackTrace,
@@ -461,7 +462,7 @@ class HttpUserOrder{
       orderId: el["order_id"], 
       clientAutoId: el["client_auto_id"], 
       departureTime: el["departure_time"],
-      nickname: el["nickname"], 
+      nickname: el["nickname"]??"N", 
       orderStatus: el["status"], 
       startCountryName: el["start_country_name"], 
       endCountryName: el["end_country_name"], 
@@ -524,7 +525,7 @@ class HttpUserOrder{
       driverId: el["driver_id"],
       driverCar: el["driver_car"], 
       departureTime: el["departure_time"],
-      nickname: el["driver_nickname"], 
+      nickname: el["driver_nickname"]??"N", 
       startPoint:PointLocation(
         city: el["start_point"]["city"],
         longitude: el["start_point"]["longitude"],
@@ -601,7 +602,7 @@ class HttpUserOrder{
       driverId: el["driver_id"],
       driverCar: el["driver_car"], 
       departureTime: el["departure_time"],
-      nickname: el["driver_nickname"], 
+      nickname: el["driver_nickname"]??"N", 
       driverRate:el["driver_rate"]+.0 ,
       startPoint:PointLocation(
         city: el["start_point"]["city"],
@@ -710,7 +711,7 @@ class HttpUserOrder{
         _travelers=_travelersResponse.map((el) {
         return Travelers(
           userId: el["id"], 
-          nickname: el["nickname"],
+          nickname: el["nickname"]==null?"No name":(el["nickname"] as String).isEmpty?"No name":el["nickname"],
           rate: el["rate"]+.0,
           driverRate: el["driver_rate"]!=null?el["driver_rate"]+.0:null
           );
@@ -732,7 +733,7 @@ class HttpUserOrder{
       orderId: _mapResponse["order_id"], 
       clientAutoId: _mapResponse["client_auto_id"], 
       departureTime: _mapResponse["departure_time"],
-      nickname: _mapResponse["nickname"], 
+      nickname: _mapResponse["nickname"]??"N", 
       orderStatus: _mapResponse["status"]??"", 
       startCountryName: "", 
       endCountryName: "",
@@ -879,7 +880,7 @@ class HttpUserOrder{
       orderId: el["order_id"], 
       userId: el["driver_id"],
       departureTime: el["departure_time"],
-      nickname: el["driver_nickname"]??"error",  
+      nickname: el["driver_nickname"]??"N",  
       seatsInfo: SeatsInfo(
         total: el["seats"]["total"], 
         reserved: el["seats"]["reserved"], 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -100,6 +102,7 @@ class _CardFullOrderState extends State<CardFullOrder> {
               String comment = fullUserOrder.comment??""; 
               int countSeats = fullUserOrder.seatsInfo.total;
               bool isCanceled= fullUserOrder.bookedStatus=="canceled"||fullUserOrder.orderStatus=="canceled";
+              inspect(travelers);
               return Expanded(
                   child: SingleChildScrollView(
                     physics: BouncingScrollPhysics(),

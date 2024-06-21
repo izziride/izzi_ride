@@ -141,7 +141,7 @@ class _FO_PassangerDataState extends State<FO_PassangerData> {
                                                                 color: ColorUtils.stringToColor(widget.travelers[((i+1)/2).toInt()].nickname)
                                                               ),
                                                               child:Text(
-                                                                      widget.travelers[((i+1)/2).toInt()].nickname[0],
+                                                                     widget.travelers[((i+1)/2).toInt()].nickname[0],
                                                                       style: TextStyle(
                                                                         fontFamily: "SF",
                                                                         fontSize: 25,

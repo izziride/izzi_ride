@@ -191,7 +191,7 @@ class _SearchFromState extends State<SearchFrom> {
               ),
               focus
                   ?localController.text.isEmpty
-                  ? arguments.hint=="from"? InkWell(
+                  ? arguments.hint=="From"? InkWell(
                     onTap: ()async {
                        bool serviceEnabled;
                         LocationPermission permission;

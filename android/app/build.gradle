@@ -35,8 +35,8 @@ android {
         release {
             storeFile file('izzistore.jks')
             storePassword 'izzipass'
-            keyAlias 'izzikey'
-            keyPassword 'izzipass'
+            keyAlias 'izziride'
+            keyPassword 'izziride'
         }
     }
     kotlinOptions {
