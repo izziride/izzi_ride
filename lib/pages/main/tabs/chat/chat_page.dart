@@ -390,6 +390,7 @@ class _MessagePageState extends State<MessagePage> {
                                     controller: _controller,
                                             itemCount: messages.length,
                                             itemBuilder: (context, index) {
+                                              
                                               print(messages[index].type);
                                               if(messages[index].type=="10"){
                                                 return SizedBox.fromSize();

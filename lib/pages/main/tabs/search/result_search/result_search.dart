@@ -34,9 +34,24 @@ class _ResultSearchState extends State<ResultSearch> {
 
   List<Widget> listOrder=[];
   List<Widget> listotherOrder=[];
-  String dateConverter(String date){
-    DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm:ssZ');
-    String formattedTime = formatter.format(DateTime.parse(date));
+  String dateConverter(String date,bool requi){
+    print("/////");
+    print(date);
+    DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
+    var dateWith12=DateTime.parse(date);
+    var now=DateTime.now();
+    
+    if(dateWith12.day!=now.day&&dateWith12.month!=now.month&&dateWith12.year!=now.year){
+      if(requi){
+        dateWith12=dateWith12.add(Duration(hours: 12));
+      }
+      
+    }
+    
+    print(dateWith12.toString()+"qwe");
+    String formattedTime = formatter.format(dateWith12);
+    print(formattedTime+"new");
+    
     String tzName(Duration offset) {
       String hours = offset.inHours.abs().toString().padLeft(2, '0');
       String minutes = (offset.inMinutes % 60).abs().toString().padLeft(2, '0');
@@ -48,13 +63,18 @@ class _ResultSearchState extends State<ResultSearch> {
 
     return formattedTime;
    }
+
+  dateToFormat(){
+    
+  }
+
   void getOtherOrder(String date)async{
   listotherOrder=[];
     List<DriverOrderFind> otherOrder = await  HttpUserOrder().findUserOrderByOtherCity(
                      searchRepo.fromCityId,
                      searchRepo.toCityId,
                      searchRepo.personCount,
-                     dateConverter(date)
+                     dateConverter(date,false)
                     );
                     print(otherOrder.length);
                     
@@ -94,7 +114,7 @@ class _ResultSearchState extends State<ResultSearch> {
                      searchRepo.fromCityId,
                      searchRepo.toCityId,
                      searchRepo.personCount,
-                     dateConverter(date)
+                     dateConverter(date,false)
                     );
                     if(otherOrder.length>0){
                       setState(() {
@@ -141,7 +161,7 @@ class _ResultSearchState extends State<ResultSearch> {
                                searchRepo.fromCityId,
                                 searchRepo.toCityId,
                                 searchRepo.personCount,
-                                dateConverter(searchRepo.date.toString())
+                                dateConverter(searchRepo.date.toString(),true)
                                 
                             );
    
@@ -219,7 +239,6 @@ class _ResultSearchState extends State<ResultSearch> {
                               }
                               List<String> similar=[searchRepo.date.toString()];
                               similar.addAll(snapshot.data!);
-                             
                               
                               return ListView.builder(
                                 itemCount: similar.length,
@@ -232,9 +251,15 @@ class _ResultSearchState extends State<ResultSearch> {
                                   onTap: () {
                                     if(currentIndex!=index){
                                       setState(() {
-                                        date=DateTime.parse(similar[index]);
+                                        
+                                        //     String formattedTime = formatter.format(dateWith12);
+                                        // DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
+                                        // date=DateTime.parse();
+                                        // DateTime nowDate = DateTime.now();
+
+                                        //nowDate.
                                         currentIndex=index;
-                                        getOrder(date.toString());
+                                        getOrder(similar[index]);
                                     });
                                       }
                                    
@@ -253,15 +278,24 @@ class _ResultSearchState extends State<ResultSearch> {
                                     ),
                                     width: 91,
                                     height: 32,
-                                    child: Text(
-                                      dateFormat.format(DateTime.parse(similar[index])),
-                                      style: const TextStyle(
-                                        fontFamily: "SF",
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Color.fromRGBO(51, 51, 51, 1)
-                                      ),
-                                      ),
+                                    child: Builder(
+                                      builder: (context) {
+                                        DateTime _date=  DateFormat("yyyy-MM-dd").parse(similar[index]);
+                                        
+                                        print("__________");
+                                        print(similar[index]);
+                                        print(_date);
+                                        return Text(
+                                          dateFormat.format(_date),
+                                          style: const TextStyle(
+                                            fontFamily: "SF",
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            color: Color.fromRGBO(51, 51, 51, 1)
+                                          ),
+                                          );
+                                      }
+                                    ),
                                   ),
                                 ),
                               );

@@ -33,13 +33,18 @@ class AuthInterceptor extends Interceptor {
       repeatCounter++;
       
       await HttpToken().refreshToken();
-      return  await dio.request(
+      final token= tokenStorage.accessToken;
+      dio.options.headers["Authorization"]="Bearer $token"; 
+      print("reReq401");
+      final result=  await dio.request(
           err.requestOptions.path, 
           data:  err.requestOptions.data,
           queryParameters: err.requestOptions.queryParameters,
           options: Options(method:  err.requestOptions.method),
-         
           );  
+          print(result);
+          return handler.resolve(result);
+          
     }
     repeatCounter=0;
     if (err.response?.statusCode == 400) {

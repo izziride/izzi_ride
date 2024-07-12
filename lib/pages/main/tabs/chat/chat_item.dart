@@ -166,7 +166,9 @@ class _ChatItemState extends State<ChatItem> {
                          String current_time=widget.chatState.messages[0].time;
                           if(current_time!=""){
                           DateTime time = DateTime.parse(widget.chatState.messages[0].time);
-                          time.add(Duration(hours: DateTime.now().timeZoneOffset.inHours));
+                          print(time);
+                          time=time.add(Duration(hours: DateTime.now().timeZoneOffset.inHours));
+                          print(time);
                           formattedTime= DateFormat('hh:mm a', 'en_US').format(time);
                           }
                     }

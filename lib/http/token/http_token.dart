@@ -26,6 +26,7 @@ class HttpToken{
         "token":token
       }
       );
+      
       await tokenStorage.setToken(response.data["data"]["access_token"], response.data["data"]["refresh_token"]);
 
       return "auth";

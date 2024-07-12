@@ -126,6 +126,7 @@ class SocketProvider {
           int messageId=statusMsg["content_id"];
             int chatId=statusMsg["chat_id"];
             String time=statusMsg["sent_time"];
+            print(time);
             String frontContentId=statusMsg["front_content_id"];
             chatsRepository.editStatus(chatId.toString(), status, frontContentId, time);
            // editStatus(chatId,uuId,status);
