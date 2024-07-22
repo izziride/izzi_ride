@@ -109,27 +109,29 @@ Future<void> setupInteractedMessage(BuildContext context) async {
   @override
   Widget build(BuildContext context) {
     Locale locale= LocalizationManager.getCurrentLocale();
-    return MaterialApp(
-          theme: ThemeData(
-             visualDensity: VisualDensity(vertical: -4),
-             
+    return MediaQuery(
+      data:MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
+      child: MaterialApp(
+            theme: ThemeData(
+               visualDensity: VisualDensity(vertical: -4),
+            ),
+            title: "iZZi Ride",
+            navigatorKey: navigatorKey,
+            initialRoute: "/loader",
+            routes: {
+              "/loader":(context) => Loader(),
+              "/menu":(context) => const MainPage(),
+              "/reg":(context) => const Registration(),
+              "/onboard":(context) => Onboard()
+            },
+            locale: locale,
+            supportedLocales: const[
+               Locale("en","US"),
+            ],
+            localizationsDelegates:const [
+              CustomLocalizationsDelegate()
+            ],
           ),
-          title: "iZZi Ride",
-          navigatorKey: navigatorKey,
-          initialRoute: "/loader",
-          routes: {
-            "/loader":(context) => Loader(),
-            "/menu":(context) => const MainPage(),
-            "/reg":(context) => const Registration(),
-            "/onboard":(context) => Onboard()
-          },
-          locale: locale,
-          supportedLocales: const[
-             Locale("en","US"),
-          ],
-          localizationsDelegates:const [
-            CustomLocalizationsDelegate()
-          ],
-        );
+    );
   }
 }

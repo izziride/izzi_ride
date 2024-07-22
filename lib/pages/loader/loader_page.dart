@@ -29,9 +29,12 @@ double _progressValue=0.0;
     });
   }
   fullStep(){
-    setState(() {
-      _progressValue=1.0;
-    });
+    if(mounted){
+      setState(() {
+        _progressValue=1.0;
+      });
+    }
+    
   }
 
   

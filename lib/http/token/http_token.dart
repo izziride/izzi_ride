@@ -26,7 +26,6 @@ class HttpToken{
         "token":token
       }
       );
-      
       await tokenStorage.setToken(response.data["data"]["access_token"], response.data["data"]["refresh_token"]);
 
       return "auth";
@@ -37,7 +36,7 @@ class HttpToken{
       );
       print("errorrrrr");
       if(e is DioException){
-        if((e as DioException).response!.statusCode==409){
+        if((e as DioException).response?.statusCode==409){
           return "version_conflict";
         }
       }
@@ -45,6 +44,8 @@ class HttpToken{
     }
       
   }
+
+
   Future<int> pushToken(String platform,String token) async{
 
      Response response;
