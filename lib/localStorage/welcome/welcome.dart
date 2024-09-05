@@ -12,14 +12,22 @@ class FirstWelcome{
 }
 
 Future<int> setWelcome() async{
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setInt("welcome", 1);
-  return 1;
+  try {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt("welcome", 1);
+    return 1;
+  } catch (e) {
+    return 0;
+  }
 }
 
 Future<void> clearSharedPreferences() async {
-  SharedPreferences preferences = await SharedPreferences.getInstance();
-  await preferences.clear();
+  try {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.clear();
+  } catch (e) {
+    
+  }
  
 }
 }

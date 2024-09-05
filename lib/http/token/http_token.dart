@@ -16,7 +16,7 @@ class HttpToken{
     if(token=="no"){
       return "noAuth";
     }
-
+      dio.interceptors.clear();
      Response response;
     try{
         

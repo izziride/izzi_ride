@@ -37,7 +37,7 @@ double _progressValue=0.0;
     
   }
 
-  
+  int code=0;
 
 
 
@@ -56,9 +56,12 @@ double _progressValue=0.0;
   }
 
   Future<void> auth(context)async{
-    String result =await HttpToken().refreshToken();
+    String result = await HttpToken().refreshToken();
     inspect(result);
     if(result=="version_conflict"){
+      setState(() {
+        code=1;
+      });
       await showCupertinoDialog(
       context: context, 
       builder: (context) {
@@ -87,8 +90,17 @@ double _progressValue=0.0;
     }
     if(result=="noAuth"){
       userRepository.isAuth=false;
+      setState(() {
+        code=2;
+      });
       await FirstWelcome().clearSharedPreferences();
+      setState(() {
+        code=3;
+      });
       int result = await FirstWelcome().getWelocme();
+      setState(() {
+        code=4;
+      });
       if(result==0){
         print("goOnboard");
         Navigator.pushNamedAndRemoveUntil(context, "/onboard", (route) => false);
@@ -170,7 +182,7 @@ double _progressValue=0.0;
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(7),
-                        color: Color.fromRGBO(58, 121, 215, 1)
+                        color: code==0? Color.fromRGBO(58, 121, 215, 1):code==1?Color.fromRGBO(170, 22, 56, 1) :code==2?Color.fromRGBO(61, 199, 231, 1):code==3?Color.fromRGBO(19, 225, 194, 1):Color.fromRGBO(13, 227, 134, 1)
                       ),
                     ),
                   )

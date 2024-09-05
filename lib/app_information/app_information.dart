@@ -4,9 +4,12 @@ class AppInformation{
   String version="";
 
   Future<void> getAppVersion() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-   
-    version= packageInfo.version;
+    try {
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      version= packageInfo.version;
+    } catch (e) {
+      
+    }
   }
 }
 
