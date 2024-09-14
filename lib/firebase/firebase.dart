@@ -1,14 +1,20 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:temp/http/chats/http_chats.dart';
 import 'package:temp/http/token/http_token.dart';
 
 class FirebaseDriver{
 
   init()async{
-    
+    String? token = await FirebaseMessaging.instance.getToken();
+    print(token);
+    if(token!=null){
+      await HttpChats().setFcmToken(token);
+    }
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     print('Got a message whilst in the foreground!');
     inspect(message);
