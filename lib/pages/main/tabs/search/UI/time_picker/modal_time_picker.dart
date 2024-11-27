@@ -54,7 +54,6 @@ class _TimePickerModal extends State<TimePickerModal> {
                             mode: CupertinoDatePickerMode.time,
                             initialDateTime: DateTime(0),
                             minuteInterval: 15,
-                            
                             onDateTimeChanged: (DateTime newDateTime) {
                                widget.update(newDateTime);
                             },
